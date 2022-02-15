@@ -6,7 +6,7 @@ import { Container, Div, Div2 } from '../styles/tes';
 import { LightButton } from "../prototypes/ThemeBtn/ThemeBtn.composition";
 import { InaLanguageOptions } from "../prototypes/LanguageOptions/LanguageOptions.composition";
 import { BasicSettingDialog } from "../prototypes/SettingDialog/SettingDialog.composition";
-
+import { BasicHelpDialog } from "../prototypes/HelpDialog/HelpDialog.composition";
 const Test: NextPage = () => {
 	return (
 			<Container>
@@ -14,7 +14,8 @@ const Test: NextPage = () => {
 					<Div2>
 						{/* <LightButton/> */}
 						{/* <InaLanguageOptions /> */}
-						<BasicSettingDialog/>
+						{/* <BasicSettingDialog/> */}
+						<BasicHelpDialog/>
 					</Div2>
 				</Div>
 			</Container>

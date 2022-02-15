@@ -51,7 +51,7 @@ export function SettingDialog({
 	return (
 		<>
 			<IconButton aria-label="setting" onClick={handleClick}>
-				<SettingsIcon />
+				<SettingsIcon sx={{color: "white"}}/>
 			</IconButton>
 			<Dialog maxWidth="xs" scroll="paper" onClose={handleClose} open={open}>
 				<DialogTitle>
