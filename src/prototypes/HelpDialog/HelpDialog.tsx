@@ -69,6 +69,7 @@ export function HelpDialog({ TEXT, open, onClick, onClose, ImageRenderer, src }:
 							component="h2"
 							variant="h6"
 							align="center"
+							sx={{textTransform: "uppercase"}}
 						>
 							{TEXT.TITLE}
 						</Typography>
@@ -81,7 +82,7 @@ export function HelpDialog({ TEXT, open, onClick, onClose, ImageRenderer, src }:
 					<ListItem>
 						<Stack sx={{ gap: "5px" }}>
 							{TEXT.HOWTO.map((HOW, i) => (
-								<Typography fontSize="0.9rem">{HOW}</Typography>
+								<Typography key={i} fontSize="0.9rem">{HOW}</Typography>
 							))}
 						</Stack>
 					</ListItem>

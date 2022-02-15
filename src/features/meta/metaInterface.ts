@@ -5,4 +5,5 @@ export interface MetaState {
   languages: string[]; 
   language: string;
   openSetting: boolean;
+  openHelp: boolean;
 }

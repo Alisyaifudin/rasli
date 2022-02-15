@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { setOpenSetting, openSettingSL, languageSL } from "../../features/meta/metaSlice";
+import { setOpen, openSettingSL, languageSL } from "../../features/meta/metaSlice";
 import { SettingDialog as SettingDialogProto } from "../../prototypes/SettingDialog";
 import DICT, { GENERAL } from "../../utils/DICT";
 import ThemeBtn from "../ThemeBtn/ThemeBtn";
@@ -11,8 +11,8 @@ function SettingDialog() {
 	const open = useAppSelector(openSettingSL);
 	const dispatch = useAppDispatch();
 
-	const handleClick = () => dispatch(setOpenSetting(true));
-	const handleClose = () => dispatch(setOpenSetting(false));
+	const handleClick = () => dispatch(setOpen({type: "setting", value: true}));
+	const handleClose = () => dispatch(setOpen({type: "setting", value: false}));
 
 	const TEXT = useMemo(
 		() => ({

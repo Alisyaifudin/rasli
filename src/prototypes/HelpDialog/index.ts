@@ -1,2 +1,2 @@
-export { SettingDialog } from './HelpDialog'
-export type { SettingDialogProps } from './HelpDialog'
+export { HelpDialog } from './HelpDialog'
+export type { HelpDialogProps } from './HelpDialog'

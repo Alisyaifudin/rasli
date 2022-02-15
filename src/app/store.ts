@@ -1,8 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 
 import metaReducer from "../features/meta/metaSlice";
-
-export const reducer = { meta: metaReducer };
+import constellationReducer from "../features/constellation/constellationSlice";
+export const reducer = { 
+  meta: metaReducer, 
+  constellation: constellationReducer
+};
 
 export function makeStore() {
   return configureStore({

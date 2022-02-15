@@ -1,7 +1,10 @@
 import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
-import { BasicHelpDialog } from "./HelpDialog.composition";
+import { render, screen, fireEvent } from "../../../utils/test/reduxRender";
+import HelpDialog from "../HelpDialog";
 import { act } from "react-dom/test-utils";
+import DICT, { GENERAL, LANGUAGES } from "../../../utils/DICT";
+
+const lang = LANGUAGES.INA;
 
 function userClick(element) {
 	act(() => {
@@ -13,20 +16,20 @@ function userClick(element) {
 
 describe("HelpDialog", () => {
 	it("should render gear btn", () => {
-		render(<BasicHelpDialog />);
+		render(<HelpDialog />);
 		const btnEl = screen.getByTestId("HelpIcon");
 		expect(btnEl).toBeInTheDocument();
 	});
 	it("should be able to click ? btn", () => {
-		render(<BasicHelpDialog />);
+		render(<HelpDialog />);
 		const btnEl = screen.getByTestId("HelpIcon");
 		fireEvent.click(btnEl);
 		const dialogEl = screen.getByRole("dialog");
-		const titleEl = screen.getByText(/cara bermain/i);
-		const howtoEl = screen.getByText(/tebak RASLI/i);
-		const exampleEl = screen.getByText(/contoh/i);
-		const guessEl = screen.getByText(/puppis/i);
-		const hintEl = screen.getByText(/warna merah/i);
+		const titleEl = screen.getByText(DICT.HELP_TITLE[lang]);
+		const howtoEl = screen.getByText(DICT.HOWTO[lang][0]);
+		const exampleEl = screen.getByText(DICT.EXAMPLE[lang]);
+		const guessEl = screen.getByText(GENERAL.EX_GUESS_AND_COLOR[0].GUESS);
+		const hintEl = screen.getByText(DICT.EX_HINT[lang][0]);
 		const dividerEls = screen.getAllByTestId("divider");
 		expect(dialogEl).toBeInTheDocument();
 		expect(titleEl).toBeInTheDocument();
@@ -38,7 +41,7 @@ describe("HelpDialog", () => {
 	});
 	it("should be able to close dialog by clicking away", () => {
 		jest.useFakeTimers();
-		render(<BasicHelpDialog />);
+		render(<HelpDialog />);
 		const btnEl = screen.getByTestId("HelpIcon");
 		userClick(btnEl);
 		const dialogEl = screen.getByRole("dialog");
@@ -51,7 +54,7 @@ describe("HelpDialog", () => {
 	});
 	it("should be able to close dialog by clicking X", () => {
 		jest.useFakeTimers();
-		render(<BasicHelpDialog />);
+		render(<HelpDialog />);
 		const btnEl = screen.getByTestId("HelpIcon");
 		userClick(btnEl);
 		const dialogEl = screen.getByRole("dialog");
