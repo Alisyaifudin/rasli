@@ -4,8 +4,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
 // Import components
-import ThemeBtn from "../ThemeBtn/ThemeBtn";
-import LanguageOptions from "../LanguageOptions/LanguageOptions";
+import SettingDialog from "../SettingDialog/SettingDialog";
 
 export default function SearchAppBar() {
 	return (
@@ -13,8 +12,7 @@ export default function SearchAppBar() {
 			<AppBar position="fixed" data-testid="Navbar">
 				<Container>
 					<Toolbar data-testid="toolbar">
-						<ThemeBtn />
-						<LanguageOptions />
+						<SettingDialog />
 					</Toolbar>
 				</Container>
 			</AppBar>

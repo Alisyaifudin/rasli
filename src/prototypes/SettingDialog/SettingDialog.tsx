@@ -10,7 +10,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import SettingsIcon from "@mui/icons-material/Settings";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 
 export type SettingDialogProps = {
 	/**
@@ -22,6 +22,7 @@ export type SettingDialogProps = {
 		COPYRIGHT: string;
 		CONTACT: string;
 		CONTACT_LABEL: string;
+		THANKS: string;
 	};
 	/**
 	 * ThemeBtn component
@@ -59,15 +60,15 @@ export function SettingDialog({
 							{TEXT.TITLE}
 						</Typography>
 						<IconButton onClick={handleClose}>
-							<CloseIcon color="error"/>
+							<CloseIcon color="error" />
 						</IconButton>
 					</Stack>
 				</DialogTitle>
 				<List sx={{ pt: 0 }}>
 					<ListItem>
-						<Stack direction="row" justifyContent="space-around" sx={{ width: "100%" }}>
+						<Stack flexWrap="wrap-reverse" direction="row" justifyContent="space-around" sx={{ width: "100%", gap: "20px" }}>
 							{LanguageOptions}
-              {ThemeBtn}
+							{ThemeBtn}
 						</Stack>
 					</ListItem>
 					<ListItem>
@@ -76,7 +77,7 @@ export function SettingDialog({
 						</DialogContent>
 					</ListItem>
 					<ListItem>
-						<Stack direction="row" justifyContent="space-around" sx={{ width: "100%" }}>
+						<Stack direction="row" justifyContent="space-evenly" sx={{ width: "100%" }}>
 							<Typography component="p">{TEXT.CONTACT_LABEL}</Typography>
 							<Typography component="a" href={TEXT.CONTACT} sx={{ textDecoration: "underline" }}>
 								Email
@@ -84,9 +85,21 @@ export function SettingDialog({
 						</Stack>
 					</ListItem>
 					<ListItem>
-						<Typography component="p" variant="caption" fontSize={11}>
-							© 2022 {TEXT.COPYRIGHT}
-						</Typography>
+						<Stack direction="row" justifyContent="space-between" sx={{ width: "100%" }}>
+							<Typography component="p" variant="caption" fontSize={11}>
+								{TEXT.COPYRIGHT}
+							</Typography>
+							<Typography
+								component="a"
+								variant="caption"
+								fontSize={11}
+								href="https://bit.ly/HadiahTerimaKasih"
+								sx={{ textDecoration: "underline" }}
+								target="_blank"
+							>
+								{TEXT.THANKS}
+							</Typography>
+						</Stack>
 					</ListItem>
 				</List>
 			</Dialog>

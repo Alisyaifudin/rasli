@@ -1,7 +1,10 @@
 import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
-import { BasicSettingDialog, dummy } from "./SettingDialog.composition";
+import { render, screen, fireEvent } from "../../../utils/test/reduxRender";
+import SettingDialog from "../SettingDialog";
 import { act } from "react-dom/test-utils";
+import DICT, { GENERAL, LANGUAGES, LANGUAGES_NAME } from "../../../utils/DICT";
+
+const lang = LANGUAGES.INA
 
 function userClick(element) {
 	act(() => {
@@ -13,23 +16,23 @@ function userClick(element) {
 
 describe("SettingDialog", () => {
 	it("should render gear btn", () => {
-		render(<BasicSettingDialog />);
+		render(<SettingDialog />);
 		const btnEl = screen.getByTestId("SettingsIcon");
 		expect(btnEl).toBeInTheDocument();
 	});
 	it("should be able to click gear btn", () => {
-		render(<BasicSettingDialog />);
+		render(<SettingDialog />);
 		const btnEl = screen.getByTestId("SettingsIcon");
 		fireEvent.click(btnEl);
 		const dialogEl = screen.getByRole("dialog");
-		const titleEl = screen.getByText(/pengaturan/i);
-		const themeEl = screen.getByText(/tema/i);
-		const languageOptionsEl = screen.getByText(/bahasa/i);
-		const messageEl = screen.getByText(dummy);
-		const contactLabelEl = screen.getByText(/masukan\?/i);
+		const titleEl = screen.getByText(DICT.SETTING[lang]);
+		const themeEl = screen.getByText(DICT.THEME_DARK[lang]);
+		const languageOptionsEl = screen.getByText(LANGUAGES_NAME[lang]);
+		const messageEl = screen.getByText(GENERAL.MESSAGE[lang]);
+		const contactLabelEl = screen.getByText(DICT.CONTACT_LABEL[lang]);
 		const contactEl = screen.getByText(/email/i);
-		const copyrightEl = screen.getByText(/© 2022/);
-		const thanksEl = screen.getByText(/terima kasih!/i);
+		const copyrightEl = screen.getByText(GENERAL.COPYRIGHT);
+		const thanksEl = screen.getByText(DICT.THANKS[lang]);
 		expect(dialogEl).toBeInTheDocument();
 		expect(titleEl).toBeInTheDocument();
 		expect(themeEl).toBeInTheDocument();
@@ -42,7 +45,7 @@ describe("SettingDialog", () => {
 	});
 	it("should be able to close dialog by clicking away", () => {
 		jest.useFakeTimers();
-		render(<BasicSettingDialog />);
+		render(<SettingDialog />);
 		const btnEl = screen.getByTestId("SettingsIcon");
 		userClick(btnEl);
 		const dialogEl = screen.getByRole("dialog");
@@ -55,7 +58,7 @@ describe("SettingDialog", () => {
 	});
 	it("should be able to close dialog by clicking X", () => {
 		jest.useFakeTimers();
-		render(<BasicSettingDialog />);
+		render(<SettingDialog />);
 		const btnEl = screen.getByTestId("SettingsIcon");
 		userClick(btnEl);
 		const dialogEl = screen.getByRole("dialog");

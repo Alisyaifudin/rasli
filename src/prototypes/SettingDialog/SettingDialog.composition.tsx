@@ -18,9 +18,10 @@ export const BasicSettingDialog = () => {
 	const TEXT = {
 		TITLE: "Pengaturan",
 		MESSAGE: dummy,
-		COPYRIGHT: "Muhammad Ali Syaifudin",
+		COPYRIGHT: "© 2022 Muhammad Ali Syaifudin",
 		CONTACT: "mailto:muhammad.ali.syaifudin@hotmail.com",
 		CONTACT_LABEL: "Masukan?",
+		THANKS: "Terima kasih!"
 	};
 	const handleClose = () => setOpen(false);
 	const handleClick = () => setOpen(true);
