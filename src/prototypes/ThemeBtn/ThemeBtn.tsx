@@ -23,10 +23,7 @@ export type ThemeBtnProps = {
 	 */
 	mode?: "light" | "dark";
 };
-/**
- * @param {Object} props
- * @returns React.FC
- */
+
 export function ThemeBtn({
 	TEXT = { DARK: "Dark", LIGHT: "Light" },
 	onClick,
