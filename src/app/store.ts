@@ -1,14 +1,18 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 
-import counterReducer from '../features/counter/counterSlice'
+import metaReducer from "../features/meta/metaSlice";
+
+export const reducer = { meta: metaReducer };
 
 export function makeStore() {
   return configureStore({
-    reducer: { counter: counterReducer },
+    reducer,
   })
 }
 
 const store = makeStore()
+
+export const preloadedState = store.getState();
 
 export type AppState = ReturnType<typeof store.getState>
 
