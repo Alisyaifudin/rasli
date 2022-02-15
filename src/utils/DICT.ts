@@ -5,6 +5,11 @@ export const LANGUAGES = {
   EN: "en"
 }
 
+export const LANGUAGES_NAME = {
+  [LANGUAGES.INA]: "Bahasa Indonesia",
+  [LANGUAGES.EN]: "English",
+}
+
 export const THEME = {
   DARK: "dark" as themeTypes,
   LIGHT: "light"  as themeTypes
@@ -18,5 +23,9 @@ export default {
   THEME_DARK: {
     [LANGUAGES.INA]: "Gelap",
     [LANGUAGES.EN]: "Dark"
-  }
+  },
+  LANGUAGE: {
+    [LANGUAGES.INA]: "Bahasa",
+    [LANGUAGES.EN]: "Language"
+  },
 }

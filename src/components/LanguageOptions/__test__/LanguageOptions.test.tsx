@@ -1,10 +1,10 @@
 import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
-import { InaLanguageOptions, EnLanguageOptions } from "./LanguageOptions.composition";
+import { render, screen, fireEvent } from "../../../utils/test/reduxRender";
+import LanguageOptions from "../LanguageOptions";
 
 describe("LanguageOptions", () => {
 	it("should render select options", () => {
-		render(<InaLanguageOptions />);
+		render(<LanguageOptions />);
 		// label in Indonesian
 		const labelEls = screen.getAllByText(/^Bahasa$/g);
 		const languageEl = screen.getByText(/^Bahasa Indonesia$/g);
