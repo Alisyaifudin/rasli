@@ -44,7 +44,8 @@ export const GENERAL = {
 			COLOR: "#54ff6b",
 		},
 	],
-	RIGHT_COLOR: "#3d61ff"
+	RIGHT_COLOR: "#3d61ff",
+	IAU_LIST: "https://www.iau.org/public/themes/constellations/",
 };
 
 export default {
