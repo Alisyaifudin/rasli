@@ -5,6 +5,8 @@ export const LANGUAGES = {
 	EN: "en",
 };
 
+export const VERSION = "0.1.0";
+
 export const LANGUAGES_NAME = {
 	[LANGUAGES.INA]: "Bahasa Indonesia",
 	[LANGUAGES.EN]: "English",
@@ -16,11 +18,15 @@ export const THEME = {
 };
 
 export const GENERAL = {
-	MESSAGE: {
-		[LANGUAGES.INA]:
+	MESSAGES: {
+		[LANGUAGES.INA]: [
 			"RASLI adalah game menebak rasi bintang, terinspirasi dari game wordle. Ada RASLI baru tiap harinya!",
-		[LANGUAGES.EN]:
+			`Ini adalah RASLI versi ${VERSION}`,
+		],
+		[LANGUAGES.EN]: [
 			"RASLI is a guessing the constelation game, inspired by wordle. A new RASLI will be available each day!",
+			`This is RASLI version ${VERSION}`,
+		],
 	},
 	COPYRIGHT: "© 2022 Muhammad Ali Syaifudin",
 	CONTACT: "mailto:muhammad.ali.syaifudin@hotmail.com",

@@ -18,7 +18,7 @@ export type SettingDialogProps = {
 	 */
 	TEXT: {
 		TITLE: string;
-		MESSAGE: string;
+		MESSAGES: string[];
 		COPYRIGHT: string;
 		CONTACT: string;
 		CONTACT_LABEL: string;
@@ -51,7 +51,7 @@ export function SettingDialog({
 	return (
 		<>
 			<IconButton aria-label="setting" onClick={handleClick}>
-				<SettingsIcon sx={{color: "white"}}/>
+				<SettingsIcon sx={{ color: "white" }} />
 			</IconButton>
 			<Dialog maxWidth="xs" scroll="paper" onClose={handleClose} open={open}>
 				<DialogTitle>
@@ -66,14 +66,22 @@ export function SettingDialog({
 				</DialogTitle>
 				<List sx={{ pt: 0 }}>
 					<ListItem>
-						<Stack flexWrap="wrap-reverse" direction="row" alignItems="center" justifyContent="space-around" sx={{ width: "100%", gap: "20px" }}>
+						<Stack
+							flexWrap="wrap-reverse"
+							direction="row"
+							alignItems="center"
+							justifyContent="space-around"
+							sx={{ width: "100%", gap: "20px" }}
+						>
 							{LanguageOptions}
 							{ThemeBtn}
 						</Stack>
 					</ListItem>
 					<ListItem>
-						<DialogContent>
-							<DialogContentText id="alert-dialog-description">{TEXT.MESSAGE}</DialogContentText>
+						<DialogContent sx={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+							{TEXT.MESSAGES.map((MESSAGE, i) => (
+								<DialogContentText key={i}>{MESSAGE}</DialogContentText>
+							))}
 						</DialogContent>
 					</ListItem>
 					<ListItem>

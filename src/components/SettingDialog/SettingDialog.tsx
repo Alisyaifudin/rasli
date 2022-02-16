@@ -17,7 +17,7 @@ function SettingDialog() {
 	const TEXT = useMemo(
 		() => ({
 			TITLE: DICT.SETTING[lang],
-			MESSAGE: GENERAL.MESSAGE[lang],
+			MESSAGES: GENERAL.MESSAGES[lang],
 			COPYRIGHT: GENERAL.COPYRIGHT,
 			CONTACT: GENERAL.CONTACT,
 			CONTACT_LABEL: DICT.CONTACT_LABEL[lang],

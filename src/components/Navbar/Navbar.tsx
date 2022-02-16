@@ -8,15 +8,24 @@ import Container from "@mui/material/Container";
 import SettingDialog from "../SettingDialog/SettingDialog";
 import HelpDialog from "../HelpDialog/HelpDialog";
 import Typography from "@mui/material/Typography";
+import { VERSION } from "../../utils/DICT";
+
 export default function SearchAppBar() {
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="fixed" data-testid="Navbar">
 				<Container>
 					<Toolbar data-testid="toolbar">
-						<Stack direction="row" justifyContent="space-evenly" sx={{width: "100%"}}>
+						<Stack direction="row" justifyContent="space-evenly" sx={{ width: "100%" }}>
 							<HelpDialog />
-							<Typography component="h1" variant="h4" fontWeight={700} alignSelf="flex-end">RASLI</Typography>
+							<Stack direction="row">
+								<Typography component="h1" variant="h4" fontWeight={700} alignSelf="flex-end">
+									RASLI
+								</Typography>
+								<Typography component="h2" variant="caption" alignSelf="flex-end">
+									v{VERSION}
+								</Typography>
+							</Stack>
 							<SettingDialog />
 						</Stack>
 					</Toolbar>

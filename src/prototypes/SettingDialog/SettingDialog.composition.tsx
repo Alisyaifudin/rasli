@@ -17,7 +17,7 @@ export const BasicSettingDialog = () => {
 	);
 	const TEXT = {
 		TITLE: "Pengaturan",
-		MESSAGE: dummy,
+		MESSAGES: [dummy],
 		COPYRIGHT: "© 2022 Muhammad Ali Syaifudin",
 		CONTACT: "mailto:muhammad.ali.syaifudin@hotmail.com",
 		CONTACT_LABEL: "Masukan?",
