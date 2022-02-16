@@ -36,6 +36,11 @@ export const initialState: ConstellationState = {
 		value: false,
 		message: "",
 	},
+	status: {
+		finished: false,
+		win: false,
+		number: 0,
+	},
 };
 
 export const constellationSlice = createSlice({
@@ -46,11 +51,11 @@ export const constellationSlice = createSlice({
 			state.guesses = [];
 		},
 		setGuess: (state, action: PayloadAction<string>) => {
+			if(state.status.finished) return;
 			state.guess = action.payload;
 		},
 		submit: (state, action: PayloadAction<string>) => {
-			// console.log(state.guess.toLowerCase());
-			// console.log(state.all.map((c) => c.name.toLowerCase()));
+			if(state.status.finished) return;
 			const lang = action.payload;
 			const index = state.all
 				.map((c) => c.name.toLowerCase())
@@ -62,6 +67,10 @@ export const constellationSlice = createSlice({
 			} else if (index !== -1) {
 				state.error = { value: false, message: "" };
 				state.guesses.push(state.all[index]);
+				if (state.guess.toLowerCase() === state.secret.name.toLowerCase())
+					state.status = { finished: true, win: true, number: state.guesses.length + 1 };
+				else if ((state.guesses.length === 5))
+					state.status = { finished: true, win: false, number: state.guesses.length + 1 };
 			} else {
 				state.error = { value: true, message: DICT.ERROR_NOT_FOUND[lang] };
 			}
@@ -77,5 +86,6 @@ export const allSL = (state: AppState) => state.constellation.all;
 export const guessesSL = (state: AppState) => state.constellation.guesses;
 export const guessSL = (state: AppState) => state.constellation.guess;
 export const errorSL = (state: AppState) => state.constellation.error;
+export const statusSL = (state: AppState) => state.constellation.status;
 
 export default constellationSlice.reducer;

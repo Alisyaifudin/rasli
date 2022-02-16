@@ -8,7 +8,7 @@ export const initialState: MetaState = {
 	languages: [LANGUAGES.EN, LANGUAGES.INA],
 	language: LANGUAGES.INA,
 	openSetting: false,
-	openHelp: false,
+	openHelp: false
 };
 
 export const metaSlice = createSlice({

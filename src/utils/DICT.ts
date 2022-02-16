@@ -44,6 +44,7 @@ export const GENERAL = {
 			COLOR: "#54ff6b",
 		},
 	],
+	RIGHT_COLOR: "#3d61ff"
 };
 
 export default {
@@ -122,5 +123,13 @@ export default {
 	ERROR_ALREADY_TRIED: {
 		[LANGUAGES.INA]: "Sudah dicoba",
 		[LANGUAGES.EN]: "Already tried",
+	},
+	WIN: {
+		[LANGUAGES.INA]: "Menang!",
+		[LANGUAGES.EN]: "Win!",
+	},
+	LOSE: {
+		[LANGUAGES.INA]: "Kalah",
+		[LANGUAGES.EN]: "Lose",
 	},
 };

@@ -8,6 +8,11 @@ export type constellationType = {
 	coordinate: coordType;
 	src: string;
 };
+export type statusType = {
+  finished: boolean;
+  win: boolean;
+  number: number;
+}
 export interface ConstellationState {
 	secret: constellationType;
 	all: constellationType[];
@@ -17,4 +22,5 @@ export interface ConstellationState {
 		value: boolean;
 		message: string;
 	}
+	status: statusType;
 }

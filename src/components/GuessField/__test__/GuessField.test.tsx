@@ -34,6 +34,16 @@ const initConstellationState = {
 		},
 	],
 	guesses: [],
+	guess: "",
+	error: {
+		value: false,
+		message: "",
+	},
+	status: {
+		finished: false,
+		win: false,
+		number: 0,
+	},
 };
 
 const newState = produce(preloadedState, (draft) => {
