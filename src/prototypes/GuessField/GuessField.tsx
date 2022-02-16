@@ -25,7 +25,7 @@ export function GuessField({ fields, colors, N = 6 }: GuessFieldProps) {
 	const Spot = _.range(N);
 
 	const Text = ({ i }: { i: number }) => (
-		<Typography data-testid="field" component="p" variant="body1" color={colors[i]} textTransform="uppercase">
+		<Typography fontWeight={800} data-testid="field" component="p" variant="body1" color={colors[i]} textTransform="uppercase">
 			{i < fields.length && fields[i]}&nbsp;
 		</Typography>
 	);

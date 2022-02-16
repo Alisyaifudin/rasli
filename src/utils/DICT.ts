@@ -78,12 +78,12 @@ export default {
 	HOWTO: {
 		[LANGUAGES.INA]: [
 			"Tebak RASLI dalam 6 kesempatan. 1 hari ada 1 rasi rahasia.",
-			"Setiap tebakan adalah nama rasi bintang yang valid menurut IAU. Ketikan jawaban pada petak yang disediakan, lalu tekan JAWAB.",
+			"Setiap tebakan adalah nama rasi bintang yang valid menurut IAU. Ketikan jawaban pada petak yang disediakan, lalu tekan JAWAB (atau tekan Enter).",
 			"Setelah menjawab, tebakan akan berubah warna, bergantung seberapa dekat rasi tebakan dengan rasi rahasia.",
 		],
 		[LANGUAGES.EN]: [
 			"Guess the RASLI in six tries. 1 day 1 secret constellation.",
-			"Each guess must be a valid constellation according to IAU. Type your guess in given input space, then hit ANSWER.",
+			"Each guess must be a valid constellation according to IAU. Type your guess in given input space, then hit SUBMIT (or hit Enter).",
 			"After each guess, the color of your guess will change, depending to how close your guess to the secret constellation.",
 		],
 	},
@@ -106,5 +106,21 @@ export default {
 	CONSTELLATION: {
 		[LANGUAGES.INA]: "Rasi Bintang",
 		[LANGUAGES.EN]: "Constellation",
+	},
+	INPUT: {
+		[LANGUAGES.INA]: "Ketik Di Sini",
+		[LANGUAGES.EN]: "Type Here",
+	},
+	SUBMIT: {
+		[LANGUAGES.INA]: "Jawab",
+		[LANGUAGES.EN]: "Submit",
+	},
+	ERROR_NOT_FOUND: {
+		[LANGUAGES.INA]: "Tidak valid",
+		[LANGUAGES.EN]: "Not valid",
+	},
+	ERROR_ALREADY_TRIED: {
+		[LANGUAGES.INA]: "Sudah dicoba",
+		[LANGUAGES.EN]: "Already tried",
 	},
 };

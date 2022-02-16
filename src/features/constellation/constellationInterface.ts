@@ -12,4 +12,9 @@ export interface ConstellationState {
 	secret: constellationType;
 	all: constellationType[];
 	guesses: constellationType[];
+	guess: string;
+	error: {
+		value: boolean;
+		message: string;
+	}
 }

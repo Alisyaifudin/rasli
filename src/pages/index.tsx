@@ -1,15 +1,9 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import type { NextPage } from "next";
+import Head from "next/head";
+import Main from "../components/Main/Main";
 
 const IndexPage: NextPage = () => {
-  return (
-    <div className={styles.container}>
-      <header className={styles.header}>
-        <p>Halo</p>
-      </header>
-    </div>
-  )
-}
+	return <Main />;
+};
 
-export default IndexPage
+export default IndexPage;
