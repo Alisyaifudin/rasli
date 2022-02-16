@@ -66,7 +66,7 @@ export function SettingDialog({
 				</DialogTitle>
 				<List sx={{ pt: 0 }}>
 					<ListItem>
-						<Stack flexWrap="wrap-reverse" direction="row" justifyContent="space-around" sx={{ width: "100%", gap: "20px" }}>
+						<Stack flexWrap="wrap-reverse" direction="row" alignItems="center" justifyContent="space-around" sx={{ width: "100%", gap: "20px" }}>
 							{LanguageOptions}
 							{ThemeBtn}
 						</Stack>
