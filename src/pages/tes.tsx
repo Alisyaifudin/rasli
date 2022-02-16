@@ -7,6 +7,8 @@ import { LightButton } from "../prototypes/ThemeBtn/ThemeBtn.composition";
 import { InaLanguageOptions } from "../prototypes/LanguageOptions/LanguageOptions.composition";
 import { BasicSettingDialog } from "../prototypes/SettingDialog/SettingDialog.composition";
 import { BasicHelpDialog } from "../prototypes/HelpDialog/HelpDialog.composition";
+import { BasicGuessField } from "../prototypes/GuessField/GuessField.composition";
+
 const Test: NextPage = () => {
 	return (
 			<Container>
@@ -15,7 +17,8 @@ const Test: NextPage = () => {
 						{/* <LightButton/> */}
 						{/* <InaLanguageOptions /> */}
 						{/* <BasicSettingDialog/> */}
-						<BasicHelpDialog/>
+						{/* <BasicHelpDialog/> */}
+						<BasicGuessField/>
 					</Div2>
 				</Div>
 			</Container>

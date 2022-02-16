@@ -30,10 +30,7 @@ export type LanguageOptionsProps = {
 };
 
 export function LanguageOptions({ language, languages, TEXT, onChange }: LanguageOptionsProps) {
-	const handleChange = (event: SelectChangeEvent) => {
-    if(onChange) onChange(event.target.value);
-    console.log(event)
-  }
+	const handleChange = (event: SelectChangeEvent) => onChange && onChange(event.target.value);
 
 	return (
 		<Box sx={{ minWidth: 180 }}>
@@ -47,7 +44,9 @@ export function LanguageOptions({ language, languages, TEXT, onChange }: Languag
 					onChange={handleChange}
 				>
 					{languages.map((lang) => (
-						<MenuItem key={lang} value={lang}>{TEXT.LANGUAGES[lang]}</MenuItem>
+						<MenuItem key={lang} value={lang}>
+							{TEXT.LANGUAGES[lang]}
+						</MenuItem>
 					))}
 				</Select>
 			</FormControl>
