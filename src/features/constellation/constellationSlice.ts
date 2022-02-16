@@ -29,18 +29,27 @@ export const initialState: ConstellationState = {
 			src: "/UrsaMinor.png",
 		},
 	],
+	guesses: [],
 };
 
 export const constellationSlice = createSlice({
 	name: "meta",
 	initialState,
-	reducers: {},
+	reducers: {
+		addGuess: (state, action: PayloadAction<constellationType>) => {
+			state.guesses.push(action.payload);
+		},
+		resetGuesses: (state) => {
+			state.guesses = [];
+		},
+	},
 });
 
-// export const { setTheme, setLanguage, setOpenSetting } = metaSlice.actions;
+export const { addGuess, resetGuesses } = constellationSlice.actions;
 
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const secretSL = (state: AppState) => state.constellation.secret;
 export const allSL = (state: AppState) => state.constellation.all;
+export const guessesSL = (state: AppState) => state.constellation.guesses;
 
 export default constellationSlice.reducer;

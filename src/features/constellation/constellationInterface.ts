@@ -11,4 +11,5 @@ export type constellationType = {
 export interface ConstellationState {
 	secret: constellationType;
 	all: constellationType[];
+	guesses: constellationType[];
 }
