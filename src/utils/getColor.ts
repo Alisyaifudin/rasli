@@ -19,9 +19,9 @@ export const ihav = (v: number) => (2 * Math.asin(Math.sqrt(v)) * 180) / Math.PI
 export const getColor = (object: coordType, target: coordType) => {
 	const havTheta =
 		hav(object.DEC - target.DEC) +
-		Math.cos(object.DEC) * Math.cos(target.DEC) * hav(target.RA - object.RA);
+		Math.cos(object.DEC*Math.PI/180) * Math.cos(target.DEC*Math.PI/180) * hav(target.RA - object.RA);
 	const theta = ihav(havTheta);
-	if (theta > 240) return colors[0];
-	else if (theta > 120) return colors[1];
+	if (theta > 120) return colors[0];
+	else if (theta > 60) return colors[1];
 	return colors[2];
 };

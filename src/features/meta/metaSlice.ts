@@ -4,7 +4,7 @@ import { MetaState, themeTypes } from "./metaInterface";
 import { THEME, LANGUAGES } from "../../utils/DICT";
 
 export const initialState: MetaState = {
-	theme: THEME.LIGHT,
+	theme: THEME.DARK,
 	languages: [LANGUAGES.EN, LANGUAGES.INA],
 	language: LANGUAGES.INA,
 	openSetting: false,

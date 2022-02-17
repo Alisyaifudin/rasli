@@ -2,34 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { AppState } from "../../app/store";
 import { ConstellationState, constellationType, coordType } from "./constellationInterface";
 import DICT from "../../utils/DICT";
+import { list } from "../../utils/list";
+import { random } from "../../utils/random";
+
+const cstIndex = Math.floor(random(new Date().getDate().toString())*89)
 
 export const initialState: ConstellationState = {
-	secret: {
-		name: "Leo",
-		coordinate: {
-			RA: 160.93125,
-			DEC: 18.10302778,
-		},
-		src: "/UrsaMinor.png",
-	},
-	all: [
-		{
-			name: "Leo",
-			coordinate: {
-				RA: 160.93125,
-				DEC: 18.10302778,
-			},
-			src: "/UrsaMinor.png",
-		},
-		{
-			name: "Virgo",
-			coordinate: {
-				RA: 198.8033333,
-				DEC: -2.9245,
-			},
-			src: "/UrsaMinor.png",
-		},
-	],
+	secret: list[cstIndex],
+	all: list,
 	guesses: [],
 	guess: "",
 	error: {
@@ -71,6 +51,7 @@ export const constellationSlice = createSlice({
 					state.status = { finished: true, win: true, number: state.guesses.length + 1 };
 				else if ((state.guesses.length === 5))
 					state.status = { finished: true, win: false, number: state.guesses.length + 1 };
+				state.guess = "";
 			} else {
 				state.error = { value: true, message: DICT.ERROR_NOT_FOUND[lang] };
 			}

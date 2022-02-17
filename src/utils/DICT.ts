@@ -102,7 +102,7 @@ export default {
 		[LANGUAGES.EN]: [
 			"Red color means your guess is too far",
 			"Orange color means your guess is kind of far",
-			"Green color means your guess is near",
+			"Green color means your guess is close",
 		],
 	},
 	CONSTELLATION: {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { languageSL } from "../../features/meta/metaSlice";
@@ -18,15 +18,46 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import DICT from "../../utils/DICT";
 import { Typography } from "@mui/material";
+import { AdvancedImage } from "@cloudinary/react";
+import { Cloudinary } from "@cloudinary/url-gen";
+import {max} from "@cloudinary/url-gen/actions/roundCorners";
+
+// Import any actions required for transformations.
+import { crop, fill } from "@cloudinary/url-gen/actions/resize";
+import {byAngle} from "@cloudinary/url-gen/actions/rotate"
+import { URLSearchParams } from "url";
+import { random } from '../../utils/random'
+import { auto } from "@cloudinary/url-gen/qualifiers/quality";
 
 function Main() {
+	const cld = new Cloudinary({
+		cloud: {
+			cloudName: "aleksandria",
+		},
+	});
 	const dispatch = useAppDispatch();
 	const lang = useAppSelector(languageSL);
 	const secret = useAppSelector(secretSL);
 	const guess = useAppSelector(guessSL);
 	const error = useAppSelector(errorSL);
 	const status = useAppSelector(statusSL);
-
+	const url = useMemo(() => {
+		const myImage = cld.image(secret.src);
+		const angle = random(new Date().toUTCString())*360;
+		// const angle = 0.01
+		let alpha = angle
+		if(alpha>270) alpha -= 270;
+		else if(alpha>180) alpha -=180;
+		else if(alpha>90) alpha -= 90;
+		const ratio = 1/(Math.sin(Math.PI/180*alpha)+Math.cos(Math.PI/180*alpha))
+		myImage
+		.resize(fill(700))
+		.rotate(byAngle(angle))
+		.resize(crop(ratio))
+		.roundCorners(max())
+		return myImage.toURL()
+	}, [secret])
+	
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
 		dispatch(setGuess(event.target.value));
 
@@ -43,9 +74,10 @@ function Main() {
 							{secret.name}
 						</Typography>
 					)}
-					<div style={{ width: "100%", height: "300px", position: "relative" }}>
+					<div style={{ width: "100%", height: "600px", position: "relative"}}>
+						{/* <AdvancedImage cldImg={myImage} /> */}
 						<Image
-							src={secret.src}
+							src={url}
 							layout="fill"
 							alt={DICT.CONSTELLATION[lang]}
 							objectFit="contain"
@@ -67,8 +99,9 @@ function Main() {
 						error={error.value}
 						helperText={error.message}
 						onKeyPress={handleKeyPress}
+						disabled={status.finished}
 					/>
-					<Button onClick={handleClick} variant="outlined">
+					<Button onClick={handleClick} variant="outlined" disabled={status.finished}>
 						{DICT.SUBMIT[lang]}
 					</Button>
 					<div style={{ flexGrow: 1 }} />
