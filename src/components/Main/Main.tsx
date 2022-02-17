@@ -43,18 +43,17 @@ function Main() {
 	const status = useAppSelector(statusSL);
 	const url = useMemo(() => {
 		const myImage = cld.image(secret.src);
-		const angle = random(new Date().toUTCString())*360;
-		// const angle = 0.01
+		const angle = Math.floor(random(new Date().toUTCString())*360);
 		let alpha = angle
 		if(alpha>270) alpha -= 270;
-		else if(alpha>180) alpha -=180;
+		else if(alpha>180) alpha -= 180;
 		else if(alpha>90) alpha -= 90;
-		const ratio = 1/(Math.sin(Math.PI/180*alpha)+Math.cos(Math.PI/180*alpha))
+		const ratio = 1/(Math.sin(alpha*Math.PI/180)+Math.cos(alpha*Math.PI/180))
 		myImage
 		.resize(fill(700))
 		.rotate(byAngle(angle))
-		.resize(crop(ratio))
-		.roundCorners(max())
+		if(![0,90,180,270].includes(angle)) myImage.resize(crop(ratio))
+		myImage.roundCorners(max())
 		return myImage.toURL()
 	}, [secret])
 	
@@ -75,7 +74,6 @@ function Main() {
 						</Typography>
 					)}
 					<div style={{ width: "100%", height: "600px", position: "relative"}}>
-						{/* <AdvancedImage cldImg={myImage} /> */}
 						<Image
 							src={url}
 							layout="fill"
