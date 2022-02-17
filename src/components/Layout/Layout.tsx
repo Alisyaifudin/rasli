@@ -11,7 +11,6 @@ function Layout({ children }: { children: React.ReactNode }) {
 		<>
 			<Head>
 				<title>RASLI</title>
-				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<LayoutDiv>
 				<Navbar />
