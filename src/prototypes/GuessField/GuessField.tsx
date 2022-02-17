@@ -25,22 +25,25 @@ export function GuessField({ fields, colors, N = 6 }: GuessFieldProps) {
 	const Spot = _.range(N);
 
 	const Text = ({ i }: { i: number }) => (
-		<Typography fontWeight={800} data-testid="field" component="p" variant="body1" color={colors[i]} textTransform="uppercase">
+		<Typography
+			fontWeight={800}
+			data-testid="field"
+			component="p"
+			variant="body1"
+			color={colors[i]}
+			textTransform="uppercase"
+		>
 			{i < fields.length && fields[i]}&nbsp;
 		</Typography>
 	);
 	return (
 		<Stack sx={{ minWidth: 180 }}>
-			{Spot.map((i) => {
-				if (i !== Spot.length - 1)
-					return (
-						<Box key={i}>
-							<Text i={i} />
-							<Divider data-testid="divider"/>
-						</Box>
-					);
-				return <Box key={i}><Text i={i} /></Box>;
-			})}
+			{Spot.map((i) => (
+				<Box key={i}>
+					<Text i={i} />
+					<Divider data-testid="divider" />
+				</Box>
+			))}
 		</Stack>
 	);
 }

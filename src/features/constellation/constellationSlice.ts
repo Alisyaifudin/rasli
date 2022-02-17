@@ -49,7 +49,7 @@ export const constellationSlice = createSlice({
 				state.guesses.push(state.all[index]);
 				if (state.guess.toLowerCase() === state.secret.name.toLowerCase())
 					state.status = { finished: true, win: true, number: state.guesses.length + 1 };
-				else if ((state.guesses.length === 5))
+				else if ((state.guesses.length === 6))
 					state.status = { finished: true, win: false, number: state.guesses.length + 1 };
 				state.guess = "";
 			} else {

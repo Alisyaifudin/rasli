@@ -5,7 +5,7 @@ import DICT, { GENERAL } from "../../utils/DICT";
 import Image from "next/image";
 import { guessesSL, secretSL } from "../../features/constellation/constellationSlice";
 import { getColor } from "../../utils/getColor";
-
+ 
 function GuessField() {
 	const guesses = useAppSelector(guessesSL);
 	const secret = useAppSelector(secretSL);
