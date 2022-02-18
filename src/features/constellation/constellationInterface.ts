@@ -9,10 +9,24 @@ export type constellationType = {
 	src: string;
 };
 export type statusType = {
-  finished: boolean;
-  win: boolean;
-  number: number;
-}
+	finished: boolean;
+	win: boolean;
+	number: number;
+};
+
+export type statisticsType = {
+	played: number;
+	win: number;
+	winPerc: number;
+	lastRound: boolean; //Win or Not
+	currStreak: number;
+	maxStreak: number;
+	dist: {
+		name: string;
+		number: number;
+		length: number;
+	}[];
+};
 export interface ConstellationState {
 	secret: constellationType;
 	all: constellationType[];
@@ -21,6 +35,7 @@ export interface ConstellationState {
 	error: {
 		value: boolean;
 		message: string;
-	}
+	};
 	status: statusType;
+	statistics?: statisticsType;
 }

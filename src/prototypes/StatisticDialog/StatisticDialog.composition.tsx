@@ -27,8 +27,8 @@ const TEXT = {
 		DIST: [
 			{
 				NAME: "1",
-				VALUE: 7,
-				LENGTH: 8,
+				VALUE: 10,
+				LENGTH: 10,
 			},
 			{
 				NAME: "2",
@@ -77,6 +77,28 @@ export const BasicStatisticDialog = () => {
 				onClick={handleClick}
 				onClose={handleClose}
 				onShare={handleShare}
+				finished={false}
+			/>
+			<p>{text}</p>
+		</Stack>
+	);
+};
+
+export const FinishedStatisticDialog = () => {
+	const [open, setOpen] = useState(false);
+	const [text, setText] = useState("text");
+	const handleClose = () => setOpen(false);
+	const handleClick = () => setOpen(true);
+	const handleShare = () => setText("shared");
+	return (
+		<Stack>
+			<StatisticDialog
+				open={open}
+				TEXT={TEXT}
+				onClick={handleClick}
+				onClose={handleClose}
+				onShare={handleShare}
+				finished
 			/>
 			<p>{text}</p>
 		</Stack>

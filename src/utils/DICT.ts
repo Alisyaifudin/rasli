@@ -5,7 +5,7 @@ export const LANGUAGES = {
 	EN: "en",
 };
 
-export const VERSION = "0.1.0";
+export const VERSION = "0.2.0";
 
 export const LANGUAGES_NAME = {
 	[LANGUAGES.INA]: "Bahasa Indonesia",
@@ -132,5 +132,33 @@ export default {
 	LOSE: {
 		[LANGUAGES.INA]: "Kalah",
 		[LANGUAGES.EN]: "Lose",
+	},
+	PLAYED: {
+		[LANGUAGES.INA]: "Dimainkan",
+		[LANGUAGES.EN]: "Played",
+	},
+	WIN_PERC: {
+		[LANGUAGES.INA]: "% Menang",
+		[LANGUAGES.EN]: "Win %",
+	},
+	CURR_STREAK: {
+		[LANGUAGES.INA]: "Streak Saat Ini",
+		[LANGUAGES.EN]: "Current Streak",
+	},
+	MAX_STREAK: {
+		[LANGUAGES.INA]: "Streak Maksimum",
+		[LANGUAGES.EN]: "Maximum Streak",
+	},
+	STATISTICS: {
+		[LANGUAGES.INA]: "Statistik",
+		[LANGUAGES.EN]: "Statistics",
+	},
+	DIST: {
+		[LANGUAGES.INA]: "Distribusi Tebakan",
+		[LANGUAGES.EN]: "Guess Distribution",
+	},
+	NEXT: {
+		[LANGUAGES.INA]: "RASLI Selanjutnya",
+		[LANGUAGES.EN]: "Next RASLI",
 	},
 };

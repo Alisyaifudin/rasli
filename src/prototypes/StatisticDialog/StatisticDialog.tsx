@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import List from "@mui/material/List";
 import Stack from "@mui/material/Stack";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -40,7 +40,6 @@ export type StatisticDialogProps = {
 		};
 		NEXT: {
 			TEXT: string;
-			VALUE: string;
 		};
 	};
 	/**
@@ -59,12 +58,32 @@ export type StatisticDialogProps = {
 	 * close dialog by clicking backdrop or X
 	 */
 	onShare: () => void;
+	/**
+	 * finished?
+	 */
+	finished: boolean;
 };
 
-export function StatisticDialog({ TEXT, open, onClick, onClose, onShare }: StatisticDialogProps) {
+const t = new Date()
+t.setHours(24,0,0,0)
+
+export function StatisticDialog({ TEXT, open, onClick, onClose, onShare, finished = false }: StatisticDialogProps) {
+	
+	const [time, setTime] = useState(t.toLocaleTimeString("en-GB"));
+
+	useEffect(() => {
+		setInterval(() => {
+			const date = new Date();
+			const interval = t.getTime() - date.getTime()
+			// console.log(interval)
+			setTime(new Date(interval).toISOString().substring(11,19))
+		}, 1000)
+	}, [])
+	
 	const handleClick = () => onClick && onClick();
 	const handleClose = () => onClose && onClose();
 	const handleShare = () => onShare && onShare();
+	
 	return (
 		<>
 			<IconButton aria-label="stat" onClick={handleClick}>
@@ -115,14 +134,14 @@ export function StatisticDialog({ TEXT, open, onClick, onClose, onShare }: Stati
 						<ResponsiveContainer width="95%" height={200}>
 							<BarChart data={TEXT.DIST.DIST} layout="vertical">
 								<YAxis dataKey="NAME" type="category" />
-								<XAxis type="number" hide />
+								<XAxis type="number" hide domain={[0, 10]}/>
 								<Bar dataKey="LENGTH" fill="#8884d8">
 									<LabelList dataKey="VALUE" position="insideRight" fill="white" />
 								</Bar>
 							</BarChart>
 						</ResponsiveContainer>
 					</ListItem>
-					<ListItem>
+					{finished && <ListItem>
 						<Stack
 							direction="row"
 							justifyContent="space-around"
@@ -131,7 +150,7 @@ export function StatisticDialog({ TEXT, open, onClick, onClose, onShare }: Stati
 						>
 							<Stack alignItems="center">
 								<Typography fontSize="0.9rem">{TEXT.NEXT.TEXT.toUpperCase()}</Typography>
-								<Typography fontSize="2.7rem">{TEXT.NEXT.VALUE}</Typography>
+								<Typography fontSize="2.7rem">{time}</Typography>
 							</Stack>
 							<Divider variant="middle" data-testid="divider" orientation="vertical" flexItem />
 							<Button
@@ -143,7 +162,7 @@ export function StatisticDialog({ TEXT, open, onClick, onClose, onShare }: Stati
 								<Typography fontSize="1.2rem">Share</Typography>
 							</Button>
 						</Stack>
-					</ListItem>
+					</ListItem>}
 				</List>
 			</Dialog>
 		</>

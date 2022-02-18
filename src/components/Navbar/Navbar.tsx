@@ -7,6 +7,7 @@ import Container from "@mui/material/Container";
 // Import components
 import SettingDialog from "../SettingDialog/SettingDialog";
 import HelpDialog from "../HelpDialog/HelpDialog";
+import StatisticDialog from "../StatisticDialog/StatisticDialog";
 import Typography from "@mui/material/Typography";
 import { VERSION } from "../../utils/DICT";
 
@@ -26,7 +27,10 @@ export default function SearchAppBar() {
 									v{VERSION}
 								</Typography>
 							</Stack>
-							<SettingDialog />
+							<Box>
+								<StatisticDialog />
+								<SettingDialog />
+							</Box>
 						</Stack>
 					</Toolbar>
 				</Container>
