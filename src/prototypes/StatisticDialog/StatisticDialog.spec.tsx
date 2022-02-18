@@ -1,9 +1,9 @@
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { BasicHelpDialog } from "./StatisticDialog.composition";
+import { BasicStatisticDialog } from "./StatisticDialog.composition";
 import { act } from "react-dom/test-utils";
 
-function userClick(element) {
+function userClick(element: HTMLElement) {
 	act(() => {
 		fireEvent.mouseDown(element);
 		fireEvent.mouseUp(element);
@@ -11,35 +11,33 @@ function userClick(element) {
 	});
 }
 
-describe("HelpDialog", () => {
-	it("should render gear btn", () => {
-		render(<BasicHelpDialog />);
-		const btnEl = screen.getByTestId("HelpIcon");
+describe("StatisticDialog", () => {
+	it("should render bar icon btn", () => {
+		render(<BasicStatisticDialog />);
+		const btnEl = screen.getByTestId("BarChartIcon");
 		expect(btnEl).toBeInTheDocument();
 	});
-	it("should be able to click ? btn", () => {
-		render(<BasicHelpDialog />);
-		const btnEl = screen.getByTestId("HelpIcon");
+	it("should be able to click the btn", () => {
+		render(<BasicStatisticDialog />);
+		const btnEl = screen.getByTestId("BarChartIcon");
 		fireEvent.click(btnEl);
 		const dialogEl = screen.getByRole("dialog");
-		const titleEl = screen.getByText(/cara bermain/i);
-		const howtoEl = screen.getByText(/tebak RASLI/i);
-		const exampleEl = screen.getByText(/contoh/i);
-		const guessEl = screen.getByText(/puppis/i);
-		const hintEl = screen.getByText(/warna merah/i);
-		const dividerEls = screen.getAllByTestId("divider");
+		const titleEl = screen.getByText(/statistik/i);
+		const statEl = screen.getByText(/dimainkan/i);
+		const distEl = screen.getByText(/distribusi tebakan/i);
+		const nextEl = screen.getByText(/rasli berikutnya/i);
+		const shareEl = screen.getByText(/share/i);
 		expect(dialogEl).toBeInTheDocument();
 		expect(titleEl).toBeInTheDocument();
-		expect(howtoEl).toBeInTheDocument();
-		expect(exampleEl).toBeInTheDocument();
-		expect(guessEl).toBeInTheDocument();
-		expect(hintEl).toBeInTheDocument();
-		expect(dividerEls.length).toEqual(2);
+		expect(statEl).toBeInTheDocument();
+		expect(distEl).toBeInTheDocument();
+		expect(nextEl).toBeInTheDocument();
+		expect(shareEl).toBeInTheDocument();
 	});
 	it("should be able to close dialog by clicking away", () => {
 		jest.useFakeTimers();
-		render(<BasicHelpDialog />);
-		const btnEl = screen.getByTestId("HelpIcon");
+		render(<BasicStatisticDialog />);
+		const btnEl = screen.getByTestId("BarChartIcon");
 		userClick(btnEl);
 		const dialogEl = screen.getByRole("dialog");
 		const backdropEl = dialogEl.parentElement;
@@ -51,8 +49,8 @@ describe("HelpDialog", () => {
 	});
 	it("should be able to close dialog by clicking X", () => {
 		jest.useFakeTimers();
-		render(<BasicHelpDialog />);
-		const btnEl = screen.getByTestId("HelpIcon");
+		render(<BasicStatisticDialog />);
+		const btnEl = screen.getByTestId("BarChartIcon");
 		userClick(btnEl);
 		const dialogEl = screen.getByRole("dialog");
 		const cancelEl = screen.getByTestId("CloseIcon");
@@ -61,5 +59,15 @@ describe("HelpDialog", () => {
 			jest.runAllTimers();
 		});
 		expect(dialogEl).not.toBeInTheDocument();
+	});
+	it("should be able to click share", () => {
+		jest.useFakeTimers();
+		render(<BasicStatisticDialog />);
+		const btnEl = screen.getByTestId("BarChartIcon");
+		const textEl = screen.getByText(/text/i)
+		userClick(btnEl);
+		const shareEl = screen.getByText(/share/i);
+		userClick(shareEl);
+		expect(textEl).toHaveTextContent("shared")
 	});
 });

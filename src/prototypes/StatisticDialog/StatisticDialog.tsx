@@ -16,8 +16,6 @@ import {
 	Bar,
 	XAxis,
 	YAxis,
-	CartesianGrid,
-	Tooltip,
 	ResponsiveContainer,
 	LabelList,
 } from "recharts";
@@ -58,25 +56,15 @@ export type StatisticDialogProps = {
 	 */
 	onClose: () => void;
 	/**
-	 * image renderer
+	 * close dialog by clicking backdrop or X
 	 */
-	ImageRenderer: (src: string) => React.ReactNode;
-	/**
-	 * Image source
-	 */
-	src: string;
+	onShare: () => void;
 };
 
-export function StatisticDialog({
-	TEXT,
-	open,
-	onClick,
-	onClose,
-	ImageRenderer,
-	src,
-}: StatisticDialogProps) {
+export function StatisticDialog({ TEXT, open, onClick, onClose, onShare }: StatisticDialogProps) {
 	const handleClick = () => onClick && onClick();
 	const handleClose = () => onClose && onClose();
+	const handleShare = () => onShare && onShare();
 	return (
 		<>
 			<IconButton aria-label="stat" onClick={handleClick}>
@@ -124,7 +112,7 @@ export function StatisticDialog({
 						</Typography>
 					</ListItem>
 					<ListItem>
-						<ResponsiveContainer width="95%" height={300}>
+						<ResponsiveContainer width="95%" height={200}>
 							<BarChart data={TEXT.DIST.DIST} layout="vertical">
 								<YAxis dataKey="NAME" type="category" />
 								<XAxis type="number" hide />
@@ -135,18 +123,27 @@ export function StatisticDialog({
 						</ResponsiveContainer>
 					</ListItem>
 					<ListItem>
-						<Stack direction="row" justifyContent="space-around" sx={{ width: "100%" }} alignItems="center">
+						<Stack
+							direction="row"
+							justifyContent="space-around"
+							sx={{ width: "100%" }}
+							alignItems="center"
+						>
 							<Stack alignItems="center">
 								<Typography fontSize="0.9rem">{TEXT.NEXT.TEXT.toUpperCase()}</Typography>
 								<Typography fontSize="2.7rem">{TEXT.NEXT.VALUE}</Typography>
 							</Stack>
 							<Divider variant="middle" data-testid="divider" orientation="vertical" flexItem />
-							<Button variant="contained" endIcon={<ShareIcon />} sx={{height: "fit-content"}}>
-							<Typography fontSize="1.2rem">Share</Typography>
+							<Button
+								onClick={handleShare}
+								variant="contained"
+								endIcon={<ShareIcon />}
+								sx={{ height: "fit-content" }}
+							>
+								<Typography fontSize="1.2rem">Share</Typography>
 							</Button>
 						</Stack>
 					</ListItem>
-					<Divider variant="middle" data-testid="divider" />
 				</List>
 			</Dialog>
 		</>
