@@ -48,9 +48,9 @@ export const constellationSlice = createSlice({
 				state.error = { value: false, message: "" };
 				state.guesses.push(state.all[index]);
 				if (state.guess.toLowerCase() === state.secret.name.toLowerCase())
-					state.status = { finished: true, win: true, number: state.guesses.length + 1 };
+					state.status = { finished: true, win: true, number: state.guesses.length };
 				else if ((state.guesses.length === 6))
-					state.status = { finished: true, win: false, number: state.guesses.length + 1 };
+					state.status = { finished: true, win: false, number: state.guesses.length };
 				state.guess = "";
 			} else {
 				state.error = { value: true, message: DICT.ERROR_NOT_FOUND[lang] };
