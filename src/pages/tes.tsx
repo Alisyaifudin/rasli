@@ -8,6 +8,7 @@ import { InaLanguageOptions } from "../prototypes/LanguageOptions/LanguageOption
 import { BasicSettingDialog } from "../prototypes/SettingDialog/SettingDialog.composition";
 import { BasicHelpDialog } from "../prototypes/HelpDialog/HelpDialog.composition";
 import { BasicGuessField } from "../prototypes/GuessField/GuessField.composition";
+import { BasicStatisticDialog } from "../prototypes/StatisticDialog/StatisticDialog.composition";
 
 const Test: NextPage = () => {
 	return (
@@ -18,7 +19,8 @@ const Test: NextPage = () => {
 						{/* <InaLanguageOptions /> */}
 						{/* <BasicSettingDialog/> */}
 						{/* <BasicHelpDialog/> */}
-						<BasicGuessField/>
+						{/* <BasicGuessField/> */}
+						<BasicStatisticDialog/>
 					</Div2>
 				</Div>
 			</Container>

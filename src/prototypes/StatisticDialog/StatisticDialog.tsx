@@ -1,18 +1,26 @@
 import React from "react";
 import List from "@mui/material/List";
 import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import ListItem from "@mui/material/ListItem";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Divider from "@mui/material/Divider";
-import Paper from "@mui/material/Paper";
-import HelpIcon from "@mui/icons-material/Help";
+import BarChartIcon from "@mui/icons-material/BarChart";
 import CloseIcon from "@mui/icons-material/Close";
+import ShareIcon from "@mui/icons-material/Share";
+import Button from "@mui/material/Button";
+import {
+	BarChart,
+	Bar,
+	XAxis,
+	YAxis,
+	CartesianGrid,
+	Tooltip,
+	ResponsiveContainer,
+	LabelList,
+} from "recharts";
 
 export type StatisticDialogProps = {
 	/**
@@ -20,13 +28,22 @@ export type StatisticDialogProps = {
 	 */
 	TEXT: {
 		TITLE: string;
-		HOWTO: string[];
-		EXAMPLE: string;
-		EX: {
-			GUESS: string;
-			HINT: string;
-			COLOR: string;
+		STATS: {
+			VALUE: number;
+			TEXT: string;
 		}[];
+		DIST: {
+			TEXT: string;
+			DIST: {
+				NAME: string;
+				VALUE: number;
+				LENGTH: number;
+			}[];
+		};
+		NEXT: {
+			TEXT: string;
+			VALUE: string;
+		};
 	};
 	/**
 	 * Open the dialog
@@ -50,14 +67,20 @@ export type StatisticDialogProps = {
 	src: string;
 };
 
-export function StatisticDialog({ TEXT, open, onClick, onClose, ImageRenderer, src }: StatisticDialogProps) {
+export function StatisticDialog({
+	TEXT,
+	open,
+	onClick,
+	onClose,
+	ImageRenderer,
+	src,
+}: StatisticDialogProps) {
 	const handleClick = () => onClick && onClick();
 	const handleClose = () => onClose && onClose();
-
 	return (
 		<>
-			<IconButton aria-label="help" onClick={handleClick}>
-				<HelpIcon sx={{ color: "white" }} />
+			<IconButton aria-label="stat" onClick={handleClick}>
+				<BarChartIcon sx={{ color: "white" }} />
 			</IconButton>
 			<Dialog maxWidth="xs" scroll="paper" onClose={handleClose} open={open}>
 				<DialogTitle>
@@ -69,7 +92,7 @@ export function StatisticDialog({ TEXT, open, onClick, onClose, ImageRenderer, s
 							component="h2"
 							variant="h6"
 							align="center"
-							sx={{textTransform: "uppercase"}}
+							sx={{ textTransform: "uppercase" }}
 						>
 							{TEXT.TITLE}
 						</Typography>
@@ -80,34 +103,50 @@ export function StatisticDialog({ TEXT, open, onClick, onClose, ImageRenderer, s
 				</DialogTitle>
 				<List sx={{ pt: 0 }}>
 					<ListItem>
-						<Stack sx={{ gap: "5px" }}>
-							{TEXT.HOWTO.map((HOW, i) => (
-								<Typography key={i} fontSize="0.9rem">{HOW}</Typography>
+						<Stack
+							direction="row"
+							sx={{ gap: "10px", width: "100%" }}
+							justifyContent="space-evenly"
+						>
+							{TEXT.STATS.map((STAT) => (
+								<Stack key={STAT.TEXT} alignItems="center" flexWrap="wrap" flex="1 1 0px">
+									<Typography fontSize="1.4rem">{STAT.VALUE}</Typography>
+									<Typography textAlign="center" fontSize="0.9rem">
+										{STAT.TEXT}
+									</Typography>
+								</Stack>
 							))}
 						</Stack>
 					</ListItem>
-					<Divider variant="middle" data-testid="divider"/>
 					<ListItem>
-						<Typography fontSize="0.95rem" component="h5" variant="h6" fontWeight={700}>
-							{TEXT.EXAMPLE}
+						<Typography fontWeight={700} fontSize="1rem">
+							{TEXT.DIST.TEXT.toUpperCase()}
 						</Typography>
 					</ListItem>
-					<ListItem>{ImageRenderer(src)}</ListItem>
-					{TEXT.EX.map((E) => (
-						<ListItem key={E.GUESS}>
-							<Stack>
-								<Paper sx={{width: "fit-content", padding: "0 6px"}}>
-									<Typography fontSize="0.9rem" component="h6" variant="h6" sx={{ color: E.COLOR }}>
-										{E.GUESS}
-									</Typography>
-								</Paper>
-								<Typography fontSize="0.9rem" component="p" variant="subtitle1">
-									{E.HINT}
-								</Typography>
+					<ListItem>
+						<ResponsiveContainer width="95%" height={300}>
+							<BarChart data={TEXT.DIST.DIST} layout="vertical">
+								<YAxis dataKey="NAME" type="category" />
+								<XAxis type="number" hide />
+								<Bar dataKey="LENGTH" fill="#8884d8">
+									<LabelList dataKey="VALUE" position="insideRight" fill="white" />
+								</Bar>
+							</BarChart>
+						</ResponsiveContainer>
+					</ListItem>
+					<ListItem>
+						<Stack direction="row" justifyContent="space-around" sx={{ width: "100%" }} alignItems="center">
+							<Stack alignItems="center">
+								<Typography fontSize="0.9rem">{TEXT.NEXT.TEXT.toUpperCase()}</Typography>
+								<Typography fontSize="2.7rem">{TEXT.NEXT.VALUE}</Typography>
 							</Stack>
-						</ListItem>
-					))}
-					<Divider variant="middle" data-testid="divider"/>
+							<Divider variant="middle" data-testid="divider" orientation="vertical" flexItem />
+							<Button variant="contained" endIcon={<ShareIcon />} sx={{height: "fit-content"}}>
+							<Typography fontSize="1.2rem">Share</Typography>
+							</Button>
+						</Stack>
+					</ListItem>
+					<Divider variant="middle" data-testid="divider" />
 				</List>
 			</Dialog>
 		</>

@@ -4,33 +4,67 @@ import { StatisticDialog } from "./StatisticDialog";
 export const dummy =
 	"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
 
-export const BasicHelpDialog = () => {
+export const BasicStatisticDialog = () => {
 	const [open, setOpen] = useState(false);
 	const TEXT = {
-		TITLE: "CARA BERMAIN",
-		HOWTO: [
-			"Tebak RASLI dalam 6 kesempatan. 1 hari ada 1 rasi rahasia.",
-			"Setiap tebakan adalah nama rasi bintang yang valid menurut IAU. Ketikan jawaban pada petak yang disediakan, lalu tekan JAWAB.",
-			"Setelah menjawab, tebakan akan berubah warna, bergantung seberapa dekat rasi tebakan dengan rasi rahasia.",
-		],
-		EXAMPLE: "Contoh",
-		EX: [
+		TITLE: "Statistik",
+		STATS: [
 			{
-				GUESS: "PUPPIS",
-				HINT: "Warna merah menunjukkan rasi tebakan terlalu jauh",
-				COLOR: "#ff4f4f",
+				VALUE: 2,
+				TEXT: "Dimainkan",
 			},
 			{
-				GUESS: "LEO",
-				HINT: "Warna jingga menunjukkan rasi tebakan agak jauh",
-				COLOR: "#ffbb00",
+				VALUE: 100,
+				TEXT: "% Menang",
 			},
 			{
-				GUESS: "DRACO",
-				HINT: "Warna hijau menunjukkan rasi tebakan sudah dekat",
-				COLOR: "#54ff6b",
+				VALUE: 2,
+				TEXT: "Streak Saat ini",
+			},
+			{
+				VALUE: 2,
+				TEXT: "Streak Maksimum",
 			},
 		],
+		DIST: {
+			TEXT: "Distribusi tebakan",
+			DIST: [
+				{
+					NAME: "1",
+					VALUE: 7,
+					LENGTH: 8,
+				},
+				{
+					NAME: "2",
+					VALUE: 0,
+					LENGTH: 1,
+				},
+				{
+					NAME: "3",
+					VALUE: 1,
+					LENGTH: 2,
+				},
+				{
+					NAME: "4",
+					VALUE: 1,
+					LENGTH: 2,
+				},
+				{
+					NAME: "5",
+					VALUE: 2,
+					LENGTH: 3,
+				},
+				{
+					NAME: "6",
+					VALUE: 4,
+					LENGTH: 5,
+				}
+			],
+		},
+		NEXT: {
+			TEXT: "RASLI berikutnya",
+			VALUE: "9:23:33",
+		},
 	};
 	const ImageRenderer = (src: string) => (
 		<div style={{ width: "100%", height: "100%", position: "relative" }}>
