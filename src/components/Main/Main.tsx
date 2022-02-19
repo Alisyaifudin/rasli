@@ -14,6 +14,7 @@ import {
 	setStatus,
 	guessesSL,
 	setGuesses,
+	numberSL,
 } from "../../features/constellation/constellationSlice";
 import GuessField from "../GuessField/GuessField";
 import TextField from "@mui/material/TextField";
@@ -31,6 +32,11 @@ import { byAngle } from "@cloudinary/url-gen/actions/rotate";
 import { random } from "../../utils/random";
 import produce from "immer";
 import { calcLength } from "../../utils/calcLength";
+import {
+	constellationType,
+	statisticsType,
+	statusType,
+} from "../../features/constellation/constellationInterface";
 
 function Main() {
 	const cld = new Cloudinary({
@@ -47,6 +53,8 @@ function Main() {
 	const status = useAppSelector(statusSL);
 	const statistics = useAppSelector(statisticsSL);
 	const guesses = useAppSelector(guessesSL);
+	const number = useAppSelector(numberSL);
+
 	const url = useMemo(() => {
 		const myImage = cld.image(secret.src);
 		const angle = Math.floor(random(new Date().toUTCString()) * 360);
@@ -62,17 +70,20 @@ function Main() {
 	}, [secret]);
 	//useEffect
 	useEffect(() => {
-		const initStatistics = window.localStorage.getItem("statistics");
-		const initStatus = window.localStorage.getItem("status");
-		const initGuesses = window.localStorage.getItem("guesses");
+		const initStatistics = JSON.parse(window.localStorage.getItem("statistics")) as statisticsType;
+		const initStatus = JSON.parse(window.localStorage.getItem("status")) as statusType;
+		const initGuesses = JSON.parse(window.localStorage.getItem("guesses")) as constellationType[];
+		const initNumber = window.localStorage.getItem("number");
 		if (initStatistics && initGuesses && initStatus) {
-			dispatch(setStatistics(JSON.parse(initStatistics)));
-			dispatch(setStatus(JSON.parse(initStatus)));
-			dispatch(setGuesses(JSON.parse(initGuesses)));
-		}else{
-			window.localStorage.removeItem("statistics")
-			window.localStorage.removeItem("status")
-			window.localStorage.removeItem("guesses")
+			dispatch(setStatistics(initStatistics));
+			if (number.toString() === initNumber) {
+				dispatch(setGuesses(initGuesses));
+				dispatch(setStatus(initStatus));
+			}
+		} else {
+			window.localStorage.removeItem("statistics");
+			window.localStorage.removeItem("status");
+			window.localStorage.removeItem("guesses");
 		}
 	}, []);
 
@@ -93,6 +104,7 @@ function Main() {
 			window.localStorage.setItem("statistics", JSON.stringify(statistics));
 			window.localStorage.setItem("status", JSON.stringify(status));
 			window.localStorage.setItem("guesses", JSON.stringify(guesses));
+			window.localStorage.setItem("number", number.toString());
 		}
 	}, [statistics]);
 

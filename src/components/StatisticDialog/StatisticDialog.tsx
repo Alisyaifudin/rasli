@@ -1,10 +1,10 @@
 import React, { useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { setOpen, openStatisticsSL, languageSL, numberSL } from "../../features/meta/metaSlice";
+import { setOpen, openStatisticsSL, languageSL } from "../../features/meta/metaSlice";
 import { StatisticDialog as StatisticDialogProto } from "../../prototypes/StatisticDialog";
 import DICT, { GENERAL } from "../../utils/DICT";
 import Image from "next/image";
-import { statisticsSL, statusSL } from "../../features/constellation/constellationSlice";
+import { statisticsSL, statusSL, numberSL } from "../../features/constellation/constellationSlice";
 
 function StatisticDialog() {
 	const lang = useAppSelector(languageSL);

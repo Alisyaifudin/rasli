@@ -6,5 +6,4 @@ export interface MetaState {
   openSetting: boolean;
   openHelp: boolean;
   openStatistics: boolean;
-  number: number;
 }

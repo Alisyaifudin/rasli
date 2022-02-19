@@ -7,8 +7,11 @@ import { random } from "../../utils/random";
 import produce from "immer";
 
 const cstIndex = Math.floor(random(new Date().getDate().toString()) * 89);
+const genesis = new Date("2022/2/17")
+const today = new Date().getDate() - genesis.getDate()
 
 export const initialState: ConstellationState = {
+	number: today,
 	secret: list[cstIndex],
 	all: list,
 	guesses: [],
@@ -23,6 +26,7 @@ export const initialState: ConstellationState = {
 		number: 0,
 	},
 	statistics: {
+		lastGame: 0,
 		played: 0,
 		win: 0,
 		lastRound: false,
@@ -85,6 +89,7 @@ export const constellationSlice = createSlice({
 						draft.currStreak += 1;
 						draft.dist = draft.dist.map(d => state.guesses.length.toString() === d.name ? {...d, number: d.number+1} : d)
 						draft.lastRound = true;
+						draft.lastGame = state.number;
 					});
 				}
 				// LOSE
@@ -95,6 +100,7 @@ export const constellationSlice = createSlice({
 						draft.played += 1;
 						draft.currStreak = 0;
 						draft.lastRound = false
+						draft.lastGame = state.number;
 					});
 				}
 				// NEXT
@@ -116,5 +122,6 @@ export const guessSL = (state: AppState) => state.constellation.guess;
 export const errorSL = (state: AppState) => state.constellation.error;
 export const statusSL = (state: AppState) => state.constellation.status;
 export const statisticsSL = (state: AppState) => state.constellation.statistics;
+export const numberSL = (state: AppState) => state.constellation.number;
 
 export default constellationSlice.reducer;

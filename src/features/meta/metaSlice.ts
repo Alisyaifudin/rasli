@@ -3,9 +3,6 @@ import type { AppState } from "../../app/store";
 import { MetaState, themeTypes } from "./metaInterface";
 import { THEME, LANGUAGES } from "../../utils/DICT";
 
-const genesis = new Date("2022/2/17")
-const today = new Date().getDate() - genesis.getDate()
-
 export const initialState: MetaState = {
 	theme: THEME.DARK,
 	languages: [LANGUAGES.EN, LANGUAGES.INA],
@@ -13,7 +10,6 @@ export const initialState: MetaState = {
 	openSetting: false,
 	openHelp: false,
 	openStatistics: false,
-	number: today
 };
 
 export const metaSlice = createSlice({
@@ -40,7 +36,7 @@ export const metaSlice = createSlice({
 					state.openHelp = value;
 					break;
 				}
-				case "statistics": {
+				case "statistics": { 
 					state.openStatistics = value;
 					break;
 				}
@@ -58,6 +54,5 @@ export const languagesSL = (state: AppState) => state.meta.languages;
 export const openSettingSL = (state: AppState) => state.meta.openSetting;
 export const openHelpSL = (state: AppState) => state.meta.openHelp;
 export const openStatisticsSL = (state: AppState) => state.meta.openStatistics;
-export const numberSL = (state: AppState) => state.meta.number;
 
 export default metaSlice.reducer;

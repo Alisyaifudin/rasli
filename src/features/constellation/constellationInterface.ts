@@ -15,6 +15,7 @@ export type statusType = {
 };
 
 export type statisticsType = {
+	lastGame: number;
 	played: number;
 	win: number;
 	winPerc: number;
@@ -38,4 +39,5 @@ export interface ConstellationState {
 	};
 	status: statusType;
 	statistics?: statisticsType;
+	number: number;
 }
