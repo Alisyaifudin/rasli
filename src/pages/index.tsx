@@ -19,9 +19,7 @@ const IndexPage: NextPageWithLayout = () => {
 
   return (
     <>
-      <h1>Welcome to your tRPC starter!</h1>
-      <p>{t('CANNOT_BE_EMPTY')}</p>
-      <p>{data}</p>
+      <p>Main</p>
       <button
         aria-label="Toggle Dark Mode"
         type="button"
@@ -30,6 +28,56 @@ const IndexPage: NextPageWithLayout = () => {
       >
         Click Me
       </button>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
+      <p>HALO</p>
     </>
   );
 };
