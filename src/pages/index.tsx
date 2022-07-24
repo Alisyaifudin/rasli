@@ -1,10 +1,12 @@
 import { trpc } from '../utils/trpc';
 import { NextPageWithLayout } from './_app';
 import Link from 'next/link';
+import {useTheme} from 'next-themes'
 
 const IndexPage: NextPageWithLayout = () => {
   const utils = trpc.useContext();
-  const {data} = trpc.useQuery(['post.all']);
+  const { data } = trpc.useQuery(['post.all']);
+  const { theme, setTheme } = useTheme();
 
   // prefetch all posts for instant navigation
   // useEffect(() => {
@@ -17,6 +19,12 @@ const IndexPage: NextPageWithLayout = () => {
     <>
       <h1>Welcome to your tRPC starter!</h1>
       <p>{data}</p>
+      <button
+        aria-label="Toggle Dark Mode"
+        type="button"
+        className="p-3 order-2 md:order-3"
+        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      >Click Me</button>
     </>
   );
 };
