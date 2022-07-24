@@ -1,9 +1,11 @@
 import { trpc } from '../utils/trpc';
 import { NextPageWithLayout } from './_app';
 import Link from 'next/link';
-import {useTheme} from 'next-themes'
+import { useTheme } from 'next-themes';
+import useTranslation from 'next-translate/useTranslation';
 
 const IndexPage: NextPageWithLayout = () => {
+  const { t } = useTranslation('common');
   const utils = trpc.useContext();
   const { data } = trpc.useQuery(['post.all']);
   const { theme, setTheme } = useTheme();
@@ -18,13 +20,16 @@ const IndexPage: NextPageWithLayout = () => {
   return (
     <>
       <h1>Welcome to your tRPC starter!</h1>
+      <p>{t('CANNOT_BE_EMPTY')}</p>
       <p>{data}</p>
       <button
         aria-label="Toggle Dark Mode"
         type="button"
         className="p-3 order-2 md:order-3"
         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-      >Click Me</button>
+      >
+        Click Me
+      </button>
     </>
   );
 };
