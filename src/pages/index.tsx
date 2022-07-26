@@ -3,13 +3,14 @@ import { NextPageWithLayout } from './_app';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import useTranslation from 'next-translate/useTranslation';
+import { useState } from 'react';
 
 const IndexPage: NextPageWithLayout = () => {
   const { t } = useTranslation('common');
   const utils = trpc.useContext();
   const { data } = trpc.useQuery(['post.all']);
   const { theme, setTheme } = useTheme();
-
+  const [answers, setAnswers] = useState<string[]>(Array(5).fill(''));
   // prefetch all posts for instant navigation
   // useEffect(() => {
   //   for (const { id } of postsQuery.data ?? []) {
@@ -19,7 +20,6 @@ const IndexPage: NextPageWithLayout = () => {
 
   return (
     <>
-      <p>Main</p>
       <button
         aria-label="Toggle Dark Mode"
         type="button"
@@ -28,56 +28,27 @@ const IndexPage: NextPageWithLayout = () => {
       >
         Click Me
       </button>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
-      <p>HALO</p>
+      <div className="max-w-3xl mx-auto dark:bg-zinc-800 flex flex-col items-center rounded-lg p-3 gap-5">
+        <img src="testing.webp" className="max-w-lg" />
+        <div className="max-w-[200px] w-[100%] mx-auto">
+          {answers.map((answer, i) => (
+            <div key={i}>
+              <p>&nbsp;</p>
+              <hr className=" dark:border-white/30 border-black/30" />
+            </div>
+          ))}
+        </div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            console.log('UWU');
+          }}
+          className="flex flex-col items-center"
+        >
+          <input type="text" />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     </>
   );
 };

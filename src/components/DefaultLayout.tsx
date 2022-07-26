@@ -9,7 +9,7 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
   return (
     <>
       <Head>
-        <title>Olimpus</title>
+        <title>RASLI</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />

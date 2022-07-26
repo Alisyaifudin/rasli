@@ -9,10 +9,10 @@ module.exports = {
 	pages: {
 		"*": ["common"],
 	},
-	interpolation: {
-		format: (value, format, lang) => {
-			if (format === "number") return formatters[lang].format(value);
-			return value;
-		},
-	},
+	// interpolation: {
+  //   format: (value, format, lang) => {
+  //     if(format === 'number') return formatters[lang].format(value)
+  //     return value
+  //   }
+  // }
 };
