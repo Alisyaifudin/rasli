@@ -1,10 +1,10 @@
 import { trpc } from '../utils/trpc';
 import { NextPageWithLayout } from './_app';
-import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
-import TextField from '~/components/TextField';
+import TextField from '~/components/Atom/TextField';
+import Button from '~/components/Atom/Button';
 
 const IndexPage: NextPageWithLayout = () => {
   const { t } = useTranslation('common');
@@ -30,7 +30,7 @@ const IndexPage: NextPageWithLayout = () => {
       >
         Click Me
       </button>
-      <div className="max-w-xl mx-auto dark:bg-zinc-800 flex flex-col items-center rounded-lg p-3 gap-5">
+      <div className="max-w-xl mx-auto bg-zinc-50 dark:bg-zinc-800 flex flex-col items-center rounded-lg p-3 gap-5">
         <img src="testing.webp" className="max-w-lg" />
         <div className="max-w-[200px] w-[100%] mx-auto">
           {answers.map((answer, i) => (
@@ -47,8 +47,10 @@ const IndexPage: NextPageWithLayout = () => {
           }}
           className="flex flex-col items-center"
         >
-          <TextField onChange={handleChange} label="Ketik Di Sini">{input}</TextField>
-          <button type="submit">Submit</button>
+          <TextField onChange={handleChange} label={t('TYPE_HERE')}>{input}</TextField>
+          <Button className={`outline outline-[1px] transition-colors dark:hover:bg-blue-400/10 
+          dark:text-blue-300 text-blue-500 outline-blue-300 dark:bg-transparent bg-transparent
+          hover:bg-blue-400/10`} type="submit">{t('SUBMIT')}</Button>
         </form>
       </div>
     </>

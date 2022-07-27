@@ -25,7 +25,8 @@ function TextField({ children, onChange, label }: TextFieldProps) {
       />
       <label
         className={twMerge(
-          'bottom-3 peer-focus:text-blue-700 dark:peer-focus:text-blue-300 focus:bg-red-500 left-3 pointer-events-none select-none absolute dark:text-white/50 ',
+         `bottom-3 peer-focus:text-blue-500 dark:peer-focus:text-blue-300 focus:bg-red-500 left-3 
+         pointer-events-none select-none absolute dark:text-white/50 text-black/50`,
           children
             ? 'text-[0.8rem] origin-left translate-y-[-20px]'
             : 'transition-[font-size_transform] ease-in-out duration-200',
