@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
 import { twMerge } from "tailwind-merge";
 
-interface ButtonProps {
+export interface ButtonProps {
 	children?: React.ReactNode;
 	onClick?: () => void;
 	type?: "submit" | "reset" | "button";

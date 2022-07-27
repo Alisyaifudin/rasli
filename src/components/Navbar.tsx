@@ -5,18 +5,20 @@ import { BsFillGearFill } from 'react-icons/bs';
 import { IoStatsChartSharp } from 'react-icons/io5';
 import Info from './Info';
 import ThemeModeBtn from './ThemeModeBtn';
+import Setting from './Setting';
+import { useAppSelector } from '~/redux/app/hooks';
 
 function Navbar() {
+  const version = useAppSelector(state=> state.meta.version)
   const [openInfo, setOpenInfo] = useState(false);
-  const [openSettings, setOpenSettings] = useState(false);
+  const [openSetting, setOpenSetting] = useState(false);
   const [openStats, setOpenStats] = useState(false);
 
-  const handleClickInfo = () => {
-    setOpenInfo(true);
-  };
-  const handleCloseInfo = () => {
-    setOpenInfo(false);
-  };
+  const handleClickInfo = () => setOpenInfo(true);
+  const handleCloseInfo = () => setOpenInfo(false);
+
+  const handleClickSetting = () => setOpenSetting(true);
+  const handleCloseSetting = () => setOpenSetting(false);
 
   return (
     <>
@@ -29,20 +31,23 @@ function Navbar() {
             <ThemeModeBtn />
           </div>
           <div className="flex text-sm items-end overflow-hidden">
-            <h1 className="overflow-hidden text-ellipsis font-extrabold text-4xl ">RASLI</h1>
-            <p className='overflow-hidden text-ellipsis'>v0.3.0</p>
+            <h1 className="overflow-hidden text-ellipsis font-extrabold text-4xl ">
+              RASLI
+            </h1>
+            <p className="overflow-hidden text-ellipsis">v{version}</p>
           </div>
           <div className="flex">
             <IconButton>
               <IoStatsChartSharp fontSize={26} />
             </IconButton>
-            <IconButton>
+            <IconButton onClick={handleClickSetting}>
               <BsFillGearFill fontSize={26} />
             </IconButton>
           </div>
         </div>
       </div>
       <Info open={openInfo} onClose={handleCloseInfo} />
+      <Setting open={openSetting} onClose={handleCloseSetting} />
     </>
   );
 }

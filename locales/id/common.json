@@ -3,12 +3,23 @@
   "TYPE_HERE": "Ketik Di Sini",
   "SUBMIT": "Jawab",
   "INFO_TITLE": "Cara Bermain",
-  "INFO_DESC_1": "Tebak RASLI dalam 6 kesempatan. 1 hari ada 1 rasi rahasia.",
+  "INFO_DESC_1": "Tebak RASLI dalam 6 kesempatan. 1 hari ada 1 rasi rahasia (pada mode comfy).",
   "INFO_DESC_2": "Setiap tebakan adalah nama rasi bintang yang valid menurut IAU. Ketikan jawaban pada petak yang disediakan, lalu tekan JAWAB (atau tekan Enter).",
   "INFO_DESC_3": "Setelah menjawab, tebakan akan berubah warna, bergantung seberapa dekat rasi tebakan dengan rasi rahasia.",
   "EXAMPLE": "Contoh",
   "INFO_TOO_FAR": "Warna merah menunjukkan rasi tebakan terlalu jauh",
   "INFO_FAR": "Warna jingga menunjukkan rasi tebakan agak jauh",
-  "INFO_NEAR": "Warna hijau menunjukkan rasi tebakan sudah dekat"
-  
+  "INFO_NEAR": "Warna hijau menunjukkan rasi tebakan sudah dekat",
+  "LANGUAGE": "Bahasa",
+  "ENGLISH": "Inggris",
+  "INDONESIAN": "Indonesia",
+  "SETTING_TITLE": "Pengaturan",
+  "SETTING_DESC_1": "RASLI adalah game menebak rasi bintang, terinspirasi dari gim wordle.",
+  "SETTING_DESC_2": "Ada RASLI baru tiap harinya!",
+  "SETTING_DESC_3": "Ini adalah RASLI versi",
+  "FEEDBACK": "Masukan?",
+  "EMAIL": "Surel",
+  "THANKS": "Terima Kasih!",
+  "SKIP": "Lewati",
+  "NEXT": "Selanjutnya"
 }

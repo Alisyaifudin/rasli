@@ -5,6 +5,9 @@ import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import TextField from '~/components/Atom/TextField';
 import Button from '~/components/Atom/Button';
+import LanguageOption from '~/components/LanguageOption';
+import ButtonOutlined from '~/components/ButtonOutlined';
+import { useAppSelector } from '~/redux/app/hooks';
 
 const IndexPage: NextPageWithLayout = () => {
   const { t } = useTranslation('common');
@@ -13,6 +16,8 @@ const IndexPage: NextPageWithLayout = () => {
   const { theme, setTheme } = useTheme();
   const [answers, setAnswers] = useState<string[]>(Array(5).fill(''));
   const [input, setInput] = useState('');
+  const done = useAppSelector((state) => state.meta.done);
+  const mode = useAppSelector((state) => state.meta.mode);
   // prefetch all posts for instant navigation
   // useEffect(() => {
   //   for (const { id } of postsQuery.data ?? []) {
@@ -39,10 +44,18 @@ const IndexPage: NextPageWithLayout = () => {
           }}
           className="flex flex-col items-center"
         >
-          <TextField onChange={handleChange} label={t('TYPE_HERE')}>{input}</TextField>
-          <Button className={`outline outline-[1px] transition-colors dark:hover:bg-blue-400/10 
-          dark:text-blue-300 text-blue-500 outline-blue-300 dark:bg-transparent bg-transparent
-          hover:bg-blue-400/10`} type="submit">{t('SUBMIT')}</Button>
+          <TextField onChange={handleChange} label={t('TYPE_HERE')}>
+            {input}
+          </TextField>
+          <div className="flex gap-2">
+            <ButtonOutlined type="submit">{t('SUBMIT')}</ButtonOutlined>
+            {mode === 'unlimited' &&
+              (done ? (
+                <ButtonOutlined type="button">{t('NEXT')}</ButtonOutlined>
+              ) : (
+                <ButtonOutlined type="button">{t('SKIP')}</ButtonOutlined>
+              ))}
+          </div>
         </form>
       </div>
     </>

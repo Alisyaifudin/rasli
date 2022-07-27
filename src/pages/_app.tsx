@@ -11,7 +11,8 @@ import { AppRouter } from '~/server/routers/_app';
 import { SSRContext } from '~/utils/trpc';
 import '../styles/global.css';
 import { ThemeProvider } from 'next-themes';
-
+import { Provider } from 'react-redux';
+import store from '~/redux/app/store';
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
@@ -26,7 +27,9 @@ const MyApp = (({ Component, pageProps }: AppPropsWithLayout) => {
 
   return (
     <ThemeProvider attribute="class">
-      {getLayout(<Component {...pageProps} />)}
+      <Provider store={store}>
+        {getLayout(<Component {...pageProps} />)}
+      </Provider>
     </ThemeProvider>
   );
 }) as AppType;
