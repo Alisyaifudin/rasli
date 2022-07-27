@@ -1,5 +1,13 @@
 {
   "CANNOT_BE_EMPTY": "Cannot be empty",
   "TYPE_HERE": "Type Here",
-  "SUBMIT": "Submit"
+  "SUBMIT": "Submit",
+  "INFO_TITLE": "How To Play",
+  "INFO_DESC_1": "Guess the RASLI in six tries. 1 day 1 secret constellation.",
+  "INFO_DESC_2": "Each guess must be a valid constellation according to IAU. Type your guess in given input space, then hit SUBMIT (or hit Enter).",
+  "INFO_DESC_3": "After each guess, the color of your guess will change, depending to how close your guess to the secret constellation.",
+  "EXAMPLE": "Example", 
+  "INFO_TOO_FAR": "Red color means your guess is too far",
+  "INFO_FAR": "Orange color means your guess is quite far",
+  "INFO_NEAR": "Green color means your guess is close"
 }

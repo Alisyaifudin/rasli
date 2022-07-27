@@ -31,7 +31,7 @@ const IndexPage: NextPageWithLayout = () => {
         Click Me
       </button>
       <div className="max-w-xl mx-auto bg-zinc-50 dark:bg-zinc-800 flex flex-col items-center rounded-lg p-3 gap-5">
-        <img src="testing.webp" className="max-w-lg" />
+        <img src="testing.webp" className="max-w-lg w-[100%]" />
         <div className="max-w-[200px] w-[100%] mx-auto">
           {answers.map((answer, i) => (
             <div key={i}>
