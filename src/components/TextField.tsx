@@ -15,17 +15,17 @@ function TextField({ children, onChange, label }: TextFieldProps) {
   };
 
   return (
-    <Parent className="relative h-14 dark:bg-zinc-700 rounded-t-sm flex flex-col justify-end border-b-white border-b-[1px]">
+    <Parent className="relative h-14 bg-zinc-100 dark:bg-zinc-700 rounded-t-sm flex flex-col justify-end dark:border-b-white border-b-black/50 border-b-[1px]">
       <Input
         id={id}
         type="text"
-        className="px-3 h-10 bg-inherit"
+        className="px-3 h-10 bg-inherit peer"
         onChange={handleChange}
         value={children}
       />
       <label
         className={twMerge(
-          'bottom-3 left-3 pointer-events-none select-none absolute dark:text-white/50 ',
+          'bottom-3 peer-focus:text-blue-700 dark:peer-focus:text-blue-300 focus:bg-red-500 left-3 pointer-events-none select-none absolute dark:text-white/50 ',
           children
             ? 'text-[0.8rem] origin-left translate-y-[-20px]'
             : 'transition-[font-size_transform] ease-in-out duration-200',
@@ -48,7 +48,6 @@ const Input = styled('input')`
     transform-origin: left;
     transform: translateY(-20px);
     font-size: 0.8rem;
-    color: rgb(144, 202, 249);
   }
 `;
 
