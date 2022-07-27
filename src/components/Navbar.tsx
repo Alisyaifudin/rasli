@@ -10,7 +10,7 @@ import { useAppSelector } from '~/redux/app/hooks';
 
 function Navbar() {
   const version = useAppSelector(state=> state.meta.version)
-  const [openInfo, setOpenInfo] = useState(false);
+  const [openInfo, setOpenInfo] = useState(true);
   const [openSetting, setOpenSetting] = useState(false);
   const [openStats, setOpenStats] = useState(false);
 
@@ -22,7 +22,7 @@ function Navbar() {
 
   return (
     <>
-      <div className="sticky top-0 dark:bg-zinc-800 bg-blue-500 p-2 text-white">
+      <div className="sticky top-0 dark:bg-zinc-900 bg-blue-500 p-2 text-white">
         <div className="max-w-2xl mx-auto flex justify-between items-center">
           <div className="flex gap-2">
             <IconButton onClick={handleClickInfo}>

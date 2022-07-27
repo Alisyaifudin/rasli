@@ -27,7 +27,7 @@ const IndexPage: NextPageWithLayout = () => {
   const handleChange = (value: string) => setInput(value);
   return (
     <>
-      <div className="max-w-xl mx-auto bg-zinc-50 dark:bg-zinc-900 flex flex-col items-center rounded-lg p-3 gap-5">
+      <div className="max-w-xl m-2 mx-auto bg-zinc-50 dark:bg-zinc-900 flex flex-col items-center rounded-lg p-3 gap-5">
         <img src="testing.webp" className="max-w-lg w-[100%]" />
         <div className="max-w-[200px] w-[100%] mx-auto">
           {answers.map((answer, i) => (
