@@ -27,7 +27,6 @@
   "dependencies": {
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
-    "@mui/material": "^5.10.1",
     "@reduxjs/toolkit": "^1.8.3",
     "@trpc/client": "^9.26.2",
     "@trpc/next": "^9.26.2",

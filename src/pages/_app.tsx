@@ -14,12 +14,6 @@ import { ThemeProvider } from 'next-themes';
 import { Provider } from 'react-redux';
 import store from '~/redux/app/store';
 import { createContext, useMemo, useState } from 'react';
-import {
-  createTheme,
-  PaletteMode,
-  ThemeProvider as MuiThemeProvider,
-} from '@mui/material';
-import { StyledEngineProvider } from '@mui/material/styles';
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -29,44 +23,15 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-export const ColorModeContext = createContext({
-  toggleColorMode: (theme: PaletteMode) => {},
-});
-
 const MyApp = (({ Component, pageProps }: AppPropsWithLayout) => {
   const getLayout =
     Component.getLayout ?? ((page) => <DefaultLayout>{page}</DefaultLayout>);
-  const [mode, setMode] = useState<PaletteMode>('light');
-  const colorMode = useMemo(
-    () => ({
-      toggleColorMode: (theme: PaletteMode) => {
-        setMode(theme);
-      },
-    }),
-    [],
-  );
-
-  const theme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-        },
-      }),
-    [mode],
-  );
   return (
-    <ColorModeContext.Provider value={colorMode}>
-			<MuiThemeProvider theme={theme}>
 				<Provider store={store}>
-					<StyledEngineProvider injectFirst>
 						<ThemeProvider attribute="class">
               {getLayout(<Component {...pageProps} />)}
               </ThemeProvider>
-					</StyledEngineProvider>
 				</Provider>
-			</MuiThemeProvider>
-		</ColorModeContext.Provider>
   );
 }) as AppType;
 

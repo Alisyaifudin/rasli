@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { useOnClickOutside } from 'usehooks-ts';
 import { twMerge } from 'tailwind-merge';
+
 interface SelectProps {
   value: string;
   label: string;
@@ -54,49 +55,58 @@ function Select({
   const handleClick = () => {
     animation();
   };
-  const handleClickOutside = (e: MouseEvent) => {
+  const handleClickOutside = () => {
     if (scale === 'scale-1') {
       setScale('scale-0');
       setRotate('rotate-0');
       setOpacity('opacity-0');
     }
   };
-  
-  useOnClickOutside(ref, handleClickOutside);
+
   return (
-    <div
-      ref={ref}
-      className={twMerge('relative', className, classNames?.root)}
-      onClick={handleClick}
+    <div ref={ref}
+    className="relative"
     >
-      <p
-        className={twMerge(
-          'border-[1px] dark:text-black border-solid border-gray-300 text-white px-3 py-2 rounded-md w-full min-w-[120px] cursor-pointer',
-          classNames?.selected,
-        )}
+      <div
+        className={twMerge( className, classNames?.root)}
+        onClick={handleClick}
       >
-        {options.find((option) => option.value === value)?.label}
-      </p>
-      <span
-        className={twMerge(
-          'text-gray-400 absolute text-xs -top-2 left-3 dark:text-gray-700 rounded-sm px-2',
-          classNames?.label,
-        )}
-      >
-        {label}
-      </span>
-      <span
-        className={twMerge(
-          'cursor-pointer absolute right-2 top-3 transition',
-          rotate,
-          classNames?.icon,
-        )}
-      >
-        <MdKeyboardArrowDown className="text-black dark:text-white" />
-      </span>
+        <p
+          className={twMerge(
+            'border-[1px] dark:text-black border-solid border-gray-300 text-white px-3 py-2 rounded-md w-full min-w-[120px] cursor-pointer',
+            classNames?.selected,
+          )}
+        >
+          {options.find((option) => option.value === value)?.label}
+        </p>
+        <span
+          className={twMerge(
+            'text-gray-400 absolute text-xs -top-2 left-3 dark:text-gray-700 rounded-sm px-2',
+            classNames?.label,
+          )}
+        >
+          {label}
+        </span>
+        <span
+          className={twMerge(
+            'cursor-pointer absolute right-2 top-3 transition',
+            rotate,
+            classNames?.icon,
+          )}
+        >
+          <MdKeyboardArrowDown className="text-black dark:text-white" />
+        </span>
+      </div>
+      <div
+          className={twMerge(
+            'fixed z-[49] left-0 right-0 top-0 bottom-0 bg-transparent',
+            scale === 'scale-0' ? 'pointer-events-none' : '',
+          )}
+          onClick={handleClickOutside}
+        ></div>
       <div
         className={twMerge(
-          'absolute mt-1 bg-white flex w-full flex-col transition ease-in-out duration-200 origin-top rounded-lg cursor-pointer border-[1px] border-solid border-gray-500',
+          'absolute z-50 mt-1 bg-white flex w-full flex-col transition ease-in-out duration-200 origin-top rounded-lg cursor-pointer border-[1px] border-solid border-gray-500',
           scale,
           opacity,
           classNames?.rootOption,
