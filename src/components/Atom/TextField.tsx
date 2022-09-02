@@ -6,17 +6,31 @@ interface TextFieldProps {
   children?: string;
   onChange?: (e: string) => void;
   label?: string;
+  disabled?: boolean;
+  className?: string;
 }
 
-function TextField({ children, onChange, label }: TextFieldProps) {
+function TextField({
+  children,
+  onChange,
+  label,
+  disabled,
+  className,
+}: TextFieldProps) {
   const id = useId();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) onChange(e.target.value);
   };
 
   return (
-    <Parent className="relative h-14 bg-zinc-100 dark:bg-zinc-700 rounded-t-sm flex flex-col justify-end dark:border-b-white border-b-black/50 border-b-[1px]">
+    <Parent
+      className={twMerge(
+        'relative h-14 bg-zinc-100 dark:bg-zinc-700 rounded-t-sm flex flex-col justify-end dark:border-b-white border-b-black/50 border-b-[1px]',
+        className,
+      )}
+    >
       <Input
+        disabled={disabled}
         id={id}
         type="text"
         className="px-3 h-10 bg-inherit peer"
@@ -25,7 +39,7 @@ function TextField({ children, onChange, label }: TextFieldProps) {
       />
       <label
         className={twMerge(
-         `bottom-3 peer-focus:text-blue-500 dark:peer-focus:text-blue-300 focus:bg-red-500 left-3 
+          `bottom-3 peer-focus:text-blue-500 dark:peer-focus:text-blue-300 focus:bg-red-500 left-3 
          pointer-events-none select-none absolute dark:text-white/50 text-black/50`,
           children
             ? 'text-[0.8rem] origin-left translate-y-[-20px]'

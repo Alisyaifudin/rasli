@@ -21,5 +21,7 @@
   "EMAIL": "Email",
   "THANKS": "Thanks!",
   "SKIP": "Skip",
-  "NEXT": "Next"
+  "NEXT": "Next",
+  "ALREADY_GUESSED": "Already guessed this one",
+  "NOT_A_CONSTELLATION": "Not a constellation!"
 }

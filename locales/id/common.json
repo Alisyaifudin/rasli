@@ -21,5 +21,7 @@
   "EMAIL": "Surel",
   "THANKS": "Terima Kasih!",
   "SKIP": "Lewati",
-  "NEXT": "Selanjutnya"
+  "NEXT": "Selanjutnya",
+  "ALREADY_GUESSED": "Sudah dicoba",
+  "NOT_A_CONSTELLATION": "Bukan rasi!"
 }
