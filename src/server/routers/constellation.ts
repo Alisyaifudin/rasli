@@ -16,6 +16,7 @@ import {
   skyToXY,
 } from '~/utils/convenience';
 import seedrandom from 'seedrandom';
+import fs from "fs"
 /**
  * Default selector for Post.
  * It's important to always explicitly say which fields you want to return in order to not leak extra information
@@ -37,6 +38,14 @@ type CatalogueFile = {
   Vmag: number;
   bv: number;
 };
+
+type constellation = {
+  name: string;
+  coordinate: {
+    RA: number;
+    DEC: number;
+  }
+}
 
 export const constellationRouter = createRouter()
   .query('getSome', {
@@ -70,11 +79,15 @@ export const constellationRouter = createRouter()
   .query('get', {
     input: z.object({
       r: z.number(),
-      ra: z.number(),
-      dec: z.number(),
       date: z.string(),
     }),
-    async resolve({ input: { r, ra, dec, date } }): Promise<Star2D[]> {
+    async resolve({ input: { r, date } }): Promise<{name: string, pos: Star2D[]}> {
+      const generator = seedrandom(date); 
+      let obj: constellation[] = JSON.parse(fs.readFileSync('src/server/data/const.json', 'utf8'));
+      const index = Math.floor(generator()*obj.length);
+      const constellation = obj[index];
+      const ra = constellation?.coordinate.RA || 0;
+      const dec = constellation?.coordinate.DEC || 0;
       const filePath = 'src/server/data/asu.tsv';
       const jsonArray: CatalogueFile[] = (
         await csv({ delimiter: ',' }).fromFile(filePath)
@@ -111,16 +124,18 @@ export const constellationRouter = createRouter()
         jsonArrayColor,
       );
       const sizes = vmagToSize(filteredStars.map(({ Vmag }) => Vmag));
-      const generator = seedrandom(date);
       const rotation = generator()*360;
       const pos = filteredStars.map(({ ra: ra1, dec: dec1 }) =>
         skyToXY(ra1, dec1, ra, dec, rotation),
       );
-      return pos.map(({ x, y }, i) => ({
-        x,
-        y,
-        c: colors[i]!,
-        s: sizes[i]!,
-      }))
+      return {
+        name: constellation?.name || "uwu",
+        pos: pos.map(({ x, y }, i) => ({
+          x,
+          y,
+          c: colors[i]!,
+          s: sizes[i]!,
+        }))
+      }
     },
   });

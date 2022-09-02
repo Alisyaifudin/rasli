@@ -7,6 +7,7 @@ export interface MetaState {
 	version: string;
 	done: boolean;
 	date: string;
+	name: string;
 }
 
 const initialState: MetaState = {
@@ -14,6 +15,7 @@ const initialState: MetaState = {
 	version: "0.3.0",
 	done: false,
 	date: new Date().toISOString(),
+	name: "uwu"
 };
 
 export const metaSlice = createSlice({
@@ -25,10 +27,13 @@ export const metaSlice = createSlice({
 		},
 		setDone: (state, action: PayloadAction<boolean>) => {
 			state.done = action.payload
+		},
+		setName: (state, action: PayloadAction<string>) => {
+			state.name = action.payload
 		}
 	},
 });
 
-export const { changeMode, setDone } = metaSlice.actions;
+export const { changeMode, setDone, setName } = metaSlice.actions;
 
 export default metaSlice.reducer;

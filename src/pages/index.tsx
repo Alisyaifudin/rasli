@@ -2,26 +2,33 @@ import { trpc } from '../utils/trpc';
 import { NextPageWithLayout } from './_app';
 import { useTheme } from 'next-themes';
 import useTranslation from 'next-translate/useTranslation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TextField from '~/components/Atom/TextField';
 import ButtonOutlined from '~/components/ButtonOutlined';
-import { useAppSelector } from '~/redux/app/hooks';
+import { useAppDispatch, useAppSelector } from '~/redux/app/hooks';
 import Canvas from '~/components/Canvas';
+import { setName } from '~/redux/metaSlice';
 
 const IndexPage: NextPageWithLayout = () => {
   const { t } = useTranslation('common');
   const utils = trpc.useContext();
+  const dispatch = useAppDispatch()
   const date = useAppSelector((state) => state.meta.date)
   const radius = 20;
-  const { data } = trpc.useQuery([
+  const { data, isSuccess } = trpc.useQuery([
     'constellation.get',
-    { ra: 187.5, dec: -60, r: radius, date },
+    { r: radius, date },
   ]);
   const { theme, setTheme } = useTheme();
   const [answers, setAnswers] = useState<string[]>(Array(5).fill(''));
   const [input, setInput] = useState('');
   const done = useAppSelector((state) => state.meta.done);
   const mode = useAppSelector((state) => state.meta.mode);
+  useEffect(() => {
+    if (data && isSuccess) {
+      dispatch(setName(data.name));
+    }
+  }, [isSuccess])
   // prefetch all posts for instant navigation
   // useEffect(() => {
   //   for (const { id } of postsQuery.data ?? []) {
@@ -32,7 +39,7 @@ const IndexPage: NextPageWithLayout = () => {
   return (
     <>
       <div className="max-w-xl m-2 mx-auto bg-zinc-50 dark:bg-zinc-900 flex flex-col items-center rounded-lg p-3 gap-5">
-        <Canvas stars={data} r={radius} />
+        <Canvas stars={data?.pos} r={radius} />
         <div className="max-w-[200px] w-[100%] mx-auto">
           {answers.map((answer, i) => (
             <div key={i}>
