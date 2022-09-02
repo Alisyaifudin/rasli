@@ -11,7 +11,7 @@ import Canvas from '~/components/Canvas';
 const IndexPage: NextPageWithLayout = () => {
   const { t } = useTranslation('common');
   const utils = trpc.useContext();
-  const date = useAppSelector((state) => state.meta.date).toISOString();
+  const date = useAppSelector((state) => state.meta.date)
   const radius = 20;
   const { data } = trpc.useQuery([
     'constellation.get',
