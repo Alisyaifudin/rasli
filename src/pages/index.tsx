@@ -4,15 +4,19 @@ import { useTheme } from 'next-themes';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import TextField from '~/components/Atom/TextField';
-import Button from '~/components/Atom/Button';
-import LanguageOption from '~/components/LanguageOption';
 import ButtonOutlined from '~/components/ButtonOutlined';
 import { useAppSelector } from '~/redux/app/hooks';
+import Canvas from '~/components/Canvas';
 
 const IndexPage: NextPageWithLayout = () => {
   const { t } = useTranslation('common');
   const utils = trpc.useContext();
-  const { data } = trpc.useQuery(['post.all']);
+  const date = useAppSelector((state) => state.meta.date).toISOString();
+  const radius = 20;
+  const { data } = trpc.useQuery([
+    'constellation.get',
+    { ra: 187.5, dec: -60, r: radius, date },
+  ]);
   const { theme, setTheme } = useTheme();
   const [answers, setAnswers] = useState<string[]>(Array(5).fill(''));
   const [input, setInput] = useState('');
@@ -28,7 +32,7 @@ const IndexPage: NextPageWithLayout = () => {
   return (
     <>
       <div className="max-w-xl m-2 mx-auto bg-zinc-50 dark:bg-zinc-900 flex flex-col items-center rounded-lg p-3 gap-5">
-        <img src="testing.webp" className="max-w-lg w-[100%]" />
+        <Canvas stars={data} r={radius} />
         <div className="max-w-[200px] w-[100%] mx-auto">
           {answers.map((answer, i) => (
             <div key={i}>

@@ -6,12 +6,14 @@ export interface MetaState {
 	mode: ModeType;
 	version: string;
 	done: boolean;
+	date: Date;
 }
 
 const initialState: MetaState = {
 	mode: "comfy",
 	version: "0.3.0",
 	done: false,
+	date: new Date(),
 };
 
 export const metaSlice = createSlice({
