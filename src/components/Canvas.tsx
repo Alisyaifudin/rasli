@@ -1,5 +1,8 @@
 import React, { useRef, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '~/redux/app/hooks';
+import { setName } from '~/redux/metaSlice';
 import { background, circle } from '~/utils/drawing';
+import { trpc } from '~/utils/trpc';
 export type Star2D = {
   x: number;
   y: number;
@@ -8,17 +11,18 @@ export type Star2D = {
 };
 
 
-interface CanvasProps {
-  stars?: Star2D[];
-  r: number;
-}
-
-function Canvas({ stars, r }: CanvasProps) {
+function Canvas() {
+  const date = useAppSelector((state) => state.meta.date);
+  const dispatch = useAppDispatch();
+  const r = 20;
+  const { data, isSuccess } = trpc.useQuery([
+    'constellation.get',
+    { r, date },
+  ]);
   const [mounted, setMounted] = React.useState(false);
-  
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
   const draw = (ctx: CanvasRenderingContext2D) => {
+    const stars =  data?.pos
     background(ctx, '#000');
     if (!stars) return;
     for (const star of stars) {
@@ -32,8 +36,8 @@ function Canvas({ stars, r }: CanvasProps) {
         color: star.c,
       };
       circle(ctx, options);
-      options.radius = options.radius*0.5;
-      options.color = "#fff";
+      options.radius = options.radius * 0.5;
+      options.color = '#fff';
       circle(ctx, options);
     }
   };
@@ -55,6 +59,11 @@ function Canvas({ stars, r }: CanvasProps) {
     draw(context);
   }, [draw, mounted]);
 
+  useEffect(() => {
+    if (data && isSuccess) {
+      dispatch(setName(data.name));
+    }
+  }, [isSuccess]);
   return (
     <div className="block w-full aspect-square">
       <canvas

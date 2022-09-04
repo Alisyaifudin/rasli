@@ -11,6 +11,7 @@ const nextConfig =  nextTranslate({
 	reactStrictMode: true,
   publicRuntimeConfig: {
     NODE_ENV: env.NODE_ENV,
+    KEY: env.KEY,
   },
 })
 

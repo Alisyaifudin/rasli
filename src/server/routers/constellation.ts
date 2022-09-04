@@ -3,7 +3,8 @@
  * This is an example router, you can delete this file and then update `../pages/api/trpc/[trpc].tsx`
  */
 import { TRPCError } from '@trpc/server';
-import { z } from 'zod';
+import { string, z } from 'zod';
+import { env } from '../env';
 import { createRouter } from '~/server/createRouter';
 import csv from 'csvtojson';
 import {
@@ -17,7 +18,8 @@ import {
 } from '~/utils/convenience';
 import seedrandom from 'seedrandom';
 import fs from 'fs';
-import { resolve } from 'path';
+import bcrypt from 'bcryptjs';
+
 /**
  * Default selector for Post.
  * It's important to always explicitly say which fields you want to return in order to not leak extra information
@@ -48,14 +50,6 @@ type constellation = {
 };
 
 export const constellationRouter = createRouter()
-  .query('name', {
-    resolve(): string[] {
-      let obj: constellation[] = JSON.parse(
-        fs.readFileSync('src/server/data/const.json', 'utf8'),
-      );
-      return obj.map((item) => item.name);
-    },
-  })
   .query('get', {
     input: z.object({
       r: z.number(),
@@ -112,14 +106,70 @@ export const constellationRouter = createRouter()
       const pos = filteredStars.map(({ ra: ra1, dec: dec1 }) =>
         skyToXY(ra1, dec1, ra, dec, rotation),
       );
+      const salt = bcrypt.genSaltSync(10);
+      const name = bcrypt.hashSync(
+        `${constellation?.name.toLowerCase()};${env.KEY}`,
+        salt,
+      );
+      console.log('ANSWER: ', constellation?.name);
       return {
-        name: constellation?.name || 'uwu',
+        name,
         pos: pos.map(({ x, y }, i) => ({
           x,
           y,
           c: colors[i]!,
           s: sizes[i]!,
         })),
+      };
+    },
+  })
+  .mutation('answer', {
+    input: z.object({
+      guess: z.string(),
+      answer: z.string(),
+      answers: z.array(z.string()),
+    }),
+    resolve({ input: { guess, answer, answers } }): {
+      error: string;
+      answers: string[];
+      correct: boolean;
+      done: boolean;
+    } {
+      if (
+        answers.map((ans) => ans.toLowerCase()).includes(guess.toLowerCase())
+      ) {
+        return {
+          error: 'ALREADY_GUESSED',
+          answers,
+          correct: false,
+          done: false,
+        };
+      }
+      let obj: constellation[] = JSON.parse(
+        fs.readFileSync('src/server/data/const.json', 'utf8'),
+      );
+      const constellations = obj.map((item) => item.name);
+      if (
+        !constellations
+          .map((cons) => cons.toLowerCase())
+          .includes(guess.toLowerCase())
+      ) {
+        return {
+          error: 'NOT_A_CONSTELLATION',
+          answers,
+          correct: false,
+          done: false,
+        };
+      }
+      const result = bcrypt.compareSync(
+        `${guess.toLowerCase()};${env.KEY}`,
+        answer,
+      );
+      return {
+        error: '',
+        answers: [...answers, guess],
+        correct: result,
+        done: answers.length === 9,
       };
     },
   });

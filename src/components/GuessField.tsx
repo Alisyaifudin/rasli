@@ -1,35 +1,52 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import TextField from '~/components/Atom/TextField';
 import ButtonOutlined from '~/components/ButtonOutlined';
-import { ModeType } from '~/redux/metaSlice';
+import {
+  ModeType,
+  resetError,
+  setAnswers,
+  setError,
+  setWin,
+} from '~/redux/metaSlice';
 import useTranslation from 'next-translate/useTranslation';
+import { useAppDispatch, useAppSelector } from '~/redux/app/hooks';
+import { trpc } from '~/utils/trpc';
 
-interface GuessFieldProps {
-  input: string;
-  mode: ModeType;
-  done: boolean;
-  onChange: (value: string) => void;
-  onSubmit: () => void;
-  error: string;
-}
-
-function GuessField({
-  input,
-  mode,
-  done,
-  onChange,
-  onSubmit,
-  error,
-}: GuessFieldProps) {
+function GuessField() {
   const { t } = useTranslation('common');
-  const handleChange = (value: string) => onChange(value);
+  // const [errorMessage, setErrorMessage] = useState('');
+  const [input, setInput] = useState('');
+  const dispatch = useAppDispatch();
+  const done = useAppSelector((state) => state.meta.done);
+  const mode = useAppSelector((state) => state.meta.mode);
+  const error = useAppSelector((state) => state.meta.error);
+  const answer = useAppSelector((state) => state.meta.name);
+  const answers = useAppSelector((state) => state.meta.answers);
+  const errorMessage = error ? t(error) : '';
+
+  const mutation = trpc.useMutation(['constellation.answer'], {
+    onSuccess: (data) => {
+      if (data.correct) dispatch(setWin(true));
+      else if (data.answers.length === 5) dispatch(setWin(false));
+      if (data.error) dispatch(setError(data.error));
+      else setInput('');
+      dispatch(setAnswers(data.answers));
+    },
+  });
+
+  const handleChange = (value: string) => {
+    setInput(value);
+    if (errorMessage !== '') dispatch(resetError());
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit();
+    mutation.mutate({ guess: input, answer, answers });
   };
+
   return (
     <form onSubmit={handleSubmit} className="flex flex-col items-center">
-      <p className="text-sm text-red-500">{error}</p>
+      <p className="text-sm text-red-500">{errorMessage}</p>
       <TextField
         className={error === '' ? '' : 'text-red-500'}
         disabled={done}
