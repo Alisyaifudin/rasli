@@ -15,7 +15,7 @@ function Graph() {
   }
   const total = dist.reduce((a, b) => a + b, 0) || 1;
   return (
-    <div className="w-full flex flex-col mt-5">
+    <div className="w-full flex flex-col my-5 px-10">
       {dist.map((d, i) => (
         <div key={i} className="flex h-8 gap-2 w-full ">
           <div className="flex-1 flex items-center justify-center">

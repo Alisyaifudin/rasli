@@ -5,6 +5,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import useTranslation from 'next-translate/useTranslation';
 import { twMerge } from 'tailwind-merge';
 import Graph from '~/components/Graph';
+import Timer from './Timer';
 interface StatisticsProps {
   open: boolean;
   onClose?: () => void;
@@ -31,6 +32,7 @@ function Statistics({ open, onClose }: StatisticsProps) {
     <Modal
       open={open}
       onClose={onClose}
+      className="px-3 pb-5"
       classNames={{
         portal: mounted
           ? ''
@@ -60,6 +62,11 @@ function Statistics({ open, onClose }: StatisticsProps) {
       <p className="font-bold">{t('GUESS_DISTRIBUTION').toUpperCase()}</p>
       <Graph />
       {/* <div className='w-5 h-7 bg-green-500 mt-5'></div> */}
+      <div className='flex justify-around'>
+        <Timer/>
+        <div className='border dark:border-white/10 bg-black/10'/>
+        <p>HELOOO</p>
+      </div>
     </Modal>
   );
 }

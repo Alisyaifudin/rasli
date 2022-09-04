@@ -48,7 +48,7 @@ function GuessField() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col items-center">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-2 items-center">
       <p className="text-sm text-red-500">{errorMessage}</p>
       {done && <p>{win ? t('WON') : t('LOST')}</p>}
       <TextField
@@ -60,7 +60,7 @@ function GuessField() {
         {input}
       </TextField>
       <div className="flex gap-2">
-        <ButtonOutlined disabled={done} type="submit">
+        <ButtonOutlined disabled={done || !input || !!error} type="submit">
           {t('SUBMIT')}
         </ButtonOutlined>
         {mode === 'unlimited' &&
