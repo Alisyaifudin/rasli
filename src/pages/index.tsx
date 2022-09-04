@@ -7,22 +7,23 @@ import Canvas from '~/components/Canvas';
 import { setDone, setName } from '~/redux/metaSlice';
 import GuessField from '~/components/GuessField';
 import AnswerField from '~/components/AnswerField';
+import Graph from '~/components/Graph';
 
 const IndexPage: NextPageWithLayout = () => {
   const { t } = useTranslation('common');
   const dispatch = useAppDispatch();
-  
+
   // prefetch all posts for instant navigation
   // useEffect(() => {
   //   for (const { id } of postsQuery.data ?? []) {
   //     utils.prefetchQuery(['post.byId', { id }]);
   //   }
   // }, [postsQuery.data, utils]);
-  
+
   return (
     <>
       <div className="max-w-xl m-2 mx-auto bg-zinc-50 dark:bg-zinc-900 flex flex-col items-center rounded-lg p-3 gap-5">
-        <Canvas/>
+        <Canvas />
         <AnswerField />
         <GuessField />
       </div>

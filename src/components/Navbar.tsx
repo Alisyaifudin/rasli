@@ -7,9 +7,10 @@ import Info from './Info';
 import ThemeModeBtn from './ThemeModeBtn';
 import Setting from './Setting';
 import { useAppSelector } from '~/redux/app/hooks';
+import Statistics from './Statistics';
 
 function Navbar() {
-  const version = useAppSelector(state=> state.meta.version)
+  const version = useAppSelector((state) => state.meta.version);
   const [openInfo, setOpenInfo] = useState(true);
   const [openSetting, setOpenSetting] = useState(false);
   const [openStats, setOpenStats] = useState(false);
@@ -19,6 +20,9 @@ function Navbar() {
 
   const handleClickSetting = () => setOpenSetting(true);
   const handleCloseSetting = () => setOpenSetting(false);
+
+  const handleClickStats = () => setOpenStats(true);
+  const handleCloseStats = () => setOpenStats(false);
 
   return (
     <>
@@ -37,7 +41,7 @@ function Navbar() {
             <p className="overflow-hidden text-ellipsis">v{version}</p>
           </div>
           <div className="flex">
-            <IconButton>
+            <IconButton onClick={handleClickStats}>
               <IoStatsChartSharp fontSize={26} />
             </IconButton>
             <IconButton onClick={handleClickSetting}>
@@ -48,6 +52,7 @@ function Navbar() {
       </div>
       <Info open={openInfo} onClose={handleCloseInfo} />
       <Setting open={openSetting} onClose={handleCloseSetting} />
+      <Statistics open={openStats} onClose={handleCloseStats} />
     </>
   );
 }

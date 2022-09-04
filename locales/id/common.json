@@ -25,5 +25,12 @@
   "ALREADY_GUESSED": "Sudah dicoba",
   "NOT_A_CONSTELLATION": "Bukan rasi!",
   "LOST": "Salah semua T_T",
-  "WON": "Benar 🥳"
+  "WON": "Benar 🥳",
+  "STATISTICS_TITLE": "Statistik",
+  "PLAYED": "Dimainkan",
+  "WIN": "% Menang",
+  "CURRENT_STREAK": "Streak Terkini",
+  "LONGEST_STREAK": "Streak Terpanjang",
+  "GUESS_DISTRIBUTION": "Distribusi Tebakan",
+  "L": "K"
 }

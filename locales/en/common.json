@@ -25,5 +25,12 @@
   "ALREADY_GUESSED": "Already guessed this one",
   "NOT_A_CONSTELLATION": "Not a constellation!",
   "LOST": "All wrongs T_T",
-  "WON": "Correct! 🥳"
+  "WON": "Correct! 🥳",
+  "STATISTICS_TITLE": "Statistics",
+  "PLAYED": "Played",
+  "WIN": "Win %",
+  "CURRENT_STREAK": "Current Streak",
+  "LONGEST_STREAK": "Longest Streak",
+  "GUESS_DISTRIBUTION": "Guess Distribution",
+  "L": "L"
 }

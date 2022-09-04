@@ -5,9 +5,9 @@ const nextTranslate = require('next-translate')
 
 /** @type {import('next').NextConfig} */
 const nextConfig =  nextTranslate({
-  webpack: (config, { isServer, webpack }) => {
-    return config;
-  },
+  // webpack: (config, { isServer, webpack }) => {
+  //   return config;
+  // },
 	reactStrictMode: true,
   publicRuntimeConfig: {
     NODE_ENV: env.NODE_ENV,
