@@ -64,7 +64,7 @@ function Info({ open, onClose }: InfoProps) {
           <p className="p-1">{t('INFO_FAR')}</p>
         </div>
         <div>
-          <p className="dark:bg-zinc-900 shadow-md bg-zinc-100 w-fit px-2 py-1 rounded-md text-green-500">
+          <p className="dark:bg-zinc-900 shadow-md bg-zinc-100 w-fit px-2 py-1 rounded-md text-yellow-500">
             DRACO
           </p>
           <p className="p-1">{t('INFO_NEAR')}</p>

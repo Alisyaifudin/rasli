@@ -6,6 +6,7 @@ import {
   resetError,
   setAnswers,
   setError,
+  setName,
   setWin,
 } from '~/redux/metaSlice';
 import useTranslation from 'next-translate/useTranslation';
@@ -18,6 +19,7 @@ function GuessField() {
   const [input, setInput] = useState('');
   const dispatch = useAppDispatch();
   const done = useAppSelector((state) => state.meta.done);
+  const win = useAppSelector((state) => state.meta.win);
   const mode = useAppSelector((state) => state.meta.mode);
   const error = useAppSelector((state) => state.meta.error);
   const answer = useAppSelector((state) => state.meta.name);
@@ -31,6 +33,7 @@ function GuessField() {
       if (data.error) dispatch(setError(data.error));
       else setInput('');
       dispatch(setAnswers(data.answers));
+      if(data.answer) dispatch(setName(data.answer))
     },
   });
 
@@ -47,6 +50,7 @@ function GuessField() {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col items-center">
       <p className="text-sm text-red-500">{errorMessage}</p>
+      {done && <p>{win ? t('WON') : t('LOST')}</p>}
       <TextField
         className={error === '' ? '' : 'text-red-500'}
         disabled={done}

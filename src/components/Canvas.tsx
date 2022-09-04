@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { twMerge } from 'tailwind-merge';
 import { useAppDispatch, useAppSelector } from '~/redux/app/hooks';
 import { setName } from '~/redux/metaSlice';
 import { background, circle } from '~/utils/drawing';
@@ -10,19 +11,22 @@ export type Star2D = {
   c: string;
 };
 
-
 function Canvas() {
   const date = useAppSelector((state) => state.meta.date);
+  const done = useAppSelector((state) => state.meta.done);
+  const name = useAppSelector((state) => state.meta.name);
   const dispatch = useAppDispatch();
   const r = 20;
-  const { data, isSuccess } = trpc.useQuery([
-    'constellation.get',
-    { r, date },
-  ]);
+  const { data } = trpc.useQuery(['constellation.get', { r, date }], {
+    onSuccess: (data) => {
+      if (!name) dispatch(setName(data.name));
+    },
+  });
   const [mounted, setMounted] = React.useState(false);
+  const answer = useAppSelector((state) => state.meta.name);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const draw = (ctx: CanvasRenderingContext2D) => {
-    const stars =  data?.pos
+    const stars = data?.pos;
     background(ctx, '#000');
     if (!stars) return;
     for (const star of stars) {
@@ -59,19 +63,17 @@ function Canvas() {
     draw(context);
   }, [draw, mounted]);
 
-  useEffect(() => {
-    if (data && isSuccess) {
-      dispatch(setName(data.name));
-    }
-  }, [isSuccess]);
   return (
-    <div className="block w-full aspect-square">
-      <canvas
-        // className='w-full h-auto'
-        className="h-full rounded-full"
-        ref={canvasRef}
-        id="canvas"
-      ></canvas>
+    <div className='w-full'>
+      {done && <p className="mx-auto text-center text-3xl font-bold">{answer}</p>}
+      <div className="block w-full aspect-square">
+        <canvas
+          // className='w-full h-auto'
+          className={twMerge('h-full rounded-full', done ? 'scale-[0.9]' : '')}
+          ref={canvasRef}
+          id="canvas"
+        ></canvas>
+      </div>
     </div>
   );
 }

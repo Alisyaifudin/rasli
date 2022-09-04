@@ -9,7 +9,7 @@
   "EXAMPLE": "Example", 
   "INFO_TOO_FAR": "Red color means your guess is too far",
   "INFO_FAR": "Orange color means your guess is quite far",
-  "INFO_NEAR": "Green color means your guess is close",
+  "INFO_NEAR": "Yellow color means your guess is close",
   "LANGUAGE": "Language",
   "ENGLISH": "English",
   "INDONESIAN": "Indonesian",
@@ -23,5 +23,7 @@
   "SKIP": "Skip",
   "NEXT": "Next",
   "ALREADY_GUESSED": "Already guessed this one",
-  "NOT_A_CONSTELLATION": "Not a constellation!"
+  "NOT_A_CONSTELLATION": "Not a constellation!",
+  "LOST": "All wrongs T_T",
+  "WON": "Correct! 🥳"
 }

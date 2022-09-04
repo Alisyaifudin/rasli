@@ -101,4 +101,19 @@ export const vmagToSize = (Vmag: number[]) => {
   sizes = sizes.map(size=> size*0.05)
   return Vmag.map((vmag) => interpolate(Vmags, sizes, vmag));
 };
-
+// given two stars coordinate, find their distance in degree
+type coordinate = {
+  RA: number;
+  DEC: number;
+}
+export const distance = (star1: coordinate, star2: coordinate) => {
+  const { RA: ra1, DEC: dec1 } = star1;
+  const { RA: ra2, DEC: dec2 } = star2;
+  const rr = Math.acos(
+    Math.sin((dec1 * Math.PI) / 180) * Math.sin((dec2 * Math.PI) / 180) +
+      Math.cos((dec1 * Math.PI) / 180) *
+        Math.cos((dec2 * Math.PI) / 180) *
+        Math.cos(((ra1 - ra2) * Math.PI) / 180),
+  );
+  return (rr * 180) / Math.PI;
+}

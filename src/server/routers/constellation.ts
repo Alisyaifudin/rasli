@@ -15,10 +15,11 @@ import {
   ColorFile,
   vmagToSize,
   skyToXY,
+  distance,
 } from '~/utils/convenience';
 import seedrandom from 'seedrandom';
 import fs from 'fs';
-import bcrypt from 'bcryptjs';
+import Cryptr from 'cryptr';
 
 /**
  * Default selector for Post.
@@ -63,7 +64,10 @@ export const constellationRouter = createRouter()
         fs.readFileSync('src/server/data/const.json', 'utf8'),
       );
       const index = Math.floor(generator() * obj.length);
-      const constellation = obj[index];
+      const constellation = obj[index] || {
+        name: 'Cassiopeia',
+        coordinate: { RA: 0, DEC: 0 },
+      };
       const ra = constellation?.coordinate.RA || 0;
       const dec = constellation?.coordinate.DEC || 0;
       const filePath = 'src/server/data/asu.tsv';
@@ -106,12 +110,14 @@ export const constellationRouter = createRouter()
       const pos = filteredStars.map(({ ra: ra1, dec: dec1 }) =>
         skyToXY(ra1, dec1, ra, dec, rotation),
       );
-      const salt = bcrypt.genSaltSync(10);
-      const name = bcrypt.hashSync(
-        `${constellation?.name.toLowerCase()};${env.KEY}`,
-        salt,
-      );
-      console.log('ANSWER: ', constellation?.name);
+      const cryptr = new Cryptr(env.KEY);
+      const name = cryptr.encrypt(constellation.name);
+      // const salt = bcrypt.genSaltSync(10);
+      // const name = bcrypt.hashSync(
+      //   `${constellation?.name.toLowerCase()};${}`,
+      //   salt,
+      // );
+      console.log('ANSWER: ', constellation.name);
       return {
         name,
         pos: pos.map(({ x, y }, i) => ({
@@ -127,16 +133,19 @@ export const constellationRouter = createRouter()
     input: z.object({
       guess: z.string(),
       answer: z.string(),
-      answers: z.array(z.string()),
+      answers: z.array(z.object({ name: z.string(), quality: z.number() })),
     }),
     resolve({ input: { guess, answer, answers } }): {
       error: string;
-      answers: string[];
+      answers: { name: string; quality: number }[];
       correct: boolean;
       done: boolean;
+      answer?: string;
     } {
       if (
-        answers.map((ans) => ans.toLowerCase()).includes(guess.toLowerCase())
+        answers
+          .map((ans) => ans.name.toLowerCase())
+          .includes(guess.toLowerCase())
       ) {
         return {
           error: 'ALREADY_GUESSED',
@@ -161,15 +170,32 @@ export const constellationRouter = createRouter()
           done: false,
         };
       }
-      const result = bcrypt.compareSync(
-        `${guess.toLowerCase()};${env.KEY}`,
-        answer,
-      );
+      const cryptr = new Cryptr(env.KEY);
+      const name = cryptr.decrypt(answer);
+      const guessCoord = obj.find(
+        (o) => o.name.toLowerCase() === guess.toLowerCase(),
+      )?.coordinate || { RA: 0, DEC: 0 };
+      const answerCoord = obj.find(
+        (o) => o.name.toLowerCase() === name.toLowerCase(),
+      )?.coordinate || { RA: 0, DEC: 0 };
+      const result = name.toLowerCase() === guess.toLowerCase();
+      //best quality = 3, worst = 0
+      let quality: number;
+      const dist = distance(guessCoord, answerCoord);
+      if (result) quality = 3;
+      else if (dist < 60) {
+        quality = 2;
+      } else if (dist < 120) {
+        quality = 1;
+      } else {
+        quality = 0;
+      }
       return {
         error: '',
-        answers: [...answers, guess],
+        answers: [...answers, { name: guess, quality }],
         correct: result,
-        done: answers.length === 9,
+        done: answers.length === 4,
+        answer: answers.length === 4 || result ? name : undefined,
       };
     },
   });
