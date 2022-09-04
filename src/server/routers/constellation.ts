@@ -16,6 +16,7 @@ import {
   vmagToSize,
   skyToXY,
   distance,
+  intervalDate,
 } from '~/utils/convenience';
 import seedrandom from 'seedrandom';
 import fs from 'fs';
@@ -50,6 +51,9 @@ type constellation = {
   };
 };
 
+// the "beginning"
+const genesis = new Date('2022-09-04T00:00:00.000Z');
+
 export const constellationRouter = createRouter()
   .query('get', {
     input: z.object({
@@ -58,12 +62,14 @@ export const constellationRouter = createRouter()
     }),
     async resolve({
       input: { r, date },
-    }): Promise<{ name: string; pos: Star2D[] }> {
+    }): Promise<{ day: number, name: string; pos: Star2D[] }> {
+      const index_generator = seedrandom(date.substring(0, 10));
       const generator = seedrandom(date);
+      const interval = intervalDate(new Date(date), genesis);
       let obj: constellation[] = JSON.parse(
         fs.readFileSync('src/server/data/const.json', 'utf8'),
       );
-      const index = Math.floor(generator() * obj.length);
+      const index = Math.floor(index_generator() * obj.length);
       const constellation = obj[index] || {
         name: 'Cassiopeia',
         coordinate: { RA: 0, DEC: 0 },
@@ -112,13 +118,9 @@ export const constellationRouter = createRouter()
       );
       const cryptr = new Cryptr(env.KEY);
       const name = cryptr.encrypt(constellation.name);
-      // const salt = bcrypt.genSaltSync(10);
-      // const name = bcrypt.hashSync(
-      //   `${constellation?.name.toLowerCase()};${}`,
-      //   salt,
-      // );
       console.log('ANSWER: ', constellation.name);
       return {
+        day: interval,
         name,
         pos: pos.map(({ x, y }, i) => ({
           x,

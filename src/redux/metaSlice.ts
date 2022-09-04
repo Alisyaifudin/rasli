@@ -8,6 +8,7 @@ export interface MetaState {
   done: boolean;
   win: boolean;
   date: string;
+  day: number;
   name: string;
   answers: {
     name: string;
@@ -20,6 +21,7 @@ const initialState: MetaState = {
   mode: 'comfy',
   version: '0.3.0',
   done: false,
+  day: 0,
   win: false,
   date: new Date().toISOString(),
   name: '',
@@ -55,7 +57,10 @@ export const metaSlice = createSlice({
 		},
 		setAnswers: (state, action: PayloadAction<{name: string, quality: number}[]>) => {
 			state.answers = action.payload;
-		}
+		},
+    setDay: (state, action: PayloadAction<number>) => {
+      state.day = action.payload;
+    }
   },
 });
 
@@ -68,6 +73,7 @@ export const {
   setWin,
 	setError,
 	setAnswers,
+  setDay
 } = metaSlice.actions;
 
 export default metaSlice.reducer;

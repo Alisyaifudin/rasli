@@ -117,3 +117,8 @@ export const distance = (star1: coordinate, star2: coordinate) => {
   );
   return (rr * 180) / Math.PI;
 }
+//interval between two dates
+export const intervalDate = (date1: Date, date2: Date) => {
+  const diff = Math.abs(date1.getTime() - date2.getTime());
+  return Math.floor(diff / (1000 * 3600 * 24));
+}

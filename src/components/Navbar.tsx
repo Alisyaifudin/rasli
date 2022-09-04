@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import IconButton from './Atom/IconButton';
 import { MdInfo } from 'react-icons/md';
 import { BsFillGearFill } from 'react-icons/bs';
@@ -11,7 +11,8 @@ import Statistics from './Statistics';
 
 function Navbar() {
   const version = useAppSelector((state) => state.meta.version);
-  const [openInfo, setOpenInfo] = useState(true);
+  const done = useAppSelector((state) => state.meta.done);
+  const [openInfo, setOpenInfo] = useState(false);
   const [openSetting, setOpenSetting] = useState(false);
   const [openStats, setOpenStats] = useState(false);
 
@@ -23,7 +24,14 @@ function Navbar() {
 
   const handleClickStats = () => setOpenStats(true);
   const handleCloseStats = () => setOpenStats(false);
-
+  useEffect(() => {
+    if (done) {
+      setOpenInfo(false);
+      setOpenStats(true);
+    }else{
+      setOpenInfo(true);
+    }
+  }, [done])
   return (
     <>
       <div className="sticky top-0 dark:bg-zinc-900 bg-blue-500 p-2 text-white">

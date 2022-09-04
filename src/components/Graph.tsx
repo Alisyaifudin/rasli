@@ -13,7 +13,7 @@ function Graph() {
     const local = localStorage.getItem('dist');
     dist = local ? JSON.parse(local) : empty;
   }
-  const total = dist.reduce((a, b) => a + b, 0) || 1;
+  const total = Math.max(...dist) || 1;
   
   return (
     <div className="w-full flex flex-col my-5 px-10">

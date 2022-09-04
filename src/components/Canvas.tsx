@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { useAppDispatch, useAppSelector } from '~/redux/app/hooks';
-import { setName } from '~/redux/metaSlice';
+import { setDay, setName } from '~/redux/metaSlice';
 import { background, circle } from '~/utils/drawing';
 import { trpc } from '~/utils/trpc';
 export type Star2D = {
@@ -19,7 +19,10 @@ function Canvas() {
   const r = 20;
   const { data } = trpc.useQuery(['constellation.get', { r, date }], {
     onSuccess: (data) => {
-      if (!name) dispatch(setName(data.name));
+      if (!name) {
+        dispatch(setName(data.name));
+        dispatch(setDay(data.day));
+      }
     },
   });
   const [mounted, setMounted] = React.useState(false);
