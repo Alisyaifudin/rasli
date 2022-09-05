@@ -247,10 +247,12 @@ export const gg = ({
       day,
       number: win ? answers.length : 6,
     },
-    dist: dist.map((d, i) => (i === answers.length - 1 ? d + 1 : d)),
+    dist: dist.map((d, i) =>
+      i === (win ? answers.length - 1 : 5) ? d + 1 : d,
+    ),
     answers,
     answer,
   };
   localStorage.setItem('game', JSON.stringify(newGame));
-  return newGame
+  return newGame;
 };
