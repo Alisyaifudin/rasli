@@ -4,23 +4,15 @@ import { useAppSelector } from '~/redux/app/hooks';
 import Button from './Atom/Button';
 import { BsShare } from 'react-icons/bs';
 
-const empty = {
-  day: 0,
-  number: 0,
-};
 
 function Share() {
   const { t } = useTranslation('common');
-  const done = useAppSelector((state) => state.meta.done);
-  let stats = empty;
-  if (typeof window !== 'undefined') {
-    const local = localStorage.getItem('last_played');
-    stats = local ? JSON.parse(local) : empty;
-  }
+  const done = useAppSelector((state) => state.game.done);
+  const last_played = useAppSelector((state) => state.game.last_played);  
   const handleClick = () =>
     navigator.clipboard.writeText(
-      `RASLI ${stats.day} ${
-        stats.number === 6 ? '❌' : stats.number
+      `RASLI ${last_played.day} ${
+        last_played.number === 6 ? '❌' : last_played.number
       }/5 \nhttps://rasli.vercel.app`,
     );
   return (

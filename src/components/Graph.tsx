@@ -3,18 +3,14 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
 import isPropValid from '@emotion/is-prop-valid';
+import { useAppSelector } from '~/redux/app/hooks';
 
 const empty: number[] = Array(6).fill(0);
 
 function Graph() {
   const { t } = useTranslation('common');
-  let dist = empty;
-  if (typeof window !== 'undefined') {
-    const local = localStorage.getItem('dist');
-    dist = local ? JSON.parse(local) : empty;
-  }
-  const total = Math.max(...dist) || 1;
-  
+  const dist = useAppSelector((state) => state.game.dist);
+  const total = Math.max(...dist);
   return (
     <div className="w-full flex flex-col my-5 px-10">
       {dist.map((d, i) => (

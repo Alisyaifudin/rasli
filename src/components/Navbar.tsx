@@ -11,7 +11,8 @@ import Statistics from './Statistics';
 
 function Navbar() {
   const version = useAppSelector((state) => state.meta.version);
-  const done = useAppSelector((state) => state.meta.done);
+  const done = useAppSelector((state) => state.game.done);
+  const ready = useAppSelector((state) => state.meta.ready);
   const [openInfo, setOpenInfo] = useState(false);
   const [openSetting, setOpenSetting] = useState(false);
   const [openStats, setOpenStats] = useState(false);
@@ -25,13 +26,13 @@ function Navbar() {
   const handleClickStats = () => setOpenStats(true);
   const handleCloseStats = () => setOpenStats(false);
   useEffect(() => {
+    if (!ready) return;
     if (done) {
-      setOpenInfo(false);
       setOpenStats(true);
-    }else{
+    } else {
       setOpenInfo(true);
     }
-  }, [done])
+  }, [ready, done]);
   return (
     <>
       <div className="sticky top-0 dark:bg-zinc-900 bg-blue-500 p-2 text-white">
@@ -58,9 +59,13 @@ function Navbar() {
           </div>
         </div>
       </div>
-      <Info open={openInfo} onClose={handleCloseInfo} />
-      <Setting open={openSetting} onClose={handleCloseSetting} />
-      <Statistics open={openStats} onClose={handleCloseStats} />
+      {ready && (
+        <>
+          <Info open={openInfo} onClose={handleCloseInfo} />
+          <Setting open={openSetting} onClose={handleCloseSetting} />
+          <Statistics open={openStats} onClose={handleCloseStats} />
+        </>
+      )}
     </>
   );
 }

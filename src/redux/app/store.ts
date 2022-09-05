@@ -1,8 +1,10 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 
-import meta from "../metaSlice";
+import meta from "~/redux/metaSlice";
+import game from "~/redux/gameSlice"
 export const reducer = {
 	meta,
+	game
 };
 
 export function makeStore() {

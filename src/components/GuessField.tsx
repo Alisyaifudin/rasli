@@ -5,84 +5,58 @@ import {
   ModeType,
   resetError,
   setAnswers,
+  setDist,
   setError,
+  setLastPlayed,
   setName,
+  setStats,
   setWin,
-} from '~/redux/metaSlice';
+} from '~/redux/gameSlice';
 import useTranslation from 'next-translate/useTranslation';
 import { useAppDispatch, useAppSelector } from '~/redux/app/hooks';
 import { trpc } from '~/utils/trpc';
-
-const emptyDist: number[] = Array(6).fill(0);
-const emptyStats = {
-  played: 0,
-  win: 0,
-  winrate: 0,
-  streak: 0,
-  longest_streak: 0,
-};
-const emptyPlay = { day: 0, number: 0 };
+import { gg } from '~/utils/convenience';
 
 function GuessField() {
   const { t } = useTranslation('common');
   // const [errorMessage, setErrorMessage] = useState('');
   const [input, setInput] = useState('');
   const dispatch = useAppDispatch();
-  const done = useAppSelector((state) => state.meta.done);
-  const win = useAppSelector((state) => state.meta.win);
   const mode = useAppSelector((state) => state.meta.mode);
-  const error = useAppSelector((state) => state.meta.error);
-  const day = useAppSelector((state) => state.meta.day);
-  const answer = useAppSelector((state) => state.meta.name);
-  const answers = useAppSelector((state) => state.meta.answers);
+  const done = useAppSelector((state) => state.game.done);
+  const win = useAppSelector((state) => state.game.win);
+  const error = useAppSelector((state) => state.game.error);
+  const day = useAppSelector((state) => state.game.day);
+  const stats = useAppSelector((state) => state.game.stats);
+  const dist = useAppSelector((state) => state.game.dist);
+  const last_played = useAppSelector((state) => state.game.last_played);
+  const answer = useAppSelector((state) => state.game.name);
+  const answers = useAppSelector((state) => state.game.answers);
   const errorMessage = error ? t(error) : '';
-  let dist = emptyDist;
-  let stats = emptyStats;
-  let lastPlayed = emptyPlay;
-  if (typeof window !== 'undefined') {
-    const localDist = localStorage.getItem('dist');
-    dist = localDist ? JSON.parse(localDist) : emptyDist;
-    const localStats = localStorage.getItem('stats');
-    stats = localStats ? JSON.parse(localStats) : emptyStats;
-    const localPlay = localStorage.getItem('last_played');
-    lastPlayed = localPlay ? JSON.parse(localPlay) : emptyPlay;
-  }
-  const gg = (win: boolean, answers: {name: string, quality: number}[], answer: string) => {
-    const newLastPlayed = { day, number: win ? answers.length : 6 };
-    localStorage.setItem('last_played', JSON.stringify(newLastPlayed));
-    const newDist = dist.map((d, i) =>
-      i === newLastPlayed.number - 1 ? d + 1 : d,
-    );
-    localStorage.setItem('dist', JSON.stringify(newDist));
-    const newStats = {
-      played: stats.played + 1,
-      win: stats.win + (win ? 1 : 0),
-      winrate: Math.floor(
-        ((stats.win + (win ? 1 : 0)) / (stats.played + 1)) * 100,
-      ),
-      streak: win ? (lastPlayed.number < 6 ? stats.streak + 1 : 1) : 0,
-      longest_streak:
-        win && lastPlayed.number < 6
-          ? Math.max(stats.streak + 1, stats.longest_streak)
-          : stats.longest_streak,
-    };
-    localStorage.setItem('stats', JSON.stringify(newStats));
-    localStorage.setItem('answers', JSON.stringify(answers));
-    localStorage.setItem('answer', JSON.stringify(answer));
-  };
+
   const mutation = trpc.useMutation(['constellation.answer'], {
     onSuccess: (data) => {
-      if (data.correct && data.answer) {
-        dispatch(setWin(true));
-        gg(true, data.answers, data.answer);
-      } else if (data.answers.length === 5 && data.answer) {
-        dispatch(setWin(false));
-        gg(false, data.answers, data.answer);
+      if (data.answer) {
+        if (data.correct) dispatch(setWin(true));
+        else dispatch(setWin(false));
+        dispatch(setName(data.answer));
+        const newGame = gg({
+          stats,
+          dist,
+          last_played,
+          day,
+          answers: data.answers,
+          answer: data.answer,
+          win: data.correct,
+        });
+        dispatch(setStats(newGame.stats));
+        dispatch(setDist(newGame.dist));
+        dispatch(setLastPlayed(newGame.last_played));
+        dispatch(setName(newGame.answer));
       }
       if (data.error) dispatch(setError(data.error));
       else setInput('');
       dispatch(setAnswers(data.answers));
-      if (data.answer) dispatch(setName(data.answer));
     },
   });
 

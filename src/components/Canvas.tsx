@@ -1,9 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { useAppDispatch, useAppSelector } from '~/redux/app/hooks';
-import { setDay, setName } from '~/redux/metaSlice';
+import { useAppSelector } from '~/redux/app/hooks';
 import { background, circle } from '~/utils/drawing';
-import { trpc } from '~/utils/trpc';
+
 export type Star2D = {
   x: number;
   y: number;
@@ -11,25 +10,17 @@ export type Star2D = {
   c: string;
 };
 
-function Canvas() {
-  const date = useAppSelector((state) => state.meta.date);
-  const done = useAppSelector((state) => state.meta.done);
-  const name = useAppSelector((state) => state.meta.name);
-  const dispatch = useAppDispatch();
-  const r = 20;
-  const { data } = trpc.useQuery(['constellation.get', { r, date }], {
-    onSuccess: (data) => {
-      if (!name) {
-        dispatch(setName(data.name));
-        dispatch(setDay(data.day));
-      }
-    },
-  });
+interface CanvasProps {
+  stars: Star2D[];
+  r: number;
+}
+
+function Canvas({stars, r}: CanvasProps) {
+  const done = useAppSelector((state) => state.game.done);
   const [mounted, setMounted] = React.useState(false);
-  const answer = useAppSelector((state) => state.meta.name);
+  const answer = useAppSelector((state) => state.game.name);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const draw = (ctx: CanvasRenderingContext2D) => {
-    const stars = data?.pos;
     background(ctx, '#000');
     if (!stars) return;
     for (const star of stars) {

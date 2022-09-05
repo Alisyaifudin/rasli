@@ -63,9 +63,9 @@ export const constellationRouter = createRouter()
     async resolve({
       input: { r, date },
     }): Promise<{ day: number, name: string; pos: Star2D[] }> {
-      const index_generator = seedrandom(date.substring(0, 10));
       const generator = seedrandom(date);
       const interval = intervalDate(new Date(date), genesis);
+      const index_generator = seedrandom(date.substring(0, 10));
       let obj: constellation[] = JSON.parse(
         fs.readFileSync('src/server/data/const.json', 'utf8'),
       );

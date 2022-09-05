@@ -7,6 +7,7 @@ import { twMerge } from 'tailwind-merge';
 import Graph from '~/components/Graph';
 import Timer from './Timer';
 import Share from './Share';
+import { useAppSelector } from '~/redux/app/hooks';
 interface StatisticsProps {
   open: boolean;
   onClose?: () => void;
@@ -16,12 +17,8 @@ const empty = { played: 0, win: 0, winrate: 0, streak: 0, longest_streak: 0 };
 
 function Statistics({ open, onClose }: StatisticsProps) {
   const [mounted, setMounted] = useState(true);
+  const stats = useAppSelector((state) => state.game.stats);
   const { t } = useTranslation('common');
-  let stats = empty;
-  if (typeof window !== 'undefined') {
-    const local = localStorage.getItem('stats');
-    stats = local ? JSON.parse(local) : empty;
-  }
   const handleClickClose = () => {
     setMounted(false);
     setTimeout(() => {
