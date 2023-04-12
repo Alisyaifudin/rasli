@@ -11,6 +11,7 @@ import { Input } from "~/components/ui/input";
 import { api } from "~/utils/api";
 import { useToast } from "~/hooks/use-toast";
 import SubmitButton from "~/components/SubmitButton";
+import { capitalizeFirst } from "~/utils/capitalize-first";
 
 interface AnswerProps {
   mounted: boolean;
@@ -41,7 +42,10 @@ function Answer({ mounted, mode }: AnswerProps) {
         setWon(true);
         dispatch(finishGame({ mode, result: data.message }));
         dispatch(
-          submitAnswer({ answer: { name: answer, closeness: -1 }, mode })
+          submitAnswer({
+            answer: { name: capitalizeFirst(answer), closeness: -1 },
+            mode,
+          })
         );
         setAnswer("");
         if (mode === "comfy")
@@ -59,7 +63,10 @@ function Answer({ mounted, mode }: AnswerProps) {
         setAnswer("");
         dispatch(
           submitAnswer({
-            answer: { name: answer, closeness: data.closeness },
+            answer: {
+              name: capitalizeFirst(answer),
+              closeness: data.closeness,
+            },
             mode,
           })
         );

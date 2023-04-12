@@ -18,7 +18,7 @@ export const guessRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       // transform guess to capitalize each first letter words
-      const guessTransform = input.guess.toLowerCase();
+      const guessTransform = input.guess.trim().toLowerCase();
       const currentPath = process.cwd();
       const constellations = await readCsv(
         path.join(currentPath, "src/server/api/routers/constellations.csv"),

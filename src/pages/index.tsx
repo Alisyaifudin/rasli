@@ -10,11 +10,13 @@ const Home: NextPage = () => {
   const mounted = useAppSelector((state) => state.meta.mounted);
 
   return (
-    <div className="m-2 mx-auto flex max-w-4xl flex-col items-center gap-5 rounded-lg bg-zinc-50 p-3 dark:bg-zinc-900">
-      <Title mode={mode} mounted={mounted} />
-      <Puzzle mode={mode} mounted={mounted} />
-      <Guess mode={mode} mounted={mounted} />
-      <Answer mode={mode} mounted={mounted} />
+    <div className="px-2">
+      <div className="m-2 py-4 mx-auto flex max-w-4xl flex-col items-center gap-5 rounded-lg bg-zinc-50 p-3 dark:bg-zinc-900">
+        <Title mode={mode} mounted={mounted} />
+        <Puzzle mode={mode} mounted={mounted} />
+        <Answer mode={mode} mounted={mounted} />
+        <Guess mode={mode} mounted={mounted} />
+      </div>
     </div>
   );
 };

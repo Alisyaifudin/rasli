@@ -18,7 +18,7 @@ export default function GraphComponent() {
   const dispatch = useAppDispatch();
   const played = history.stats.reduce((acc, cur) => acc + cur, 0);
   const max = Math.max(...history.stats) || 1;
-  const won = played - history.stats[6];
+  const won = Math.round(((played - history.stats[6]) / played) * 100);
 
   const handleOpen = (open: boolean) => {
     dispatch(openGraph(open));
@@ -38,11 +38,11 @@ export default function GraphComponent() {
         <div className="flex flex-col gap-1 text-black dark:text-white">
           <div className="grid grid-cols-4 items-center gap-1">
             <p className="text-center text-2xl">{played}</p>
-            <p className="text-center text-2xl">{won}</p>
+            <p className="text-center text-2xl">{won}%</p>
             <p className="text-center text-2xl">{history.currentStreak}</p>
             <p className="text-center text-2xl">{history.maxStreak}</p>
             <p className="text-center">Dimainkan</p>
-            <p className="text-center">% Menang</p>
+            <p className="text-center">Menang</p>
             <p className="text-center">Streak Saat Ini</p>
             <p className="text-center">Streak Maksimum</p>
           </div>
