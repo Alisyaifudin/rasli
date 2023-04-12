@@ -1,81 +1,52 @@
-import React, { useState } from 'react';
-import Modal from './Atom/Modal';
-import IconButton from './Atom/IconButton';
-import { AiOutlineClose } from 'react-icons/ai';
-import useTranslation from 'next-translate/useTranslation';
-import { twMerge } from 'tailwind-merge';
-import LanguageOption from './LanguageOption';
-import ModeOption from './ModeOption';
-import { useAppSelector } from '~/redux/app/hooks';
-interface SettingProps {
-  open: boolean;
-  onClose?: () => void;
-}
+import { Settings } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "~/components/ui/dialog";
+import { CONST } from "~/utils/constant";
+import ModeTab from "./ModeTab";
 
-function Setting({ open, onClose }: SettingProps) {
-  const mode = useAppSelector(state=>state.meta.mode)
-  const version = useAppSelector(state=>state.meta.version)
-  const [mounted, setMounted] = useState(true);
-  const { t } = useTranslation('common');
-  const handleClickClose = () => {
-    setMounted(false);
-    setTimeout(() => {
-      onClose?.();
-      setMounted(true);
-    }, 200);
-  };
+export default function SettingComponent() {
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      classNames={{
-        portal: mounted
-          ? ''
-          : twMerge(
-              mounted ? 'opacity-100' : 'opacity-0 pointer-events-none',
-              'transition-opacity',
-            ),
-      }}
-    >
-      <div className="flex justify-between items-center px-3 pt-3">
-        <p className="font-bold text-xl">{t('SETTING_TITLE').toUpperCase()}</p>
-        <IconButton onClick={handleClickClose}>
-          <AiOutlineClose className="text-red-500" fontSize={20} />
-        </IconButton>
-      </div>
-      <div className="flex items-center justify-evenly p-3 my-2">
-        <LanguageOption />
-        <ModeOption />
-      </div>
-      <div className="flex flex-col gap-2 px-5">
-        <p>
-          {t('SETTING_DESC_1')}
-          &nbsp;
-          {mode === "comfy" && t('SETTING_DESC_2')}
-        </p>
-        <p>{t('SETTING_DESC_3')} {version}</p>
-      </div>
-      <div className="flex justify-evenly items-center h-20">
-        <p>{t('FEEDBACK')}</p>
-        <a
-          href="mailto:muhammad.ali.syaifudin@hotmail.com"
-          className="underline"
-        >
-          {t('EMAIL')}
-        </a>
-      </div>
-      <div className="flex justify-between items-center text-xs p-2">
-        <p>© 2022 Muhammad Ali Syaifudin</p>
-        <a
-          href="https://bit.ly/HadiahTerimaKasih"
-          target="_blank"
-          className="underline"
-        >
-          {t('THANKS')}
-        </a>
-      </div>
-    </Modal>
+    <Dialog>
+      <DialogTrigger asChild>
+        <button>
+          <Settings aria-label="settings" className="mr-2 h-6 w-6" />
+        </button>
+      </DialogTrigger>
+      <DialogContent className="bg-white dark:bg-zinc-800">
+        <DialogHeader>
+          <DialogTitle>Pengaturan</DialogTitle>
+        </DialogHeader>
+        <div className="text-black dark:text-white">
+          <div className="flex flex-col gap-2">
+            <ModeTab/>
+            <p>
+              RASLI adalah game menebak rasi bintang, terinspirasi dari game
+              wordle.
+            </p>
+            <p>Ini adalah RASLI versi {CONST.VERSION}</p>
+          </div>
+          <div className="flex justify-around p-4 text-lg">
+            <p>Masukan?</p>
+            <a
+              className="underline"
+              href="mailto:muhammad.ali.syaifudin@hotmail.com"
+            >
+              Email
+            </a>
+          </div>
+          <div className="flex justify-between text-[0.7rem] text-black/70 dark:text-white/70">
+            <p>© 2022 Muhammad Ali Syaifudin</p>
+            <a className="underline" href="https://bit.ly/HadiahTerimaKasih">
+              Terimakasih!
+            </a>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }
-
-export default Setting;

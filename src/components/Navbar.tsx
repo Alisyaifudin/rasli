@@ -1,54 +1,29 @@
-import React, { useState } from 'react';
-import IconButton from './Atom/IconButton';
-import { MdInfo } from 'react-icons/md';
-import { BsFillGearFill } from 'react-icons/bs';
-import { IoStatsChartSharp } from 'react-icons/io5';
-import Info from './Info';
-import ThemeModeBtn from './ThemeModeBtn';
-import Setting from './Setting';
-import { useAppSelector } from '~/redux/app/hooks';
+import { CONST } from "~/utils/constant";
+import ThemeButton from "~/components/ThemeButton";
+import Info from "~/components/Info";
+import Setting from "~/components/Setting";
+import Graph from "./Graph";
 
 function Navbar() {
-  const version = useAppSelector(state=> state.meta.version)
-  const [openInfo, setOpenInfo] = useState(true);
-  const [openSetting, setOpenSetting] = useState(false);
-  const [openStats, setOpenStats] = useState(false);
-
-  const handleClickInfo = () => setOpenInfo(true);
-  const handleCloseInfo = () => setOpenInfo(false);
-
-  const handleClickSetting = () => setOpenSetting(true);
-  const handleCloseSetting = () => setOpenSetting(false);
-
   return (
-    <>
-      <div className="sticky top-0 dark:bg-zinc-900 bg-blue-500 p-2 text-white">
-        <div className="max-w-2xl mx-auto flex justify-between items-center">
-          <div className="flex gap-2">
-            <IconButton onClick={handleClickInfo}>
-              <MdInfo fontSize={26} />
-            </IconButton>
-            <ThemeModeBtn />
-          </div>
-          <div className="flex text-sm items-end overflow-hidden">
-            <h1 className="overflow-hidden text-ellipsis font-extrabold text-4xl ">
-              RASLI
-            </h1>
-            <p className="overflow-hidden text-ellipsis">v{version}</p>
-          </div>
-          <div className="flex">
-            <IconButton>
-              <IoStatsChartSharp fontSize={26} />
-            </IconButton>
-            <IconButton onClick={handleClickSetting}>
-              <BsFillGearFill fontSize={26} />
-            </IconButton>
-          </div>
+    <nav className="sticky top-0 z-50 bg-blue-500 p-2 text-white dark:bg-zinc-900">
+      <div className="mx-auto flex max-w-4xl items-center justify-between">
+        <div className="flex gap-4">
+          <Info />
+          <ThemeButton />
+        </div>
+        <div className="flex items-end overflow-hidden text-sm">
+          <h1 className="overflow-hidden text-ellipsis text-4xl font-bold ">
+            RASLI
+          </h1>
+          <p className="overflow-hidden text-ellipsis">v{CONST.VERSION}</p>
+        </div>
+        <div className="flex gap-4">
+          <Graph />
+          <Setting />
         </div>
       </div>
-      <Info open={openInfo} onClose={handleCloseInfo} />
-      <Setting open={openSetting} onClose={handleCloseSetting} />
-    </>
+    </nav>
   );
 }
 

@@ -1,78 +1,84 @@
-import React, { useState } from 'react';
-import Modal from './Atom/Modal';
-import IconButton from './Atom/IconButton';
-import { AiOutlineClose } from 'react-icons/ai';
-import Image from 'next/image';
-import useTranslation from 'next-translate/useTranslation';
-import { twMerge } from 'tailwind-merge';
-interface InfoProps {
-  open: boolean;
-  onClose?: () => void;
-}
+import { Info } from "lucide-react";
+import Image from "next/image";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "~/components/ui/dialog";
+import { Separator } from "~/components/ui/separator";
+import { AspectRatio } from "~/components/ui/aspect-ratio";
 
-function Info({ open, onClose }: InfoProps) {
-  const [mounted, setMounted] = useState(true);
-  const { t } = useTranslation('common');
-  const lines = Array.from(Array(3).keys()).map((i) => t(`INFO_DESC_${i + 1}`));
-  const handleClickClose = () => {
-    setMounted(false);
-    setTimeout(() => {
-      onClose?.();
-      setMounted(true);
-    }, 200);
-  };
+export default function InfoComponent() {
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      classNames={{
-        portal: mounted
-          ? ''
-          : twMerge(
-              mounted ? 'opacity-100' : 'opacity-0 pointer-events-none',
-              'transition-opacity',
-            ),
-      }}
-    >
-      <div className="flex justify-between items-center px-3 pt-3">
-        <p className="font-bold">{t('INFO_TITLE').toUpperCase()}</p>
-        <IconButton onClick={handleClickClose}>
-          <AiOutlineClose className="text-red-500" fontSize={20} />
-        </IconButton>
-      </div>
-      <div className="px-3 gap-1 flex flex-col">
-        {lines.map((line, i) => (
-          <p key={i}>{line}</p>
-        ))}
-      </div>
-      <hr className="w-[95%] mx-auto my-3 border-white/30" />
-      <div className="flex flex-col p-2 gap-5">
-        <p className="font-bold">{t('EXAMPLE')}</p>
-        <img className="self-center max-w-md w-[100%]" src="UrsaMinor.webp" />
-      </div>
-      <div className="flex flex-col gap-3 pl-3">
-        <div>
-          <p className="dark:bg-zinc-900 shadow-md bg-zinc-100 w-fit px-2 py-1 rounded-md text-red-500">
-            PUPPIS
-          </p>
-          <p className="p-1">{t('INFO_TOO_FAR')}</p>
+    <Dialog>
+      <DialogTrigger asChild>
+        <button>
+          <Info aria-label="info" className="mr-2 h-6 w-6" />
+        </button>
+      </DialogTrigger>
+      <DialogContent className="bg-white dark:bg-zinc-800">
+        <DialogHeader>
+          <DialogTitle>CARA BERMAIN</DialogTitle>
+        </DialogHeader>
+        <div className="text-black dark:text-white">
+          <div className="flex flex-col gap-1">
+            <p>Tebak RASLI dalam 6 kesempatan. 1 hari ada 1 rasi rahasia.</p>
+            <p>
+              Setiap tebakan adalah nama rasi bintang yang valid menurut IAU.
+              Ketikan jawaban pada petak yang disediakan, lalu tekan JAWAB (atau
+              tekan Enter).
+            </p>
+            <p>
+              Setelah menjawab, tebakan akan berubah warna, bergantung seberapa
+              dekat rasi tebakan dengan rasi rahasia.
+            </p>
+          </div>
+          <Separator className="my-4" />
+          <div className="flex flex-col gap-2">
+            <p className="text-lg font-bold">Contoh</p>
+            <AspectRatio
+              ratio={16 / 9}
+              className="bg-slate-50 dark:bg-slate-800"
+            >
+              <Image
+                src="/UrsaMinor.webp"
+                alt="Photo by Alvaro Pinot"
+                sizes="100%"
+                fill
+                className="rounded-md object-cover"
+              />
+            </AspectRatio>
+            <ul className="flex flex-col gap-3">
+              <li>
+                <p className="w-fit rounded-md bg-zinc-100 px-2 py-1 text-red-500 shadow-md dark:bg-zinc-900">
+                  PUPPIS
+                </p>
+                <p className="p-1">
+                  Warna merah menunjukkan rasi tebakan terlalu jauh
+                </p>
+              </li>
+              <li>
+                <p className="w-fit rounded-md bg-zinc-100 px-2 py-1 text-orange-500 shadow-md dark:bg-zinc-900">
+                  LEO
+                </p>
+                <p className="p-1">
+                  Warna jingga menunjukkan rasi tebakan agak jauh
+                </p>
+              </li>
+              <li>
+                <p className="w-fit rounded-md bg-zinc-100 px-2 py-1 text-cyan-500 shadow-md dark:bg-zinc-900">
+                  DRACO
+                </p>
+                <p className="p-1">
+                  Warna biru menunjukkan rasi tebakan sudah dekat
+                </p>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div>
-          <p className="dark:bg-zinc-900 shadow-md bg-zinc-100 w-fit px-2 py-1 rounded-md text-orange-500">
-            LEO
-          </p>
-          <p className="p-1">{t('INFO_FAR')}</p>
-        </div>
-        <div>
-          <p className="dark:bg-zinc-900 shadow-md bg-zinc-100 w-fit px-2 py-1 rounded-md text-green-500">
-            DRACO
-          </p>
-          <p className="p-1">{t('INFO_NEAR')}</p>
-        </div>
-      </div>
-      <hr className="w-[95%] mx-auto my-3 border-white/30" />
-    </Modal>
+      </DialogContent>
+    </Dialog>
   );
 }
-
-export default Info;
