@@ -9,6 +9,7 @@ import {
 import { useAppDispatch, useAppSelector } from "~/hooks/redux";
 import For from "./control-flow/For";
 import { openGraph } from "~/store/metaSlice";
+import { cn } from "~/utils/cn";
 
 export default function GraphComponent() {
   const mode = useAppSelector((state) => state.meta.mode);
@@ -58,9 +59,14 @@ export default function GraphComponent() {
                   {(value, i) => (
                     <div
                       key={i}
-                      style={{ width: `${5 + (value / max) * 95}%` }}
+                      style={{ width: `${10 + (value / max) * 90}%` }}
                     >
-                      <div className="h-full animate-expand-witdh bg-indigo-500 px-1 text-right">
+                      <div
+                        className={cn(
+                          "animate-expand-witd h-full px-1 text-right",
+                          i < 6 ? "bg-indigo-500" : "bg-red-500"
+                        )}
+                      >
                         <span className="animate-fade-in">{value}</span>
                       </div>
                     </div>

@@ -47,7 +47,7 @@ function Answer({ mounted, mode }: AnswerProps) {
         if (mode === "comfy")
           setTimeout(() => {
             dispatch(openGraph(true));
-          }, 1000);
+          }, 2000);
         return;
       }
       if (data.code === "NOT_FOUND") {
@@ -70,7 +70,7 @@ function Answer({ mounted, mode }: AnswerProps) {
           dispatch(finishGame({ mode, result: data.message }));
           setTimeout(() => {
             dispatch(openGraph(true));
-          }, 1000);
+          }, 2000);
         }
         setWon(false);
       }

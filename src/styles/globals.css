@@ -7,6 +7,15 @@
         @apply dark:bg-zinc-800 bg-white
 
     }
+    .level-1 {
+        @apply dark:bg-red-600 bg-red-500
+    }
+    .level-2 {
+        @apply dark:bg-orange-600 bg-orange-500
+    }
+    .level-3 {
+        @apply dark:bg-yellow-600 bg-yellow-500
+    }
 }
 body {
     min-height: 100vh;

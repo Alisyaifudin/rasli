@@ -4,6 +4,7 @@ import Show from "~/components/control-flow/Show";
 import Skeleton from "~/components/aux/Skeleton";
 import For from "~/components/control-flow/For";
 import { useAppSelector } from "~/hooks/redux";
+import { cn } from "~/utils/cn";
 
 interface GuessProps {
   mounted: boolean;
@@ -30,15 +31,18 @@ function Guess({ mounted, mode }: GuessProps) {
                 }
               >
                 <p
-                  className={
+                  className={cn(
+                    !!answer.name
+                      ? "rounded-md px-1 font-bold text-white shadow-sm"
+                      : null,
                     answer.closeness === -1
                       ? "text-green-500"
                       : answer.closeness < 3
-                      ? "text-cyan-500"
+                      ? "level-3"
                       : answer.closeness < 5
-                      ? "text-orange-500"
-                      : "text-red-500"
-                  }
+                      ? "level-2"
+                      : "level-1"
+                  )}
                 >
                   {answer.name}
                 </p>
