@@ -18,7 +18,8 @@ export default function GraphComponent() {
   const dispatch = useAppDispatch();
   const played = history.stats.reduce((acc, cur) => acc + cur, 0);
   const max = Math.max(...history.stats) || 1;
-  const won = Math.round(((played - history.stats[6]) / played) * 100);
+  const won =
+    played > 0 ? Math.round(((played - history.stats[6]) / played) * 100) : 0;
 
   const handleOpen = (open: boolean) => {
     dispatch(openGraph(open));
@@ -63,7 +64,7 @@ export default function GraphComponent() {
                     >
                       <div
                         className={cn(
-                          "animate-expand-witd h-full px-1 text-right",
+                          "h-full animate-expand-witdh px-1 text-right",
                           i < 6 ? "bg-indigo-500" : "bg-red-500"
                         )}
                       >
