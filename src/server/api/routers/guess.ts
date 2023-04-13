@@ -21,7 +21,10 @@ export const guessRouter = createTRPCRouter({
       const guessTransform = input.guess.trim().toLowerCase();
       const currentPath = process.cwd();
       const constellations = await readCsv(
-        path.join(currentPath, "src/server/api/routers/constellations.csv"),
+        path.join(
+          currentPath,
+          "src/server/api/routers/data/constellations.csv"
+        ),
         ",",
         constellationSchema
       );

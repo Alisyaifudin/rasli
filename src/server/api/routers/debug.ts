@@ -1,7 +1,4 @@
-import { random } from "~/utils/random";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { encryptString } from "~/utils/encryption";
-import { env } from "~/env.mjs";
 import { coneFilter } from "~/utils/coneFilter";
 import readCsv from "~/utils/read-csv";
 import { z } from "zod";
@@ -33,21 +30,23 @@ export const lineSchema = z.object({
   name: z.string(),
 });
 
-export const puzzleRouter = createTRPCRouter({
-  getPuzzle: publicProcedure
+export const debugRouter = createTRPCRouter({
+  getSpecificPuzzle: publicProcedure
     .input(
       z.object({
-        seed: z.string(),
-        mode: z.enum(["comfy", "unlimited"]),
+        name: z.string(),
+        center: z
+          .object({
+            ra: z.number(),
+            dec: z.number(),
+          })
+          .optional(),
+        radius: z.number().optional(),
+        rotation: z.number().min(0).max(360),
       })
     )
     .query(async ({ input }) => {
-      const today = new Date();
-      const date = today.toDateString();
-      const seed =
-        input.mode === "comfy" ? date : input.seed ?? Math.random().toString();
-      const r = Math.round(random(seed) * 10000) % 89;
-
+      const { name, center, radius, rotation } = input;
       // check the current path
       const currentPath = process.cwd();
       const rawConstellations = await readCsv(
@@ -72,12 +71,12 @@ export const puzzleRouter = createTRPCRouter({
           radius,
         };
       });
-      const constellation = constellations[r];
-      const encryptedName = encryptString(
-        constellation.name,
-        env.ENCRYPTION_KEY,
-        seed
+      const constellation = constellations.find(
+        (c) => c.name.toLowerCase() === name.toLowerCase()
       );
+      if (!constellation) {
+        throw new Error("Constellation not found");
+      }
       const rawStars = await readCsv(
         path.join(currentPath, "src/server/api/routers/data/stars.csv"),
         ",",
@@ -97,13 +96,18 @@ export const puzzleRouter = createTRPCRouter({
           hd: star.hd,
         };
       });
-      const center = { ra: constellation.ra, dec: constellation.dec };
-
-      const rotation = random(seed) * 2 * Math.PI;
-      const inside = coneFilter(center, constellation.radius, rotation, stars);
+      const constCenter = {
+        ra: constellation.ra,
+        dec: constellation.dec,
+      };
+      const inside = coneFilter(
+        center ?? constCenter,
+        radius ?? constellation.radius,
+        (rotation * Math.PI) / 180,
+        stars
+      );
       const linesRaw = await readCsv(
         path.join(currentPath, "src/server/api/routers/data/lines.csv"),
-        // "/home/alisyaifudin/Program/JS/rasli4/src/server/api/routers/constellations.csv",
         ",",
         lineSchema
       );
@@ -115,8 +119,14 @@ export const puzzleRouter = createTRPCRouter({
         if (isNaN(ra1) || isNaN(dec1) || isNaN(ra2) || isNaN(dec2)) {
           throw new Error("Invalid line data\n" + JSON.stringify(line));
         }
-        const edge1 = skyToXY(center, rotation, { ra: ra1, dec: dec1 });
-        const edge2 = skyToXY(center, rotation, { ra: ra2, dec: dec2 });
+        const edge1 = skyToXY(center ?? constCenter, rotation * Math.PI/180, {
+          ra: ra1,
+          dec: dec1,
+        });
+        const edge2 = skyToXY(center ?? constCenter, rotation * Math.PI/180, {
+          ra: ra2,
+          dec: dec2,
+        });
         return {
           edge1: {
             x: edge1.x,
@@ -129,11 +139,30 @@ export const puzzleRouter = createTRPCRouter({
           in: line.name === constellation.name,
         };
       });
+
       return {
-        name: encryptedName,
+        name: constellation.name,
+        center: center ?? constCenter,
         stars: inside,
-        radius: constellation.radius,
+        radius: radius ?? constellation.radius,
         lines: lines,
       };
     }),
+  getConstellations: publicProcedure.query(async () => {
+    const currentPath = process.cwd();
+    const rawConstellations = await readCsv(
+      path.join(currentPath, "src/server/api/routers/data/constellations.csv"),
+      ",",
+      constellationSchema
+    );
+    const constellations = rawConstellations.map((c) => ({
+      name: c.name,
+      center: {
+        ra: Number(c.ra),
+        dec: Number(c.dec),
+      },
+      radius: Number(c.radius),
+    }));
+    return constellations;
+  }),
 });

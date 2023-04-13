@@ -2,16 +2,17 @@ import { type AppType } from "next/app";
 import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import { ThemeProvider } from "next-themes";
-import Layout from "~/layouts/Layout";
 import { Toaster } from "~/components/ui/toaster";
+import { store } from "~/store/store";
+import { Provider } from "react-redux";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <ThemeProvider attribute="class">
-      <Layout>
+      <Provider store={store}>
         <Component {...pageProps} />
-      </Layout>
-      <Toaster/>
+      </Provider>
+      <Toaster />
     </ThemeProvider>
   );
 };

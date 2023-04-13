@@ -83,10 +83,11 @@ export function draw(
     };
     // dark outer circle
     if (!!lines.length) {
-      options.radius *= 2;
+      const dr = Math.min(options.radius, 3);
+      options.radius += dr;
       circle(ctx, options);
       ctx.globalAlpha = 1;
-      options.radius /= 2;
+      options.radius -= dr;
     }
     // the star
     options.color = star.c;
