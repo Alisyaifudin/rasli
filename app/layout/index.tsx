@@ -35,7 +35,6 @@ export default function RootLayout() {
 			</header>
 			<Outlet context={context} />
 			<Toaster />
-			<footer>This is footer</footer>
 		</>
 	);
 }

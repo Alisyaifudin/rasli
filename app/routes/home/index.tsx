@@ -19,7 +19,7 @@ export default function Page() {
 	const isLoading = data === undefined;
 	if (isLoading)
 		return (
-			<main className="m-2 mx-auto min-h-[100svh] flex max-w-4xl flex-col items-center gap-5 rounded-lg bg-zinc-50 p-3 py-4 dark:bg-zinc-900">
+			<main className="m-2 mx-auto min-h-[calc(100svh-72px)] flex max-w-xl flex-col items-center gap-5 rounded-lg bg-zinc-50 p-3 py-4 dark:bg-zinc-900">
 				<Title />
 			</main>
 		);
@@ -28,7 +28,7 @@ export default function Page() {
 	const name = completed ? puzzle.name : "Misteri";
 
 	return (
-		<main className="m-2 mx-auto min-h-[100svh] flex max-w-xl flex-col items-center gap-5 rounded-lg bg-zinc-50 p-3 py-4 dark:bg-zinc-900">
+		<main className="m-2 mx-auto min-h-[calc(100svh-72px)] flex max-w-xl flex-col items-center gap-5 rounded-lg bg-zinc-50 p-3 py-4 dark:bg-zinc-900">
 			<Title name={name} />
 			<Puzzle puzzle={puzzle} completed={completed} />
 			<Answer name={puzzle.name} constellations={constellations} />
