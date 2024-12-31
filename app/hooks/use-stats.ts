@@ -1,5 +1,6 @@
 import { useOutletContext } from "@remix-run/react";
 import { Context, Stats } from "./use-mount-local-value";
+import {Temporal} from "temporal-polyfill"
 
 export function useStatistics(mode: "comfy" | "unlimited") {
 	const contextRaw = useOutletContext();
@@ -29,13 +30,14 @@ function addAnswerRaw(
 	const answers = statistics.answers;
 	const index = answers.filter((a) => a.name !== "").length;
 	if (index >= 5) return statistics;
+	const now = Temporal.Now.instant().epochSeconds;
 	answers[index] = answer;
 	if (answer.name === name) {
-		const updatedStats: Stats = { ...statistics, completed: true, answers };
+		const updatedStats: Stats = { ...statistics, completed: true, completedAt: now, answers };
 		return finish(index, updatedStats);
 	}
 	if (index === 5) {
-		const updatedStats: Stats = { ...statistics, completed: true, answers };
+		const updatedStats: Stats = { ...statistics, completed: true, completedAt: now, answers };
 		return finish(6, updatedStats);
 	}
 	return { ...statistics, answers };

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Temporal } from "temporal-polyfill";
 import { z } from "zod";
 
 const statsSchema = z.object({
@@ -6,6 +7,7 @@ const statsSchema = z.object({
 	maxStreak: z.number().min(0),
 	stats: z.array(z.number()).length(7),
 	completed: z.boolean(),
+	completedAt: z.number(),
 	answers: z.array(
 		z.object({
 			name: z.string(),
@@ -29,6 +31,7 @@ const defaultValue: Stats = {
 	maxStreak: 0,
 	stats: Array.from({ length: 7 }, () => 0),
 	completed: false,
+	completedAt: 0,
 	answers: Array.from({ length: 6 }, () => ({ name: "", distance: 0 })),
 	seed: new Date().toDateString(),
 };
@@ -50,22 +53,31 @@ export function useMountLocalValue(): Context {
 	useEffect(() => {
 		if (!window) return;
 		setMount(true);
+		const startOfDay = Temporal.Now.zonedDateTimeISO().startOfDay().epochSeconds;
+		console.log({ startOfDay });
 		for (const key of keys) {
 			const statsStr = window.localStorage.getItem("rasli_local_value_" + key) ?? "";
-			let stats;
+			let statsRaw;
 			try {
-				stats = JSON.parse(statsStr);
+				statsRaw = JSON.parse(statsStr);
 			} catch (error) {
-				stats = "";
+				statsRaw = "";
 			}
-			const parsed = statsSchema.safeParse(stats);
+			const parsed = statsSchema.safeParse(statsRaw);
 			if (!parsed.success) {
 				window.localStorage.removeItem("rasli_local_value_" + key);
 			} else {
+				const statistics = parsed.data;
+				if (key === "comfy" && statistics.completed && statistics.completedAt < startOfDay) {
+					statistics.completed = false;
+					statistics.answers = defaultValue.answers;
+					statistics.seed = defaultValue.seed;
+				}
 				setLocalValue((prev) => ({
 					...prev,
-					[key]: parsed.data,
+					[key]: statistics,
 				}));
+				window.localStorage.setItem("rasli_local_value_" + key, JSON.stringify(statistics));
 			}
 		}
 	}, []);
