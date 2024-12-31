@@ -19,7 +19,7 @@ export function generatePuzzle(
 
 	const rotation = random(seed) * 2 * Math.PI;
 	const inside = coneFilter(center, constellation.radius, rotation, stars);
-	const lines = readLineCsv(lineCsv, center, rotation);
+	const lines = readLineCsv(lineCsv, center, rotation, constellation.name);
 	return {
 		name: constellation.name,
 		stars: inside,

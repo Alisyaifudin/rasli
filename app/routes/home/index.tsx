@@ -5,6 +5,7 @@ import { generatePuzzle } from "~/puzzle/generate-puzzle";
 import { useMode } from "~/hooks/use-mode";
 import { useStatistics } from "~/hooks/use-stats";
 import { Temporal } from "temporal-polyfill";
+import {Puzzle} from "./Puzzle";
 
 export const meta: MetaFunction = () => {
 	return [{ title: "Rasli" }, { name: "description", content: "Selamat datang di rasli!" }];
@@ -23,14 +24,14 @@ export default function Page() {
 			</main>
 		);
 	const puzzle = generatePuzzle(data[0], data[1], data[2], mode);
-	const name = completedAt > startOfDay ? puzzle.name : "Misteri";
-	console.log(puzzle);
+	const completed = completedAt > startOfDay;
+	const name = completed ? puzzle.name : "Misteri";
 	return (
-		<main className="m-2 mx-auto min-h-[100svh] flex max-w-4xl flex-col items-center gap-5 rounded-lg bg-zinc-50 p-3 py-4 dark:bg-zinc-900">
+		<main className="m-2 mx-auto min-h-[100svh] flex max-w-xl flex-col items-center gap-5 rounded-lg bg-zinc-50 p-3 py-4 dark:bg-zinc-900">
 			<Title name={name} />
-			{/* <Puzzle mode={mode} mounted={mounted} />
-			<Answer mode={mode} mounted={mounted} />
-			<Guess mode={mode} mounted={mounted} /> */}
+			<Puzzle puzzle={puzzle} completed={completed} />
+			{/* <Answer mode={mode} mounted={mounted} /> */}
+			{/* <Guess mode={mode} mounted={mounted} /> */}
 		</main>
 	);
 }

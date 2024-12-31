@@ -65,7 +65,7 @@ export function readStarCsv(text: string): Star[] {
 	return parsed;
 }
 
-type Line = {
+export type Line = {
 	edge1: {
 		x: number;
 		y: number;
@@ -74,10 +74,10 @@ type Line = {
 		x: number;
 		y: number;
 	};
-	in: string;
+	in: boolean;
 };
 
-export function readLineCsv(text: string, center: Position, rotation: number): Line[] {
+export function readLineCsv(text: string, center: Position, rotation: number, name: string): Line[] {
 	const rows = text.split("\n");
 	const parsed: Line[] = [];
 	if (rows.length === 0) {
@@ -95,7 +95,7 @@ export function readLineCsv(text: string, center: Position, rotation: number): L
 		const dec2 = Number(row[3]);
 		const edge1 = skyToXY(center, rotation, { ra: ra1, dec: dec1 });
 		const edge2 = skyToXY(center, rotation, { ra: ra2, dec: dec2 });
-		parsed.push({ edge1, edge2, in: row[4] });
+		parsed.push({ edge1, edge2, in: row[4] === name });
 	}
 	return parsed;
 }
