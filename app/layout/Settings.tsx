@@ -2,6 +2,7 @@ import { Settings as SettingsIcon } from "lucide-react";
 import {
 	Dialog,
 	DialogContent,
+	DialogDescription,
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
@@ -24,7 +25,9 @@ export function Settings() {
 				<div className="text-black dark:text-white">
 					<div className="flex flex-col gap-2">
 						<ModeTab />
-						<p>RASLI adalah game menebak rasi bintang, terinspirasi dari game wordle.</p>
+						<DialogDescription className="text-base dark:text-white text-black">
+							RASLI adalah game menebak rasi bintang, terinspirasi dari game wordle.
+						</DialogDescription>
 						<p>Ini adalah RASLI versi {CONST.VERSION}</p>
 					</div>
 					<div className="flex justify-around p-4 text-lg">

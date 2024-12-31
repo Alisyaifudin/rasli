@@ -2,6 +2,7 @@ import { ExternalLink, Info as Infoicon } from "lucide-react";
 import {
 	Dialog,
 	DialogContent,
+	DialogDescription,
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
@@ -25,10 +26,10 @@ export function Info() {
 				<ScrollArea className="max-h-[80vh] w-full rounded-md sm:p-4">
 					<div className="text-black dark:text-white">
 						<div className="flex flex-col gap-1">
-							<p>
+							<DialogDescription className="text-base dark:text-white text-black">
 								Tebak RASLI dalam 6 kesempatan. 1 hari ada 1 rasi rahasia (mode <i>comfy</i>).
-							</p>
-							<p>
+							</DialogDescription>
+							<DialogDescription className="text-base dark:text-white text-black">
 								Setiap tebakan adalah nama rasi bintang yang valid menurut{" "}
 								<a
 									href="https://www.iau.org/public/themes/constellations/"
@@ -40,11 +41,11 @@ export function Info() {
 								</a>
 								. Ketikan jawaban pada petak yang disediakan, lalu tekan JAWAB (atau tekan{" "}
 								<i>Enter</i>).
-							</p>
-							<p>
+							</DialogDescription>
+							<DialogDescription className="text-base dark:text-white text-black">
 								Setelah menjawab, tebakan akan berubah warna, bergantung seberapa dekat rasi tebakan
 								dengan rasi rahasia.
-							</p>
+							</DialogDescription>
 						</div>
 						<Separator className="my-4" />
 						<div className="flex flex-col gap-2">
