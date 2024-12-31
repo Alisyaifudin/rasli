@@ -1,5 +1,5 @@
 import { useOutletContext } from "@remix-run/react";
-import { Context } from "./use-mount-local-value";
+import { Context, Stats } from "./use-mount-local-value";
 import { Temporal } from "temporal-polyfill";
 
 export function useStatistics(mode: "comfy" | "unlimited") {
@@ -9,45 +9,57 @@ export function useStatistics(mode: "comfy" | "unlimited") {
 	}
 	const context = contextRaw as Context;
 	const statistics = context.localValue[mode];
-	const { currentStreak, maxStreak, numOfGuesses, stats, completedAt } = statistics;
-	const now = Temporal.Now.instant().epochSeconds;
-	const updateHistory = (num: number) => {
-		if (num < 1 || !Number.isInteger(num)) {
-			throw new Error("invalid number of guesses");
-		}
-		let updatedStatistics = statistics;
-		if (num > 6) {
-			const updatedStats = stats;
-			updatedStats[6] += 1;
-			updatedStatistics = {
-				numOfGuesses: 6,
-				currentStreak: 0,
-				stats: updatedStats,
-				maxStreak,
-				completedAt: now,
-			};
-		} else {
-			const updatedCurrentStreak = currentStreak + 1;
-			const updatedMaxStreak = updatedCurrentStreak > maxStreak ? updatedCurrentStreak : maxStreak;
-			const updatedStats = stats;
-			updatedStats[num] += 1;
-			updatedStatistics = {
-				numOfGuesses: num,
-				currentStreak: updatedCurrentStreak,
-				maxStreak: updatedMaxStreak,
-				stats: updatedStats,
-				completedAt: now,
-			};
-		}
-		context.updateStats(mode, updatedStatistics);
+
+	// finish the puzzle
+	// add answer
+	const addAnswer = (answer: string, name: string) => {
+		context.updateStats(mode, addAnswerRaw(answer, name, statistics));
 	};
 
 	return {
-		currentStreak,
-		maxStreak,
-		numOfGuesses,
-		stats,
-		completedAt,
-		updateHistory,
+		...statistics,
+		addAnswer,
 	};
+}
+
+function addAnswerRaw(answer: string, name: string, statistics: Stats): Stats {
+	const answers = statistics.answers;
+	if (answers.length >= 6) return statistics;
+	answers.push(answer);
+	const now = Temporal.Now.instant().epochSeconds;
+	if (answer === name) {
+		const updatedStats: Stats = { ...statistics, completed: true, lastAnswerAt: now, answers };
+		return finish(answers.length, updatedStats);
+	}
+	if (answers.length === 6) {
+		const updatedStats: Stats = { ...statistics, completed: true, lastAnswerAt: now, answers };
+		return finish(7, updatedStats);
+	}
+	return { ...statistics, lastAnswerAt: now, answers };
+}
+
+function finish(num: number, statistics: Stats): Stats {
+	let updatedStatistics = statistics;
+	if (num > 6) {
+		const updatedStats = statistics.stats;
+		updatedStats[6] += 1;
+		updatedStatistics = {
+			...statistics,
+			currentStreak: 0,
+			stats: updatedStats,
+		};
+	} else {
+		const updatedCurrentStreak = statistics.currentStreak + 1;
+		const updatedMaxStreak =
+			updatedCurrentStreak > statistics.maxStreak ? updatedCurrentStreak : statistics.maxStreak;
+		const updatedStats = statistics.stats;
+		updatedStats[num] += 1;
+		updatedStatistics = {
+			...statistics,
+			currentStreak: updatedCurrentStreak,
+			maxStreak: updatedMaxStreak,
+			stats: updatedStats,
+		};
+	}
+	return updatedStatistics;
 }

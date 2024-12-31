@@ -6,11 +6,11 @@ export function generatePuzzle(
 	constellationsCsv: string,
 	starsCsv: string,
 	lineCsv: string,
-	mode: "comfy" | "unlimited"
+	seed: string
 ) {
-	const today = new Date();
-	const date = today.toDateString();
-	const seed = mode === "comfy" ? date : Math.random().toString();
+	// const today = new Date();
+	// const date = today.toDateString();
+	// const seed = mode === "comfy" ? date : Math.random().toString();
 	const r = Math.round(random(seed) * 10000) % 89;
 	const constellations = readConstellationCsv(constellationsCsv);
 	const constellation = constellations[r];

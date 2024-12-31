@@ -5,11 +5,13 @@ const statsSchema = z.object({
 	currentStreak: z.number().min(0),
 	maxStreak: z.number().min(0),
 	stats: z.array(z.number()).length(7),
-	numOfGuesses: z.number().min(0).max(6),
-	completedAt: z.number(),
+	completed: z.boolean(),
+	answers: z.string().array(),
+	lastAnswerAt: z.number(),
+	seed: z.string()
 });
 
-type Stats = z.infer<typeof statsSchema>;
+export type Stats = z.infer<typeof statsSchema>;
 
 const localValueSchema = z.object({
 	comfy: statsSchema,
@@ -21,9 +23,11 @@ type LocalValue = z.infer<typeof localValueSchema>;
 const defaultValue: Stats = {
 	currentStreak: 0,
 	maxStreak: 0,
-	numOfGuesses: 0,
 	stats: [0, 0, 0, 0, 0, 0, 0],
-	completedAt: 0,
+	completed: false,
+	answers: [],
+	lastAnswerAt: 0,
+	seed: new Date().toDateString()
 };
 
 const keys = ["rasli_local_value_comfy", "rasli_local_value_unlimited"] as const;
@@ -67,7 +71,7 @@ export function useMountLocalValue(): Context {
 		window.localStorage.setItem("rasli_local_value_" + mode, JSON.stringify(updatedStats));
 		setLocalValue((prev) => ({
 			...prev,
-			[mode]: updateStats,
+			[mode]: updatedStats,
 		}));
 	};
 
