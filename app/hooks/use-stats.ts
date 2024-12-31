@@ -1,6 +1,7 @@
 import { useOutletContext } from "@remix-run/react";
 import { Context, Stats } from "./use-mount-local-value";
 import { Temporal } from "temporal-polyfill";
+import { useGraph } from "./use-graph";
 
 export function useStatistics(mode: "comfy" | "unlimited") {
 	const contextRaw = useOutletContext();
@@ -9,11 +10,11 @@ export function useStatistics(mode: "comfy" | "unlimited") {
 	}
 	const context = contextRaw as Context;
 	const statistics = context.localValue[mode];
-
+	const [, setOpenGraph] = useGraph();
 	// finish the puzzle
 	// add answer
 	const addAnswer = (answer: { name: string; distance: number }, name: string) => {
-		context.updateStats(mode, addAnswerRaw(answer, name, statistics));
+		context.updateStats(mode, addAnswerRaw(answer, name, statistics, setOpenGraph));
 	};
 
 	const resetPuzzle = () => {
@@ -35,7 +36,8 @@ export function useStatistics(mode: "comfy" | "unlimited") {
 function addAnswerRaw(
 	answer: { name: string; distance: number },
 	name: string,
-	statistics: Stats
+	statistics: Stats,
+	setOpenGraph: (state: boolean) => void
 ): Stats {
 	const answers = statistics.answers;
 	const index = answers.filter((a) => a.name !== "").length;
@@ -44,10 +46,12 @@ function addAnswerRaw(
 	answers[index] = answer;
 	if (answer.name === name) {
 		const updatedStats: Stats = { ...statistics, completed: true, completedAt: now, answers };
+		setOpenGraph(true);
 		return finish(index, updatedStats);
 	}
 	if (index === 5) {
 		const updatedStats: Stats = { ...statistics, completed: true, completedAt: now, answers };
+		setOpenGraph(true);
 		return finish(6, updatedStats);
 	}
 	return { ...statistics, answers };

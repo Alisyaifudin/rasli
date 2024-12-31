@@ -9,6 +9,7 @@ import { useMode } from "~/hooks/use-mode";
 
 export default function RootLayout() {
 	const context = useOutletContext();
+	
 	const [mode] = useMode();
 	return (
 		<>

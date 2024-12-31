@@ -12,6 +12,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import "./tailwind.css";
 import { getThemeFromCookieHeader } from "./lib/theme-provider";
 import { useMountLocalValue } from "./hooks/use-mount-local-value";
+import { useState } from "react";
 
 export const links: LinksFunction = () => [
 	{ rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -57,9 +58,21 @@ const queryClient = new QueryClient();
 
 export default function App() {
 	const { mount, localValue, updateStats } = useMountLocalValue();
+	const [openGraph, openGraphSetter] = useState(false);
+	const setOpenGraph = (state: boolean) => openGraphSetter(state);
 	return (
 		<QueryClientProvider client={queryClient}>
-			<Outlet context={{ mount, localValue, updateStats }} />
+			<Outlet
+				context={{
+					mount,
+					localValue,
+					updateStats,
+					graph: {
+						open: openGraph,
+						setOpen: setOpenGraph,
+					},
+				}}
+			/>
 		</QueryClientProvider>
 	);
 }
