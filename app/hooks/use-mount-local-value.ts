@@ -6,6 +6,7 @@ const statsSchema = z.object({
 	maxStreak: z.number().min(0),
 	stats: z.array(z.number()).length(7),
 	numOfGuesses: z.number().min(0).max(6),
+	completedAt: z.number(),
 });
 
 type Stats = z.infer<typeof statsSchema>;
@@ -17,11 +18,12 @@ const localValueSchema = z.object({
 
 type LocalValue = z.infer<typeof localValueSchema>;
 
-const defaultValue = {
+const defaultValue: Stats = {
 	currentStreak: 0,
 	maxStreak: 0,
 	numOfGuesses: 0,
 	stats: [0, 0, 0, 0, 0, 0, 0],
+	completedAt: 0,
 };
 
 const keys = ["rasli_local_value_comfy", "rasli_local_value_unlimited"] as const;
@@ -29,7 +31,7 @@ const keys = ["rasli_local_value_comfy", "rasli_local_value_unlimited"] as const
 export type Context = {
 	localValue: LocalValue;
 	mount: boolean;
-	updateStats: (mode: "comfy" | "unlimited", updatedStats: Stats) => void
+	updateStats: (mode: "comfy" | "unlimited", updatedStats: Stats) => void;
 };
 
 export function useMountLocalValue(): Context {

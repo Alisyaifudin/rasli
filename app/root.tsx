@@ -7,6 +7,7 @@ import {
 	ScrollRestoration,
 	useRouteLoaderData,
 } from "@remix-run/react";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 import "./tailwind.css";
 import { getThemeFromCookieHeader } from "./lib/theme-provider";
@@ -52,7 +53,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 	);
 }
 
+const queryClient = new QueryClient();
+
 export default function App() {
 	const { mount, localValue, updateStats } = useMountLocalValue();
-	return <Outlet context={{ mount, localValue, updateStats }} />;
+	return (
+		<QueryClientProvider client={queryClient}>
+			<Outlet context={{ mount, localValue, updateStats }} />
+		</QueryClientProvider>
+	);
 }
