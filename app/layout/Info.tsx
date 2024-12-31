@@ -1,4 +1,4 @@
-import { Info as Infoicon } from "lucide-react";
+import { ExternalLink, Info as Infoicon } from "lucide-react";
 import {
 	Dialog,
 	DialogContent,
@@ -22,13 +22,24 @@ export function Info() {
 				<DialogHeader>
 					<DialogTitle>CARA BERMAIN</DialogTitle>
 				</DialogHeader>
-				<ScrollArea className="max-h-[80vh] w-full rounded-md p-4">
+				<ScrollArea className="max-h-[80vh] w-full rounded-md sm:p-4">
 					<div className="text-black dark:text-white">
 						<div className="flex flex-col gap-1">
-							<p>Tebak RASLI dalam 6 kesempatan. 1 hari ada 1 rasi rahasia.</p>
 							<p>
-								Setiap tebakan adalah nama rasi bintang yang valid menurut IAU. Ketikan jawaban pada
-								petak yang disediakan, lalu tekan JAWAB (atau tekan <i>Enter</i>).
+								Tebak RASLI dalam 6 kesempatan. 1 hari ada 1 rasi rahasia (mode <i>comfy</i>).
+							</p>
+							<p>
+								Setiap tebakan adalah nama rasi bintang yang valid menurut{" "}
+								<a
+									href="https://www.iau.org/public/themes/constellations/"
+									target="_blank"
+									className="underline"
+								>
+									<abbr>IAU</abbr>
+									<ExternalLink className="w-5 h-5 inline-block pb-2" />
+								</a>
+								. Ketikan jawaban pada petak yang disediakan, lalu tekan JAWAB (atau tekan{" "}
+								<i>Enter</i>).
 							</p>
 							<p>
 								Setelah menjawab, tebakan akan berubah warna, bergantung seberapa dekat rasi tebakan
@@ -37,33 +48,52 @@ export function Info() {
 						</div>
 						<Separator className="my-4" />
 						<div className="flex flex-col gap-2">
-							<p className="text-lg font-bold">Contoh: Ursa Major</p>
-							<AspectRatio ratio={16 / 9} className="bg-slate-50 dark:bg-slate-800">
-								<img
-									src="/UrsaMinor.webp"
-									alt="by Alvaro Pinot"
-									className="rounded-md object-cover w-full h-full"
-								/>
-							</AspectRatio>
+							<p className="text-lg font-bold">Contoh: Centaurus</p>
+							<img
+								src="/centaurus.png"
+								alt="Centaurus constellation"
+								className="rounded-full object-cover sm:w-[80%] sm:h-[80%] mx-auto"
+							/>
 							<p>Kamu mencoba menjawab:</p>
 							<ul className="flex flex-col gap-3">
 								<li>
-									<p className="level-1 w-fit rounded-md px-2 py-1 bg-red-500 dark:bg-red-600 font-bold text-white shadow-md">
-										PUPPIS
+									<div className="flex items-center justify-between">
+										<p className="level-1 w-fit rounded-md px-2 py-1 text-red-500 dark:text-red-600 font-bold  shadow-md">
+											Lacerta
+										</p>
+										<p>149°</p>
+									</div>
+									<p className="p-1">
+										Warna merah menunjukkan rasi tebakan terlalu jauh. Jarak rasi lacerta dengan
+										rasi centaurus adalah 149°.
 									</p>
-									<p className="p-1">Warna merah menunjukkan rasi tebakan terlalu jauh</p>
 								</li>
 								<li>
-									<p className="level-2 w-fit rounded-md px-2 py-1 bg-orange-500 dark:bg-orange-600 font-bold text-white shadow-md">
-										LEO
-									</p>
+									<div className="flex items-center justify-between">
+										<p className="level-2 w-fit rounded-md px-2 py-1 text-orange-500 dark:text-orange-600 font-bold shadow-md">
+											Orion
+										</p>
+										<p>110°</p>
+									</div>
 									<p className="p-1">Warna jingga menunjukkan rasi tebakan agak jauh</p>
 								</li>
 								<li>
-									<p className="level-3 w-fit rounded-md px-2 py-1 bg-yellow-500 font-bold text-white shadow-md">
-										DRACO
-									</p>
+									<div className="flex items-center justify-between">
+										<p className="level-3 w-fit rounded-md px-2 py-1 text-yellow-500 font-bold shadow-md">
+											Crux
+										</p>
+										<p>12°</p>
+									</div>
 									<p className="p-1">Warna kuning menunjukkan rasi tebakan sudah dekat</p>
+								</li>
+								<li>
+									<div className="flex items-center justify-between">
+										<p className="level-3 w-fit rounded-md px-2 py-1 text-green-500 font-bold shadow-md">
+											Centaurus
+										</p>
+										<p>0°</p>
+									</div>
+									<p className="p-1">Warna hijau berarti jawaban kamu benar 🥳</p>
 								</li>
 							</ul>
 						</div>

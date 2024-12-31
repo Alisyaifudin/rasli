@@ -25,8 +25,8 @@ export function Guess() {
 										: answer.distance < 60
 										? "text-yellow-500"
 										: answer.distance < 120
-										? "text-orange-500"
-										: "text-red-500"
+										? "text-orange-500 dark:text-orange-600"
+										: "text-red-500 dark:text-red-600"
 								)}
 							>
 								{capitalizeFirst(answer.name)}
