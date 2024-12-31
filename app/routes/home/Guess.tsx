@@ -1,4 +1,4 @@
-import { cn } from "old/src/utils/cn";
+import { cn } from "~/lib/utils";
 import { useEffect } from "react";
 import { useMode } from "~/hooks/use-mode";
 import { useStatistics } from "~/hooks/use-stats";
