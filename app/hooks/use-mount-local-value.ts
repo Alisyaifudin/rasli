@@ -64,7 +64,7 @@ export function useMountLocalValue(): Context {
 			}
 			const parsed = statsSchema.safeParse(statsRaw);
 			if (!parsed.success) {
-				window.localStorage.removeItem("rasli_local_value_" + key);
+				window.localStorage.setItem("rasli_local_value_" + key, JSON.stringify(defaultValue));
 			} else {
 				const statistics = parsed.data;
 				if (key === "comfy" && statistics.completed && statistics.completedAt < startOfDay) {
