@@ -1,3 +1,3 @@
-import { type RouteConfig, route } from "@remix-run/route-config";
+import { type RouteConfig, layout, route } from "@remix-run/route-config";
 
-export default [route("/", "./routes/home.tsx")] satisfies RouteConfig;
+export default [layout("./layout.tsx", [route("/", "./routes/home.tsx")])] satisfies RouteConfig;
