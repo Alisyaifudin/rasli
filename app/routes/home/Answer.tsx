@@ -3,18 +3,24 @@ import { Button } from "~/components/ui/button";
 import { useStatistics } from "~/hooks/use-stats";
 import { useMode } from "~/hooks/use-mode";
 import { z } from "zod";
-import { getConstellationNames } from "~/lib/utils";
 import { useState } from "react";
+import { Constellation, readConstellationCsv } from "~/puzzle/generate-puzzle/read-csv";
+import { distance } from "~/puzzle/generate-puzzle/distance";
 
 interface AnswerProps {
 	name: string;
-	constellationCsv: string;
+	constellations: Constellation[];
 }
-function Answer({ name, constellationCsv }: AnswerProps) {
+function Answer({ name, constellations }: AnswerProps) {
 	const [mode] = useMode();
 	const { addAnswer, completed, answers } = useStatistics(mode);
 	const [error, setError] = useState("");
-	const constellationNames = getConstellationNames(constellationCsv);
+	const target = constellations.find(
+		(c) => c.name.trim().toLowerCase() === name.trim().toLowerCase()
+	);
+	if (!target) {
+		throw new Error("target constellation is invalid!!! " + name);
+	}
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const formData = new FormData(e.currentTarget);
@@ -24,23 +30,25 @@ function Answer({ name, constellationCsv }: AnswerProps) {
 			throw new Error("formData 'answer' is invalid");
 		}
 		const answer = answerRaw.data.trim().toLowerCase();
-		if (!constellationNames.includes(answer)) {
+		const guess = constellations.find((c) => c.name.trim().toLowerCase() === answer);
+		if (!guess) {
 			setError("Rasi tidak valid");
 			return;
 		}
-    if(answers.includes(answer)) {
-      setError("Sudah dicoba");
+		if (answers.find((a) => a.name === answer)) {
+			setError("Sudah dicoba");
 			return;
-    }
+		}
+		const dist = distance({ ra: guess.ra, dec: guess.dec }, { ra: target.ra, dec: target.dec });
 		setError("");
 		inputEl.value = "";
-    addAnswer(answer, name)
+		addAnswer({ name: answer, distance: dist }, name.trim().toLowerCase());
 	};
 	return (
 		<form onSubmit={handleSubmit} className="flex flex-col items-center gap-2">
 			{error ? <p className="text-red-500 text-sm">{error}</p> : <p className="text-sm">&nbsp;</p>}
 			<Input name="answer" disabled={completed} type="text" />
-			<Button>Jawab</Button>
+			<Button disabled={completed}>Jawab</Button>
 		</form>
 	);
 }

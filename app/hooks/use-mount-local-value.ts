@@ -6,9 +6,13 @@ const statsSchema = z.object({
 	maxStreak: z.number().min(0),
 	stats: z.array(z.number()).length(7),
 	completed: z.boolean(),
-	answers: z.string().array(),
-	lastAnswerAt: z.number(),
-	seed: z.string()
+	answers: z.array(
+		z.object({
+			name: z.string(),
+			distance: z.number(),
+		})
+	),
+	seed: z.string(),
 });
 
 export type Stats = z.infer<typeof statsSchema>;
@@ -23,14 +27,13 @@ type LocalValue = z.infer<typeof localValueSchema>;
 const defaultValue: Stats = {
 	currentStreak: 0,
 	maxStreak: 0,
-	stats: [0, 0, 0, 0, 0, 0, 0],
+	stats: Array.from({ length: 7 }, () => 0),
 	completed: false,
-	answers: [],
-	lastAnswerAt: 0,
-	seed: new Date().toDateString()
+	answers: Array.from({ length: 6 }, () => ({ name: "", distance: 0 })),
+	seed: new Date().toDateString(),
 };
 
-const keys = ["rasli_local_value_comfy", "rasli_local_value_unlimited"] as const;
+const keys = ["comfy", "unlimited"] as const;
 
 export type Context = {
 	localValue: LocalValue;
@@ -48,7 +51,7 @@ export function useMountLocalValue(): Context {
 		if (!window) return;
 		setMount(true);
 		for (const key of keys) {
-			const statsStr = window.localStorage.getItem(key) ?? "";
+			const statsStr = window.localStorage.getItem("rasli_local_value_" + key) ?? "";
 			let stats;
 			try {
 				stats = JSON.parse(statsStr);
@@ -57,7 +60,7 @@ export function useMountLocalValue(): Context {
 			}
 			const parsed = statsSchema.safeParse(stats);
 			if (!parsed.success) {
-				window.localStorage.removeItem(key);
+				window.localStorage.removeItem("rasli_local_value_" + key);
 			} else {
 				setLocalValue((prev) => ({
 					...prev,

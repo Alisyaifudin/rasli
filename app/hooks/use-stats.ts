@@ -1,6 +1,5 @@
 import { useOutletContext } from "@remix-run/react";
 import { Context, Stats } from "./use-mount-local-value";
-import { Temporal } from "temporal-polyfill";
 
 export function useStatistics(mode: "comfy" | "unlimited") {
 	const contextRaw = useOutletContext();
@@ -12,7 +11,7 @@ export function useStatistics(mode: "comfy" | "unlimited") {
 
 	// finish the puzzle
 	// add answer
-	const addAnswer = (answer: string, name: string) => {
+	const addAnswer = (answer: { name: string; distance: number }, name: string) => {
 		context.updateStats(mode, addAnswerRaw(answer, name, statistics));
 	};
 
@@ -22,25 +21,29 @@ export function useStatistics(mode: "comfy" | "unlimited") {
 	};
 }
 
-function addAnswerRaw(answer: string, name: string, statistics: Stats): Stats {
+function addAnswerRaw(
+	answer: { name: string; distance: number },
+	name: string,
+	statistics: Stats
+): Stats {
 	const answers = statistics.answers;
-	if (answers.length >= 6) return statistics;
-	answers.push(answer);
-	const now = Temporal.Now.instant().epochSeconds;
-	if (answer === name) {
-		const updatedStats: Stats = { ...statistics, completed: true, lastAnswerAt: now, answers };
-		return finish(answers.length, updatedStats);
+	const index = answers.filter((a) => a.name !== "").length;
+	if (index >= 5) return statistics;
+	answers[index] = answer;
+	if (answer.name === name) {
+		const updatedStats: Stats = { ...statistics, completed: true, answers };
+		return finish(index, updatedStats);
 	}
-	if (answers.length === 6) {
-		const updatedStats: Stats = { ...statistics, completed: true, lastAnswerAt: now, answers };
-		return finish(7, updatedStats);
+	if (index === 5) {
+		const updatedStats: Stats = { ...statistics, completed: true, answers };
+		return finish(6, updatedStats);
 	}
-	return { ...statistics, lastAnswerAt: now, answers };
+	return { ...statistics, answers };
 }
 
-function finish(num: number, statistics: Stats): Stats {
+function finish(index: number, statistics: Stats): Stats {
 	let updatedStatistics = statistics;
-	if (num > 6) {
+	if (index >= 6) {
 		const updatedStats = statistics.stats;
 		updatedStats[6] += 1;
 		updatedStatistics = {
@@ -53,7 +56,7 @@ function finish(num: number, statistics: Stats): Stats {
 		const updatedMaxStreak =
 			updatedCurrentStreak > statistics.maxStreak ? updatedCurrentStreak : statistics.maxStreak;
 		const updatedStats = statistics.stats;
-		updatedStats[num] += 1;
+		updatedStats[index] += 1;
 		updatedStatistics = {
 			...statistics,
 			currentStreak: updatedCurrentStreak,

@@ -13,9 +13,14 @@ function inverHav(x: number) {
   return Math.acos(cosTheta);
 }
 
+/**
+ * use haversine formula
+ * https://en.wikipedia.org/wiki/Haversine_formula
+ * @param a \{ra: degree, dec: degree\}
+ * @param b \{ra: degree, dec: degree\}
+ * @returns geodesic distance in degrees
+ */
 export function distance(a: Position, b: Position) {
-  // use haversine formula
-  // https://en.wikipedia.org/wiki/Haversine_formula
   const dLat = ((a.dec - b.dec) * Math.PI) / 180;
   const dLon = ((a.ra - b.ra) * Math.PI) / 180;
   const lat1 = (a.dec * Math.PI) / 180;

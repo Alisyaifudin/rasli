@@ -33,7 +33,7 @@ export function Puzzle({ puzzle, completed }: PuzzleProps) {
 	}, [canvasRef, completed, puzzle]);
 
 	return (
-		<div className="flex aspect-square w-full xs:w-[50%] p-10">
+		<div className="flex aspect-square w-full xs:w-[70%] p-0">
 			<canvas
 				className="block w-full rounded-full"
 				width="300"

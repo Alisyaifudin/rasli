@@ -1,20 +1,15 @@
 import { random } from "~/lib/utils";
-import { readConstellationCsv, readLineCsv, readStarCsv } from "./read-csv";
+import { Constellation, readLineCsv, Star } from "./read-csv";
 import { coneFilter } from "./cone-filter";
 
 export function generatePuzzle(
-	constellationsCsv: string,
-	starsCsv: string,
+	constellations: Constellation[],
+	stars: Star[],
 	lineCsv: string,
 	seed: string
 ) {
-	// const today = new Date();
-	// const date = today.toDateString();
-	// const seed = mode === "comfy" ? date : Math.random().toString();
 	const r = Math.round(random(seed) * 10000) % 89;
-	const constellations = readConstellationCsv(constellationsCsv);
 	const constellation = constellations[r];
-	const stars = readStarCsv(starsCsv);
 	const center = { ra: constellation.ra, dec: constellation.dec };
 
 	const rotation = random(seed) * 2 * Math.PI;

@@ -1,7 +1,7 @@
 import { Position } from "./distance";
 import { skyToXY } from "./sky-to-xy";
 
-type Constellation = {
+export type Constellation = {
 	name: string;
 	ra: number;
 	dec: number;
@@ -30,7 +30,7 @@ export function readConstellationCsv(text: string): Constellation[] {
 	return parsed;
 }
 
-type Star = {
+export type Star = {
 	ra: number;
 	dec: number;
 	name: string;
