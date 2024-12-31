@@ -1,7 +1,7 @@
 import type { MetaFunction } from "@remix-run/cloudflare";
 import { Title } from "./Title";
 import { useData } from "~/hooks/use-data";
-import { generatePuzzle } from "~/puzzle/generate-puzzle";
+import { generatePuzzle } from "~/puzzle";
 import { useMode } from "~/hooks/use-mode";
 import { useStatistics } from "~/hooks/use-stats";
 import { Puzzle } from "./Puzzle";

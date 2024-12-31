@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { draw } from "./draw";
-import { Line } from "~/puzzle/generate-puzzle/read-csv";
+import { Line } from "~/puzzle/read-csv";
 
 interface PuzzleProps {
 	completed: boolean;

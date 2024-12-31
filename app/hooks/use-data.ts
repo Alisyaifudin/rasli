@@ -1,10 +1,5 @@
 import { useQuery } from "react-query";
-import {
-	Constellation,
-	readConstellationCsv,
-	readStarCsv,
-	Star,
-} from "~/puzzle/generate-puzzle/read-csv";
+import { Constellation, readConstellationCsv, readStarCsv, Star } from "~/puzzle/read-csv";
 
 export function useData():
 	| {

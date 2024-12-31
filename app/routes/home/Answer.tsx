@@ -4,8 +4,8 @@ import { useStatistics } from "~/hooks/use-stats";
 import { useMode } from "~/hooks/use-mode";
 import { z } from "zod";
 import { useState } from "react";
-import { Constellation, readConstellationCsv } from "~/puzzle/generate-puzzle/read-csv";
-import { distance } from "~/puzzle/generate-puzzle/distance";
+import { Constellation, readConstellationCsv } from "~/puzzle/read-csv";
+import { distance } from "~/puzzle/distance";
 
 interface AnswerProps {
 	name: string;
