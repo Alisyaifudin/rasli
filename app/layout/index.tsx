@@ -3,6 +3,7 @@ import { ThemeToggle } from "~/components/ThemeToggle";
 import Info from "./Info";
 import { CONST } from "~/lib/constants";
 import Setting from "./Setting";
+import Graph from "./Graph";
 
 export default function RootLayout() {
 	return (
@@ -19,7 +20,7 @@ export default function RootLayout() {
 							<p className="overflow-hidden text-ellipsis">v{CONST.VERSION}</p>
 						</div>
 						<div className="flex gap-4">
-							{/* <Graph /> */}
+							<Graph />
 							<Setting />
 						</div>
 					</div>

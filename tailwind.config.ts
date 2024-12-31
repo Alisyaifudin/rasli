@@ -64,6 +64,15 @@ export default {
 					"5": "hsl(var(--chart-5))",
 				},
 			},
+			keyframes: {
+				"expand-witdh": {
+					from: { width: "0" },
+					to: { width: "100%" },
+				},
+			},
+			animation: {
+				"expand-witdh": "expand-witdh 0.5s ease-in-out",
+			},
 		},
 	},
 	plugins: [require("tailwindcss-animate")],
