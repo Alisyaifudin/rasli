@@ -3,7 +3,6 @@ import { ThemeToggle } from "~/components/ThemeToggle";
 import { Info } from "./Info";
 import { CONST } from "~/lib/constants";
 import { Settings } from "./Settings";
-import { Toaster } from "~/components/ui/toaster";
 import { Graph } from "./Graph";
 import { useMode } from "~/hooks/use-mode";
 
@@ -37,7 +36,6 @@ export default function RootLayout() {
 				</nav>
 			</header>
 			<Outlet context={context} />
-			<Toaster />
 		</>
 	);
 }
