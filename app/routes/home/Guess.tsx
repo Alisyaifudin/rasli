@@ -2,6 +2,7 @@ import { cn } from "old/src/utils/cn";
 import { useEffect, useState } from "react";
 import { useMode } from "~/hooks/use-mode";
 import { useStatistics } from "~/hooks/use-stats";
+import { capitalizeFirst } from "~/lib/utils";
 
 export function Guess() {
 	const [mode] = useMode();
@@ -29,7 +30,7 @@ export function Guess() {
 											: "text-red-500"
 									)}
 								>
-									{answer.name}
+									{capitalizeFirst(answer.name)}
 								</p>
                 <p>
                   {Math.round(answer.distance)}°
