@@ -64,7 +64,11 @@ export function useMountLocalValue(): Context {
 			}
 			const parsed = statsSchema.safeParse(statsRaw);
 			if (!parsed.success) {
-				window.localStorage.setItem("rasli_local_value_" + key, JSON.stringify(defaultValue));
+				const statistics = structuredClone(defaultValue);
+				if (key === "unlimited") {
+					statistics.seed = Math.random().toString();
+				}
+				window.localStorage.setItem("rasli_local_value_" + key, JSON.stringify(statistics));
 			} else {
 				const statistics = parsed.data;
 				if (key === "comfy" && statistics.completed && statistics.completedAt < startOfDay) {
@@ -72,6 +76,7 @@ export function useMountLocalValue(): Context {
 					statistics.answers = defaultValue.answers;
 					statistics.seed = defaultValue.seed;
 				}
+
 				setLocalValue((prev) => ({
 					...prev,
 					[key]: statistics,
@@ -86,11 +91,11 @@ export function useMountLocalValue(): Context {
 		// 	console.log(updatedStatistics);
 		// }
 		window.localStorage.setItem("rasli_local_value_" + mode, JSON.stringify(updatedStatistics));
-		setLocalValue((prev) => ({
-			...prev,
-			[mode]: updatedStatistics,
-		}));
+		setLocalValue((prev) => {
+			const copy = structuredClone(prev);
+			copy[mode] = updatedStatistics;
+			return copy;
+		});
 	};
-
 	return { localValue, mount, updateStats };
 }

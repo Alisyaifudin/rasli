@@ -1,5 +1,4 @@
 import { cn } from "~/lib/utils";
-import { useEffect } from "react";
 import { useMode } from "~/hooks/use-mode";
 import { useStatistics } from "~/hooks/use-stats";
 import { capitalizeFirst } from "~/lib/utils";
@@ -7,12 +6,11 @@ import { capitalizeFirst } from "~/lib/utils";
 export function Guess() {
 	const [mode] = useMode();
 	const { answers } = useStatistics(mode);
-	useEffect(() => {}, [answers]);
 	return (
 		<ul className="mx-auto w-[100%] max-w-[200px] flex flex-col gap-1">
 			{answers.map((answer, i) => (
 				<li
-					key={i}
+					key={`${i}-${answer.name}`}
 					className="flex h-8 items-end justify-between border-b border-b-slate-400 pb-1 dark:border-b-zinc-600"
 				>
 					{answer.name ? (
