@@ -1,4 +1,4 @@
-import { Info } from "lucide-react";
+import { Info as Infoicon } from "lucide-react";
 import {
 	Dialog,
 	DialogContent,
@@ -10,12 +10,12 @@ import { Separator } from "~/components/ui/separator";
 import { AspectRatio } from "~/components/ui/aspect-ratio";
 import { ScrollArea } from "~/components/ui/scroll-area";
 
-export default function InfoComponent() {
+export function Info() {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
 				<button>
-					<Info aria-label="info" className="mr-2 h-6 w-6" />
+					<Infoicon aria-label="info" className="mr-2 h-6 w-6" />
 				</button>
 			</DialogTrigger>
 			<DialogContent className="bg-white dark:bg-zinc-800">

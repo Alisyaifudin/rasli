@@ -1,11 +1,13 @@
-import { Outlet } from "@remix-run/react";
+import { Outlet, useOutletContext } from "@remix-run/react";
 import { ThemeToggle } from "~/components/ThemeToggle";
-import Info from "./Info";
+import { Info } from "./Info";
 import { CONST } from "~/lib/constants";
-import Setting from "./Setting";
-import Graph from "./Graph";
+import { Settings } from "./Settings";
+import { Toaster } from "~/components/ui/toaster";
+import { Graph } from "./Graph";
 
 export default function RootLayout() {
+	const context = useOutletContext();
 	return (
 		<>
 			<header>
@@ -21,12 +23,13 @@ export default function RootLayout() {
 						</div>
 						<div className="flex gap-4">
 							<Graph />
-							<Setting />
+							<Settings />
 						</div>
 					</div>
 				</nav>
 			</header>
-			<Outlet />
+			<Outlet context={context} />
+			<Toaster />
 			<footer>This is footer</footer>
 		</>
 	);

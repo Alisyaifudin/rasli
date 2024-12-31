@@ -6,13 +6,13 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "~/components/ui/dialog";
-import { useLocalValue } from "~/hooks/use-local-value";
+import { useStatistics } from "~/hooks/use-stats";
 import { useMode } from "~/hooks/use-mode";
 import { cn } from "~/lib/utils";
 
-export default function GraphComponent() {
+export function Graph() {
 	const [mode] = useMode();
-	const { stats, currentStreak, maxStreak } = useLocalValue(mode);
+	const { stats, currentStreak, maxStreak } = useStatistics(mode);
 	const max = Math.max(...stats) || 1;
 	const totalPlayed = stats.reduce((prev, curr) => prev + curr);
 	const won = totalPlayed > 0 ? Math.round(((totalPlayed - stats[6]) / totalPlayed) * 100) : 0;

@@ -1,4 +1,4 @@
-import { Settings } from "lucide-react";
+import { Settings as SettingsIcon } from "lucide-react";
 import {
 	Dialog,
 	DialogContent,
@@ -9,12 +9,12 @@ import {
 import { ModeTab } from "./ModeTab";
 import { CONST } from "~/lib/constants";
 
-export default function SettingComponent() {
+export function Settings() {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
 				<button>
-					<Settings aria-label="settings" className="mr-2 h-6 w-6" />
+					<SettingsIcon aria-label="settings" className="mr-2 h-6 w-6" />
 				</button>
 			</DialogTrigger>
 			<DialogContent className="bg-white dark:bg-zinc-800">
