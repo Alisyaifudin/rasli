@@ -1,6 +1,8 @@
 import { Outlet } from "@remix-run/react";
 import { ThemeToggle } from "~/components/ThemeToggle";
 import Info from "./Info";
+import { CONST } from "~/lib/constants";
+import Setting from "./Setting";
 
 export default function RootLayout() {
 	return (
@@ -14,11 +16,11 @@ export default function RootLayout() {
 						</div>
 						<div className="flex items-end overflow-hidden text-sm">
 							<h1 className="overflow-hidden text-ellipsis text-4xl font-bold ">RASLI</h1>
-							<p className="overflow-hidden text-ellipsis">v1.0.0</p>
+							<p className="overflow-hidden text-ellipsis">v{CONST.VERSION}</p>
 						</div>
 						<div className="flex gap-4">
-							{/* <Graph />
-							<Setting /> */}
+							{/* <Graph /> */}
+							<Setting />
 						</div>
 					</div>
 				</nav>
