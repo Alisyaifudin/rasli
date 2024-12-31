@@ -1,5 +1,5 @@
-import { CONST } from "~/utils/constant";
-import ThemeButton from "~/components/ThemeButton";
+import { CONST } from "src/utils/constant";
+import ThemeButton from "src/components/ThemeButton";
 
 function Navbar() {
   return (

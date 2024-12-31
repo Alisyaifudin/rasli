@@ -1,10 +1,10 @@
 import { type NextPage } from "next";
-import { useAppSelector } from "~/hooks/redux";
-import DebugTitle from "~/components/debug/DebugTitle";
-import DebugPuzzle from "~/components/debug/DebugPuzzle";
-import Guess from "~/components/Guess";
-import Answer from "~/components/Answer";
-import DebugLayout from "~/layouts/DebugLayout";
+import { useAppSelector } from "src/hooks/redux";
+import DebugTitle from "src/components/debug/DebugTitle";
+import DebugPuzzle from "src/components/debug/DebugPuzzle";
+import Guess from "src/components/Guess";
+import Answer from "src/components/Answer";
+import DebugLayout from "src/layouts/DebugLayout";
 import { useState } from "react";
 
 export type Region = {

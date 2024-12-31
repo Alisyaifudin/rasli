@@ -6,9 +6,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/ui/dialog";
-import { Separator } from "~/components/ui/separator";
-import { AspectRatio } from "~/components/ui/aspect-ratio";
+} from "src/components/ui/dialog";
+import { Separator } from "src/components/ui/separator";
+import { AspectRatio } from "src/components/ui/aspect-ratio";
 import { ScrollArea } from "./ui/scrol-area";
 
 export default function InfoComponent() {

@@ -1,11 +1,11 @@
-import { random } from "~/utils/random";
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { encryptString } from "~/utils/encryption";
-import { env } from "~/env.mjs";
-import { coneFilter } from "~/utils/coneFilter";
-import readCsv from "~/utils/read-csv";
+import { random } from "src/utils/random";
+import { createTRPCRouter, publicProcedure } from "src/server/api/trpc";
+import { encryptString } from "src/utils/encryption";
+import { env } from "src/env.mjs";
+import { coneFilter } from "src/utils/coneFilter";
+import readCsv from "src/utils/read-csv";
 import { z } from "zod";
-import { skyToXY } from "~/utils/skyToXY";
+import { skyToXY } from "src/utils/skyToXY";
 import path from "path";
 
 export const constellationSchema = z.object({

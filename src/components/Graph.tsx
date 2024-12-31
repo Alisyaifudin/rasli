@@ -5,11 +5,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/ui/dialog";
-import { useAppDispatch, useAppSelector } from "~/hooks/redux";
+} from "src/components/ui/dialog";
+import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import For from "./control-flow/For";
-import { openGraph } from "~/store/metaSlice";
-import { cn } from "~/utils/cn";
+import { openGraph } from "src/store/metaSlice";
+import { cn } from "src/utils/cn";
 
 export default function GraphComponent() {
   const mode = useAppSelector((state) => state.meta.mode);

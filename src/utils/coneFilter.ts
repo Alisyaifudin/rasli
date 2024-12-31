@@ -1,4 +1,4 @@
-import { type Position } from "~/utils/distance";
+import { type Position } from "src/utils/distance";
 import { vmagToSize } from "./vmagToSize";
 import { skyToXY } from "./skyToXY";
 

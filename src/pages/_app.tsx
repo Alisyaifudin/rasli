@@ -1,9 +1,9 @@
 import { type AppType } from "next/app";
-import { api } from "~/utils/api";
+import { api } from "src/utils/api";
 import "~/styles/globals.css";
 import { ThemeProvider } from "next-themes";
-import { Toaster } from "~/components/ui/toaster";
-import { store } from "~/store/store";
+import { Toaster } from "src/components/ui/toaster";
+import { store } from "src/store/store";
 import { Provider } from "react-redux";
 
 const MyApp: AppType = ({ Component, pageProps }) => {

@@ -1,11 +1,11 @@
-import Show from "~/components/control-flow/Show";
+import Show from "src/components/control-flow/Show";
 import Skeleton from "~/components/aux/Skeleton";
-import { addPuzzle } from "~/store/metaSlice";
-import { api } from "~/utils/api";
+import { addPuzzle } from "src/store/metaSlice";
+import { api } from "src/utils/api";
 import { useEffect, useRef } from "react";
-import { draw } from "~/utils/draw";
-import { useAppDispatch, useAppSelector } from "~/hooks/redux";
-import { type Region } from "~/pages/debug";
+import { draw } from "src/utils/draw";
+import { useAppDispatch, useAppSelector } from "src/hooks/redux";
+import { type Region } from "src/pages/debug";
 
 interface PuzzleProps {
   mounted: boolean;

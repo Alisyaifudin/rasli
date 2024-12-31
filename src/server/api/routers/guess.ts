@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { env } from "~/env.mjs";
-import { decryptString } from "~/utils/encryption";
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import readCsv from "~/utils/read-csv";
+import { env } from "src/env.mjs";
+import { decryptString } from "src/utils/encryption";
+import { createTRPCRouter, publicProcedure } from "src/server/api/trpc";
+import readCsv from "src/utils/read-csv";
 import path from "path";
 import { constellationSchema } from "./puzzle";
-import { distance } from "~/utils/distance";
+import { distance } from "src/utils/distance";
 
 export const guessRouter = createTRPCRouter({
   submit: publicProcedure

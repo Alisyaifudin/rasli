@@ -1,7 +1,7 @@
-import Show from "~/components/control-flow/Show";
+import Show from "src/components/control-flow/Show";
 import Skeleton from "~/components/aux/Skeleton";
-import { useAppSelector } from "~/hooks/redux";
-import { type Mode } from "~/store/metaSlice";
+import { useAppSelector } from "src/hooks/redux";
+import { type Mode } from "src/store/metaSlice";
 
 interface TitleProps {
   mounted: boolean;

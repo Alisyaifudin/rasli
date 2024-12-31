@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
-import { useAppDispatch, useAppSelector } from "~/hooks/redux";
-import { switchMode } from "~/store/metaSlice";
+import { useAppDispatch, useAppSelector } from "src/hooks/redux";
+import { switchMode } from "src/store/metaSlice";
 
 function ModeTab() {
   const mode = useAppSelector((state) => state.meta.mode);

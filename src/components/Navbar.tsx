@@ -1,7 +1,7 @@
-import { CONST } from "~/utils/constant";
-import ThemeButton from "~/components/ThemeButton";
-import Info from "~/components/Info";
-import Setting from "~/components/Setting";
+import { CONST } from "src/utils/constant";
+import ThemeButton from "src/components/ThemeButton";
+import Info from "src/components/Info";
+import Setting from "src/components/Setting";
 import Graph from "./Graph";
 
 function Navbar() {

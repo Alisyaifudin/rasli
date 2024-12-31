@@ -1,5 +1,5 @@
-import { createTRPCRouter } from "~/server/api/trpc";
-import { guessRouter } from "~/server/api/routers/guess";
+import { createTRPCRouter } from "src/server/api/trpc";
+import { guessRouter } from "src/server/api/routers/guess";
 import { puzzleRouter } from "./routers/puzzle";
 import { debugRouter } from "./routers/debug";
 

@@ -5,8 +5,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/ui/dialog";
-import { CONST } from "~/utils/constant";
+} from "src/components/ui/dialog";
+import { CONST } from "src/utils/constant";
 import ModeTab from "./ModeTab";
 
 export default function SettingComponent() {

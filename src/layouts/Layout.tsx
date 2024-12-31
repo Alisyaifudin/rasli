@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React, { useEffect } from "react";
-import Navbar from "~/components/Navbar";
-import { useAppDispatch } from "~/hooks/redux";
+import Navbar from "src/components/Navbar";
+import { useAppDispatch } from "src/hooks/redux";
 import {
   modeSchema,
   type Mode,
@@ -11,8 +11,8 @@ import {
   initialize,
   switchMode,
   addSeed,
-} from "~/store/metaSlice";
-import {} from "~/store/metaSlice";
+} from "src/store/metaSlice";
+import {} from "src/store/metaSlice";
 
 interface LayoutProps {
   children: React.ReactNode;

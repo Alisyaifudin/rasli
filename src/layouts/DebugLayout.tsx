@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React, { useEffect } from "react";
-import DebugNavbar from "~/components/debug/DebugNavbar";
-import { useAppDispatch } from "~/hooks/redux";
+import DebugNavbar from "src/components/debug/DebugNavbar";
+import { useAppDispatch } from "src/hooks/redux";
 import {
   type Mode,
   reset,
@@ -9,7 +9,7 @@ import {
   mount,
   initialize,
   switchMode,
-} from "~/store/metaSlice";
+} from "src/store/metaSlice";
 
 interface LayoutProps {
   children: React.ReactNode;

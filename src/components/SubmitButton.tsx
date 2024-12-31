@@ -1,9 +1,9 @@
-import { type Mode, reset } from "~/store/metaSlice";
-import Show from "~/components/control-flow/Show";
+import { type Mode, reset } from "src/store/metaSlice";
+import Show from "src/components/control-flow/Show";
 import Skeleton from "~/components/aux/Skeleton";
-import { useAppDispatch, useAppSelector } from "~/hooks/redux";
+import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import { Button } from "./ui/button";
-import { api } from "~/utils/api";
+import { api } from "src/utils/api";
 import { Loader2 } from "lucide-react";
 
 interface SubmitButtonProps {

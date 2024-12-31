@@ -1,10 +1,10 @@
 import { type NextPage } from "next";
-import { useAppSelector } from "~/hooks/redux";
-import Title from "~/components/Title";
-import Puzzle from "~/components/Puzzle";
-import Guess from "~/components/Guess";
-import Answer from "~/components/Answer";
-import Layout from "~/layouts/Layout";
+import { useAppSelector } from "src/hooks/redux";
+import Title from "src/components/Title";
+import Puzzle from "src/components/Puzzle";
+import Guess from "src/components/Guess";
+import Answer from "src/components/Answer";
+import Layout from "src/layouts/Layout";
 
 const Home: NextPage = () => {
   const mode = useAppSelector((state) => state.meta.mode);

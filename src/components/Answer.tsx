@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
-import Show from "~/components/control-flow/Show";
-import { useAppDispatch, useAppSelector } from "~/hooks/redux";
+import Show from "src/components/control-flow/Show";
+import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import {
   type Mode,
   finishGame,
   submitAnswer,
   openGraph,
-} from "~/store/metaSlice";
-import { Input } from "~/components/ui/input";
-import { api } from "~/utils/api";
-import { useToast } from "~/hooks/use-toast";
-import SubmitButton from "~/components/SubmitButton";
-import { capitalizeFirst } from "~/utils/capitalize-first";
+} from "src/store/metaSlice";
+import { Input } from "src/components/ui/input";
+import { api } from "src/utils/api";
+import { useToast } from "src/hooks/use-toast";
+import SubmitButton from "src/components/SubmitButton";
+import { capitalizeFirst } from "src/utils/capitalize-first";
 
 interface AnswerProps {
   mounted: boolean;

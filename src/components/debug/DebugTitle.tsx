@@ -1,20 +1,20 @@
-import Show from "~/components/control-flow/Show";
+import Show from "src/components/control-flow/Show";
 import Skeleton from "~/components/aux/Skeleton";
-import { api } from "~/utils/api";
+import { api } from "src/utils/api";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "~/components/ui/select";
-import For from "~/components//control-flow/For";
-import { type Region } from "~/pages/debug";
-import { Input } from "~/components//ui/input";
-import { Checkbox } from "~/components//ui/checkbox";
-import { useAppDispatch } from "~/hooks/redux";
+} from "src/components/ui/select";
+import For from "src/components/control-flow/For";
+import { type Region } from "src/pages/debug";
+import { Input } from "src/components/ui/input";
+import { Checkbox } from "src/components/ui/checkbox";
+import { useAppDispatch } from "src/hooks/redux";
 import { type CheckedState } from "@radix-ui/react-checkbox";
-import { finishGame, reset } from "~/store/metaSlice";
+import { finishGame, reset } from "src/store/metaSlice";
 
 interface TitleProps {
   mounted: boolean;

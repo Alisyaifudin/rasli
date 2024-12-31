@@ -1,10 +1,10 @@
 import React from "react";
-import { type Mode } from "~/store/metaSlice";
-import Show from "~/components/control-flow/Show";
+import { type Mode } from "src/store/metaSlice";
+import Show from "src/components/control-flow/Show";
 import Skeleton from "~/components/aux/Skeleton";
-import For from "~/components/control-flow/For";
-import { useAppSelector } from "~/hooks/redux";
-import { cn } from "~/utils/cn";
+import For from "src/components/control-flow/For";
+import { useAppSelector } from "src/hooks/redux";
+import { cn } from "src/utils/cn";
 
 interface GuessProps {
   mounted: boolean;
