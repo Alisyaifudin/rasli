@@ -23,7 +23,7 @@ export function Guess() {
 									answer.distance < 1
 										? "text-green-500"
 										: answer.distance < 60
-										? "text-cyan-500"
+										? "text-yellow-500"
 										: answer.distance < 120
 										? "text-orange-500"
 										: "text-red-500"

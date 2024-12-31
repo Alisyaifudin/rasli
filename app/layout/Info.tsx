@@ -37,7 +37,7 @@ export function Info() {
 						</div>
 						<Separator className="my-4" />
 						<div className="flex flex-col gap-2">
-							<p className="text-lg font-bold">Contoh</p>
+							<p className="text-lg font-bold">Contoh: Ursa Major</p>
 							<AspectRatio ratio={16 / 9} className="bg-slate-50 dark:bg-slate-800">
 								<img
 									src="/UrsaMinor.webp"
@@ -45,6 +45,7 @@ export function Info() {
 									className="rounded-md object-cover w-full h-full"
 								/>
 							</AspectRatio>
+							<p>Kamu mencoba menjawab:</p>
 							<ul className="flex flex-col gap-3">
 								<li>
 									<p className="level-1 w-fit rounded-md px-2 py-1 bg-red-500 dark:bg-red-600 font-bold text-white shadow-md">
