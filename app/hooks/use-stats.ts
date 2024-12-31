@@ -1,5 +1,6 @@
 import { useOutletContext } from "@remix-run/react";
 import { Context } from "./use-mount-local-value";
+import { Temporal } from "temporal-polyfill";
 
 export function useStatistics(mode: "comfy" | "unlimited") {
 	const contextRaw = useOutletContext();
@@ -8,7 +9,8 @@ export function useStatistics(mode: "comfy" | "unlimited") {
 	}
 	const context = contextRaw as Context;
 	const statistics = context.localValue[mode];
-	const { currentStreak, maxStreak, numOfGuesses, stats } = statistics;
+	const { currentStreak, maxStreak, numOfGuesses, stats, completedAt } = statistics;
+	const now = Temporal.Now.instant().epochSeconds;
 	const updateHistory = (num: number) => {
 		if (num < 1 || !Number.isInteger(num)) {
 			throw new Error("invalid number of guesses");
@@ -22,6 +24,7 @@ export function useStatistics(mode: "comfy" | "unlimited") {
 				currentStreak: 0,
 				stats: updatedStats,
 				maxStreak,
+				completedAt: now,
 			};
 		} else {
 			const updatedCurrentStreak = currentStreak + 1;
@@ -33,9 +36,10 @@ export function useStatistics(mode: "comfy" | "unlimited") {
 				currentStreak: updatedCurrentStreak,
 				maxStreak: updatedMaxStreak,
 				stats: updatedStats,
+				completedAt: now,
 			};
 		}
-		context.updateStats(mode, updatedStatistics)
+		context.updateStats(mode, updatedStatistics);
 	};
 
 	return {
@@ -43,6 +47,7 @@ export function useStatistics(mode: "comfy" | "unlimited") {
 		maxStreak,
 		numOfGuesses,
 		stats,
+		completedAt,
 		updateHistory,
 	};
 }
