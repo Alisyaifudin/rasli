@@ -9,7 +9,7 @@ import { useMode } from "~/hooks/use-mode";
 
 export default function RootLayout() {
 	const context = useOutletContext();
-	const [mode] = useMode()
+	const [mode] = useMode();
 	return (
 		<>
 			<header>
@@ -20,10 +20,12 @@ export default function RootLayout() {
 							<ThemeToggle />
 						</div>
 						<div className="flex items-end overflow-hidden text-sm">
-							<h1 className="overflow-hidden text-ellipsis text-4xl font-bold ">RASLI</h1>
+							<h1 className="overflow-hidden text-ellipsis text-3xl xs:text-4xl font-bold ">
+								RASLI
+							</h1>
 							<div className="flex flex-col items-start">
-								<p>{mode}</p>
-								<p>v{CONST.VERSION}</p>
+								<p className="text-xs xs:text-sm">{mode}</p>
+								<p className="text-xs xs:text-sm">v{CONST.VERSION}</p>
 							</div>
 						</div>
 						<div className="flex gap-4">
