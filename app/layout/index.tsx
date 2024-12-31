@@ -5,9 +5,11 @@ import { CONST } from "~/lib/constants";
 import { Settings } from "./Settings";
 import { Toaster } from "~/components/ui/toaster";
 import { Graph } from "./Graph";
+import { useMode } from "~/hooks/use-mode";
 
 export default function RootLayout() {
 	const context = useOutletContext();
+	const [mode] = useMode()
 	return (
 		<>
 			<header>
@@ -19,7 +21,10 @@ export default function RootLayout() {
 						</div>
 						<div className="flex items-end overflow-hidden text-sm">
 							<h1 className="overflow-hidden text-ellipsis text-4xl font-bold ">RASLI</h1>
-							<p className="overflow-hidden text-ellipsis">v{CONST.VERSION}</p>
+							<div className="flex flex-col items-start">
+								<p>{mode}</p>
+								<p>v{CONST.VERSION}</p>
+							</div>
 						</div>
 						<div className="flex gap-4">
 							<Graph />
