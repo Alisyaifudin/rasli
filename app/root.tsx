@@ -1,13 +1,15 @@
-import type { LinksFunction } from "@remix-run/cloudflare";
+import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/cloudflare";
 import {
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  useRouteLoaderData,
 } from "@remix-run/react";
 
 import "./tailwind.css";
+import { getThemeFromCookieHeader } from "./lib/theme-provider";
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -22,9 +24,18 @@ export const links: LinksFunction = () => [
   },
 ];
 
+export async function loader({ request }: LoaderFunctionArgs) {
+	const cookieHeader = request.headers.get("Cookie");
+	const theme = getThemeFromCookieHeader(cookieHeader);
+	
+	return { theme };
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
+  const data = useRouteLoaderData<typeof loader>("root");
+	const theme = data ? data.theme : "system";
   return (
-    <html lang="en">
+    <html lang="id" className={theme === "dark" ? theme : undefined}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
