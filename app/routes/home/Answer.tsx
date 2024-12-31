@@ -53,7 +53,11 @@ function Answer({ name, constellations }: AnswerProps) {
 					Jawab
 				</Button>
 				{mode === "unlimited" ? (
-					<Button onClick={resetPuzzle} variant="secondary" type="button">
+					<Button
+						onClick={() => resetPuzzle(completed ? "next" : "skip")}
+						variant="secondary"
+						type="button"
+					>
 						{completed ? "Selanjutnya" : "Lewati"}
 					</Button>
 				) : null}
