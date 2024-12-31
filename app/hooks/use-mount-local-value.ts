@@ -54,7 +54,6 @@ export function useMountLocalValue(): Context {
 		if (!window) return;
 		setMount(true);
 		const startOfDay = Temporal.Now.zonedDateTimeISO().startOfDay().epochSeconds;
-		console.log({ startOfDay });
 		for (const key of keys) {
 			const statsStr = window.localStorage.getItem("rasli_local_value_" + key) ?? "";
 			let statsRaw;
@@ -81,12 +80,15 @@ export function useMountLocalValue(): Context {
 			}
 		}
 	}, []);
-	const updateStats = (mode: "comfy" | "unlimited", updatedStats: Stats) => {
+	const updateStats = (mode: "comfy" | "unlimited", updatedStatistics: Stats) => {
 		if (!window) return;
-		window.localStorage.setItem("rasli_local_value_" + mode, JSON.stringify(updatedStats));
+		// if (!updatedStatistics.completed && updatedStatistics.answers.every((a) => a.name !== "")) {
+		// 	console.log(updatedStatistics);
+		// }
+		window.localStorage.setItem("rasli_local_value_" + mode, JSON.stringify(updatedStatistics));
 		setLocalValue((prev) => ({
 			...prev,
-			[mode]: updatedStats,
+			[mode]: updatedStatistics,
 		}));
 	};
 

@@ -13,7 +13,7 @@ interface AnswerProps {
 }
 function Answer({ name, constellations }: AnswerProps) {
 	const [mode] = useMode();
-	const { addAnswer, completed, answers } = useStatistics(mode);
+	const { addAnswer, completed, answers, resetPuzzle } = useStatistics(mode);
 	const [error, setError] = useState("");
 	const target = constellations.find(
 		(c) => c.name.trim().toLowerCase() === name.trim().toLowerCase()
@@ -48,7 +48,16 @@ function Answer({ name, constellations }: AnswerProps) {
 		<form onSubmit={handleSubmit} className="flex flex-col items-center gap-2">
 			{error ? <p className="text-red-500 text-sm">{error}</p> : <p className="text-sm">&nbsp;</p>}
 			<Input name="answer" disabled={completed} type="text" />
-			<Button disabled={completed}>Jawab</Button>
+			<div className="flex items-center gap-2">
+				<Button type="submit" disabled={completed}>
+					Jawab
+				</Button>
+				{mode === "unlimited" ? (
+					<Button onClick={resetPuzzle} variant="secondary" type="button">
+						{completed ? "Selanjutnya" : "Lewati"}
+					</Button>
+				) : null}
+			</div>
 		</form>
 	);
 }
