@@ -1,10 +1,10 @@
-import { Input } from "old/src/components/ui/input";
+import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import { useStatistics } from "~/hooks/use-stats";
 import { useMode } from "~/hooks/use-mode";
 import { z } from "zod";
 import { useState } from "react";
-import { Constellation, readConstellationCsv } from "~/puzzle/read-csv";
+import { Constellation } from "~/puzzle/read-csv";
 import { distance } from "~/puzzle/distance";
 
 interface AnswerProps {
