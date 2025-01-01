@@ -7,6 +7,7 @@ import { Puzzle } from "./Puzzle";
 import Answer from "./Answer";
 import { Guess } from "./Guess";
 import { Loading } from "./Loading";
+import { Link } from "@remix-run/react";
 
 export const meta: MetaFunction = () => {
 	return [{ title: "Rasli" }, { name: "description", content: "Selamat datang di rasli!" }];
@@ -28,6 +29,7 @@ export default function Page() {
 			<Puzzle puzzle={puzzle} completed={completed} />
 			<Answer name={puzzle.name} constellations={constellations} />
 			<Guess />
+			
 		</main>
 	);
 }
