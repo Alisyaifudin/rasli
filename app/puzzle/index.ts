@@ -8,7 +8,7 @@ export function generatePuzzle(
 	lineCsv: string,
 	seed: string
 ) {
-	const r = Math.round(random(seed) * 10000) % 89;
+	const r = Math.round(random(seed) * 10000) % 88;
 	const constellation = constellations[r];
 	const center = { ra: constellation.ra, dec: constellation.dec };
 
