@@ -3,14 +3,16 @@ export type Position = {
 	dec: number; //in degree
 };
 
-function hav(theta: number /*in radian*/) {
+/** angle in radian */
+export function hav(theta: number /*in radian*/) {
 	return Math.sin(theta / 2) ** 2;
 }
-function inverHav(x: number) {
+/** angle in radian */
+export function inverHav(havTheta: number) {
 	// use the cosine formula
 	// https://en.wikipedia.org/wiki/Haversine_formula
-	const cosTheta = 1 - 2 * x;
-	return Math.acos(cosTheta);
+	const theta = 2 * Math.asin(Math.sqrt(havTheta));
+	return theta;
 }
 
 /**
@@ -58,5 +60,5 @@ export function closestDistance(sdist: number, centerToS1: number, centerToS2: n
 	const tanRadius2 = 1 - (Math.cos(centerToS1) / Math.cos(s1)) ** 2;
 	const tanRadius = Math.sqrt(tanRadius2);
 	const radius = Math.atan(tanRadius);
-	return radius * 180 / Math.PI;
+	return (radius * 180) / Math.PI;
 }

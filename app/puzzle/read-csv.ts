@@ -76,7 +76,7 @@ export type Line = {
 		x: number;
 		y: number;
 	};
-	distance: number;
+	closest: number;
 	in: boolean;
 };
 
@@ -109,7 +109,7 @@ export function readLineCsv(
 			(edge1.distance * Math.PI) / 180,
 			(edge2.distance * Math.PI) / 180
 		);
-		parsed.push({ edge1, edge2, in: row[4] === name, distance: closest });
+		parsed.push({ edge1, edge2, in: row[4] === name, closest });
 	}
 	return parsed;
 }

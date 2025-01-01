@@ -1,3 +1,4 @@
+import { hav, inverHav } from "~/puzzle/distance";
 import { Line } from "~/puzzle/read-csv";
 
 type Options = {
@@ -24,16 +25,16 @@ function background(ctx: CanvasRenderingContext2D, color: string | CanvasGradien
 	ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 }
 
-function drawLine(ctx: CanvasRenderingContext2D, edge: Line, r: number, c?: string) {
-	const x1 = ((1 + edge.edge1.x / r) * ctx.canvas.width) / 2;
-	const y1 = ((1 + edge.edge1.y / r) * ctx.canvas.height) / 2;
-	const x2 = ((1 + edge.edge2.x / r) * ctx.canvas.width) / 2;
-	const y2 = ((1 + edge.edge2.y / r) * ctx.canvas.height) / 2;
-	ctx.strokeStyle = edge.in ? "#fff" : c ? c : "#f00";
+function drawLine(ctx: CanvasRenderingContext2D, line: Line, r: number, c?: string) {
+	const xStart = ((1 + line.edge1.x / r) * ctx.canvas.width) / 2;
+	const yStart = ((1 + line.edge1.y / r) * ctx.canvas.height) / 2;
+	const xFinish = ((1 + line.edge2.x / r) * ctx.canvas.width) / 2;
+	const yFinish = ((1 + line.edge2.y / r) * ctx.canvas.height) / 2;
+	ctx.strokeStyle = line.in ? "#fff" : c ? c : "#f00";
 	ctx.lineWidth = 1;
 	ctx.beginPath();
-	ctx.moveTo(x1, y1);
-	ctx.lineTo(x2, y2);
+	ctx.moveTo(xStart, yStart);
+	ctx.lineTo(xFinish, yFinish);
 	ctx.stroke();
 }
 
@@ -50,7 +51,7 @@ export function draw(ctx: CanvasRenderingContext2D, stars: Star[], r: number, li
 	if (!stars) return;
 	if (lines.length) {
 		for (const line of lines) {
-			if (line && line.distance < r) {
+			if (line && line.closest < r) {
 				drawLine(ctx, line, r);
 			}
 		}
