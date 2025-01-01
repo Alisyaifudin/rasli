@@ -1,4 +1,4 @@
-import { Position } from "./distance";
+import { Position, closestDistance } from "./distance";
 import { skyToXY } from "./sky-to-xy";
 
 export type Constellation = {
@@ -67,17 +67,25 @@ export function readStarCsv(text: string): Star[] {
 
 export type Line = {
 	edge1: {
+		distance: number;
 		x: number;
 		y: number;
 	};
 	edge2: {
+		distance: number;
 		x: number;
 		y: number;
 	};
+	distance: number;
 	in: boolean;
 };
 
-export function readLineCsv(text: string, center: Position, rotation: number, name: string): Line[] {
+export function readLineCsv(
+	text: string,
+	center: Position,
+	rotation: number,
+	name: string
+): Line[] {
 	const rows = text.split("\n");
 	const parsed: Line[] = [];
 	if (rows.length === 0) {
@@ -95,7 +103,13 @@ export function readLineCsv(text: string, center: Position, rotation: number, na
 		const dec2 = Number(row[3]);
 		const edge1 = skyToXY(center, rotation, { ra: ra1, dec: dec1 });
 		const edge2 = skyToXY(center, rotation, { ra: ra2, dec: dec2 });
-		parsed.push({ edge1, edge2, in: row[4] === name });
+		const sdist = Number(row[5]);
+		const closest = closestDistance(
+			(sdist * Math.PI) / 180,
+			(edge1.distance * Math.PI) / 180,
+			(edge2.distance * Math.PI) / 180
+		);
+		parsed.push({ edge1, edge2, in: row[4] === name, distance: closest });
 	}
 	return parsed;
 }
