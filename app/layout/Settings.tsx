@@ -32,12 +32,15 @@ export function Settings() {
 					</div>
 					<div className="flex justify-around p-4 text-lg">
 						<p>Masukan?</p>
-						<a className="underline" href="mailto:muhammad.ali.syaifudin@hotmail.com">
+						<a className="underline" href="mailto:syaifudin.ali.muhammad@gmail.com">
 							Email
 						</a>
 					</div>
 					<div className="flex justify-between text-[0.7rem] text-black/70 dark:text-white/70">
-						<p>© 2024 Muhammad Ali Syaifudin</p>
+						<p>
+							© 2024-{new Date().getFullYear()}{" "}
+							<a href="https://alisyaifudin.pages.dev/">Muhammad Ali Syaifudin</a>
+						</p>
 						<a className="underline" href="https://bit.ly/HadiahTerimaKasih">
 							Terimakasih!
 						</a>

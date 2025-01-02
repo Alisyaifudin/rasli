@@ -73,6 +73,15 @@ export default function RootLayout() {
 						</li>
 					)}
 				</ul>
+				<div className="flex justify-between text-[0.7rem] py-4 text-muted-foreground">
+					<p>
+						© 2024-{new Date().getFullYear()}{" "}
+						<a href="https://alisyaifudin.pages.dev/">Muhammad Ali Syaifudin</a>
+					</p>
+					<a className="underline" href="https://bit.ly/HadiahTerimaKasih">
+						Terimakasih!
+					</a>
+				</div>
 			</footer>
 		</>
 	);
