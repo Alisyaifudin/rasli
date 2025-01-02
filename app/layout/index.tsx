@@ -23,7 +23,7 @@ export default function RootLayout() {
 				<nav className="sticky top-0 z-50 bg-blue-500 p-2 text-white dark:bg-zinc-900">
 					<div className="mx-auto flex max-w-4xl items-center justify-between">
 						<div className="flex gap-4">
-							<Info />
+							{pathname === "/" ? <Info /> : null}
 							<ThemeToggle />
 						</div>
 						<div className="flex items-end overflow-hidden text-sm">
