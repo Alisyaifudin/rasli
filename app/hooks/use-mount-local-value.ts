@@ -87,9 +87,6 @@ export function useMountLocalValue(): Context {
 	}, []);
 	const updateStats = (mode: "comfy" | "unlimited", updatedStatistics: Stats) => {
 		if (!window) return;
-		// if (!updatedStatistics.completed && updatedStatistics.answers.every((a) => a.name !== "")) {
-		// 	console.log(updatedStatistics);
-		// }
 		window.localStorage.setItem("rasli_local_value_" + mode, JSON.stringify(updatedStatistics));
 		setLocalValue((prev) => {
 			const copy = structuredClone(prev);

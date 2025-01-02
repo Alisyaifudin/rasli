@@ -16,7 +16,7 @@ export function readConstellationCsv(text: string): Constellation[] {
 	}
 	const headers = rows[0].split(",");
 	const colNum = headers.length;
-	const rowNum = rows.length - 1;
+	const rowNum = rows.length;
 	for (let i = 1; i < rowNum; i++) {
 		const row = rows[i].split(",");
 		if (row.length != colNum) throw new Error("row number " + i + "is incomplete: " + rows[i]);
@@ -48,7 +48,7 @@ export function readStarCsv(text: string): Star[] {
 	}
 	const headers = rows[0].split(",");
 	const colNum = headers.length;
-	const rowNum = rows.length - 1;
+	const rowNum = rows.length;
 	for (let i = 1; i < rowNum; i++) {
 		const row = rows[i].split(",");
 		if (row.length != colNum) throw new Error("row number " + i + "is incomplete: " + rows[i]);
@@ -93,7 +93,7 @@ export function readLineCsv(
 	}
 	const headers = rows[0].split(",");
 	const colNum = headers.length;
-	const rowNum = rows.length - 1;
+	const rowNum = rows.length;
 	for (let i = 1; i < rowNum; i++) {
 		const row = rows[i].split(",");
 		if (row.length != colNum) throw new Error("row number " + i + "is incomplete: " + rows[i]);
