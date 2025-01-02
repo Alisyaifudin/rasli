@@ -3,7 +3,6 @@ import { Form, Link, redirect, useLoaderData, useSearchParams, useSubmit } from 
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { useData } from "~/hooks/use-data";
-import { Constellation } from "~/puzzle/read-csv";
 import { StarMap } from "./StarMap";
 import { getPuzzle } from "./get-puzzle";
 import { useDebouncedCallback } from "use-debounce";
@@ -14,6 +13,7 @@ import { Button } from "~/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { LoadingConstellation } from "./Loading";
+import { constellations } from "~/lib/constellations";
 
 export const meta: MetaFunction = () => {
 	return [{ title: "Rasli" }, { name: "description", content: "Selamat datang di rasli!" }];
@@ -73,24 +73,23 @@ export default function Page() {
 
 	// loading....
 	if (isLoading) return <LoadingConstellation />;
-	const constellations = data.constellations;
 	const index = constellationRaw
-		? data.constellations.findIndex(
+		? constellations.findIndex(
 				(c) => c.name.trim().toLowerCase() === constellationRaw.trim().toLowerCase()
 		  )
 		: -1;
-	const selected = index > -1 ? data.constellations[index] : undefined;
+	const selected = index > -1 ? constellations[index] : undefined;
 	const puzzle = selected
 		? getPuzzle(selected, data.stars, data.linesCsv, (rotation * Math.PI) / 180, zoom)
 		: undefined;
 	const next =
-		index === -1 || index + 1 === data.constellations.length
+		index === -1 || index + 1 === constellations.length
 			? undefined
-			: genLink(searchParams, data.constellations[index + 1].name);
+			: genLink(searchParams, constellations[index + 1].name);
 	const prev =
 		index === -1 || index === 0
 			? undefined
-			: genLink(searchParams, data.constellations[index - 1].name);
+			: genLink(searchParams, constellations[index - 1].name);
 	return (
 		<main className="m-2 mx-auto min-h-[calc(100svh-72px)] flex max-w-xl flex-col items-center gap-5 rounded-lg bg-zinc-50 p-3 py-4 dark:bg-zinc-900">
 			<Link

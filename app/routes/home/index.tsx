@@ -7,7 +7,7 @@ import { Puzzle } from "./Puzzle";
 import Answer from "./Answer";
 import { Guess } from "./Guess";
 import { Loading } from "./Loading";
-import { Link } from "@remix-run/react";
+import { constellations } from "~/lib/constellations";
 
 export const meta: MetaFunction = () => {
 	return [{ title: "Rasli" }, { name: "description", content: "Selamat datang di rasli!" }];
@@ -20,7 +20,7 @@ export default function Page() {
 	const isLoading = data === undefined;
 	if (isLoading) return <Loading mode={mode} />;
 
-	const { constellations, stars, linesCsv } = data;
+	const { stars, linesCsv } = data;
 	const puzzle = generatePuzzle(constellations, stars, linesCsv, seed);
 	const name = completed ? puzzle.name : "Misteri";
 	return (

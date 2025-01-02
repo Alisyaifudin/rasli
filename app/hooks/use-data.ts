@@ -1,9 +1,8 @@
 import { useQuery } from "react-query";
-import { Constellation, readConstellationCsv, readStarCsv, Star } from "~/puzzle/read-csv";
+import { readStarCsv, Star } from "~/puzzle/read-csv";
 
 export function useData():
 	| {
-			constellations: Constellation[];
 			stars: Star[];
 			linesCsv: string;
 	  }
@@ -17,8 +16,7 @@ export function useData():
 		return [await constellations.text(), await stars.text(), await lines.text()] as const;
 	});
 	if (!data) return data;
-	const constellations = readConstellationCsv(data[0]);
 	const stars = readStarCsv(data[1]);
 	const linesCsv = data[2];
-	return { constellations, stars, linesCsv };
+	return { stars, linesCsv };
 }

@@ -1,6 +1,6 @@
-import { random } from "~/lib/utils";
+import { Constellation } from "~/lib/constellations";
 import { coneFilter } from "~/puzzle/cone-filter";
-import { Constellation, readLineCsv, Star } from "~/puzzle/read-csv";
+import { readLineCsv, Star } from "~/puzzle/read-csv";
 
 export function getPuzzle(
 	constellation: Constellation,

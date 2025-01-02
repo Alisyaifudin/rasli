@@ -1,35 +1,6 @@
 import { Position, closestDistance } from "./distance";
 import { skyToXY } from "./sky-to-xy";
 
-export type Constellation = {
-	name: string;
-	ra: number;
-	dec: number;
-	radius: number;
-};
-
-export function readConstellationCsv(text: string): Constellation[] {
-	const rows = text.split("\n");
-	const parsed: Constellation[] = [];
-	if (rows.length === 0) {
-		return parsed;
-	}
-	const headers = rows[0].split(",");
-	const colNum = headers.length;
-	const rowNum = rows.length;
-	for (let i = 1; i < rowNum; i++) {
-		const row = rows[i].split(",");
-		if (row.length != colNum) throw new Error("row number " + i + "is incomplete: " + rows[i]);
-		parsed.push({
-			name: row[0],
-			ra: Number(row[1]),
-			dec: Number(row[2]),
-			radius: Number(row[3]),
-		});
-	}
-	return parsed;
-}
-
 export type Star = {
 	ra: number;
 	dec: number;
