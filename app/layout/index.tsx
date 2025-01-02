@@ -35,7 +35,11 @@ export default function RootLayout() {
 								RASLI
 							</Link>
 							<div className="flex flex-col items-start">
-								<p className="text-xs xs:text-sm">{mode}</p>
+								{pathname === "/" ? (
+									<p className="text-xs xs:text-sm">{mode}</p>
+								) : (
+									<p className="text-xs xs:text-sm">&nbsp;</p>
+								)}
 								<p className="text-xs xs:text-sm">v{CONST.VERSION}</p>
 							</div>
 						</div>

@@ -102,7 +102,6 @@ export default function Page() {
 				Kembali
 			</Link>
 			<Form className="flex flex-col gap-4 w-full items-center">
-				<Label htmlFor="constellation-input">Nama Rasi</Label>
 				<div className="flex items-center gap-2">
 					<Button asChild variant="secondary" size="icon" disabled={prev === undefined}>
 						<Link prefetch="intent" to={prev ?? "#"}>
@@ -110,7 +109,6 @@ export default function Page() {
 						</Link>
 					</Button>
 					<Input
-						id="constellation-input"
 						defaultValue={constellationRaw ?? ""}
 						className="max-w-[200px] w-full"
 						type="text"
