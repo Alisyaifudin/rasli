@@ -433,7 +433,7 @@ export const constellations: Constellation[] = [
 		radius: 14,
 	},
 	{
-		name: "Sagitarius",
+		name: "Sagittarius",
 		ra: 287.5369865,
 		dec: -28.89569343,
 		radius: 23,
