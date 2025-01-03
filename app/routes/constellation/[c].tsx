@@ -2,7 +2,7 @@ import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/cloudflare";
 import { Form, Link, redirect, useLoaderData, useSearchParams, useSubmit } from "@remix-run/react";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { useData } from "~/hooks/use-data";
+import { useGetStars } from "~/hooks/use-get-stars";
 import { StarMap } from "./StarMap";
 import { getPuzzle } from "./get-puzzle";
 import { useDebouncedCallback } from "use-debounce";
@@ -34,9 +34,9 @@ export function loader({ params, request }: LoaderFunctionArgs) {
 }
 
 export default function Page() {
-	const data = useData();
+	const stars = useGetStars();
 	const { constellationRaw } = useLoaderData<typeof loader>();
-	const isLoading = data === undefined;
+	const isLoading = stars === undefined;
 	const [searchParams] = useSearchParams();
 	const rotationFromSearchRaw = integer("rotation").safeParse(searchParams.get("rotation"));
 	const rotation = rotationFromSearchRaw.success ? rotationFromSearchRaw.data : 0;
@@ -80,16 +80,14 @@ export default function Page() {
 		: -1;
 	const selected = index > -1 ? constellations[index] : undefined;
 	const puzzle = selected
-		? getPuzzle(selected, data.stars, data.linesCsv, (rotation * Math.PI) / 180, zoom)
+		? getPuzzle(selected, stars, (rotation * Math.PI) / 180, zoom)
 		: undefined;
 	const next =
 		index === -1 || index + 1 === constellations.length
 			? undefined
 			: genLink(searchParams, constellations[index + 1].name);
 	const prev =
-		index === -1 || index === 0
-			? undefined
-			: genLink(searchParams, constellations[index - 1].name);
+		index === -1 || index === 0 ? undefined : genLink(searchParams, constellations[index - 1].name);
 	return (
 		<main className="m-2 mx-auto min-h-[calc(100svh-72px)] flex max-w-xl flex-col items-center gap-5 rounded-lg bg-zinc-50 p-3 py-4 dark:bg-zinc-900">
 			<Link

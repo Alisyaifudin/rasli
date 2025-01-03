@@ -1,5 +1,5 @@
 import type { MetaFunction } from "@remix-run/cloudflare";
-import { useData } from "~/hooks/use-data";
+import { useGetStars } from "~/hooks/use-get-stars";
 import { generatePuzzle } from "~/puzzle";
 import { useMode } from "~/hooks/use-mode";
 import { useStatistics } from "~/hooks/use-stats";
@@ -14,14 +14,13 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Page() {
-	const data = useData();
+	const stars = useGetStars();
 	const [mode] = useMode();
 	const { completed, seed } = useStatistics(mode);
-	const isLoading = data === undefined;
+	const isLoading = stars === undefined;
 	if (isLoading) return <Loading mode={mode} />;
 
-	const { stars, linesCsv } = data;
-	const puzzle = generatePuzzle(constellations, stars, linesCsv, seed);
+	const puzzle = generatePuzzle(constellations, stars, seed);
 	const name = completed ? puzzle.name : "Misteri";
 	return (
 		<main className="m-2 mx-auto min-h-[calc(100svh-72px)] flex max-w-xl flex-col items-center gap-5 rounded-lg bg-zinc-50 p-3 py-4 dark:bg-zinc-900">
@@ -29,7 +28,6 @@ export default function Page() {
 			<Puzzle puzzle={puzzle} completed={completed} />
 			<Answer name={puzzle.name} constellations={constellations} />
 			<Guess />
-			
 		</main>
 	);
 }

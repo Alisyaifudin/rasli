@@ -1,3 +1,4 @@
+import { linesRaw } from "~/lib/lines";
 import { Position, closestDistance } from "./distance";
 import { skyToXY } from "./sky-to-xy";
 
@@ -51,36 +52,21 @@ export type Line = {
 	in: boolean;
 };
 
-export function readLineCsv(
-	text: string,
+export function generateLines(
 	center: Position,
 	rotation: number,
 	name: string
 ): Line[] {
-	const rows = text.split("\n");
 	const parsed: Line[] = [];
-	if (rows.length === 0) {
-		return parsed;
-	}
-	const headers = rows[0].split(",");
-	const colNum = headers.length;
-	const rowNum = rows.length;
-	for (let i = 1; i < rowNum; i++) {
-		const row = rows[i].split(",");
-		if (row.length != colNum) throw new Error("row number " + i + "is incomplete: " + rows[i]);
-		const ra1 = Number(row[0]);
-		const dec1 = Number(row[1]);
-		const ra2 = Number(row[2]);
-		const dec2 = Number(row[3]);
-		const edge1 = skyToXY(center, rotation, { ra: ra1, dec: dec1 });
-		const edge2 = skyToXY(center, rotation, { ra: ra2, dec: dec2 });
-		const sdist = Number(row[5]);
+	for (const line of linesRaw) {
+		const edge1 = skyToXY(center, rotation, { ra: line.star1[0], dec: line.star1[1] });
+		const edge2 = skyToXY(center, rotation, { ra: line.star2[0], dec: line.star2[1] });
 		const closest = closestDistance(
-			(sdist * Math.PI) / 180,
+			(line.distance * Math.PI) / 180,
 			(edge1.distance * Math.PI) / 180,
 			(edge2.distance * Math.PI) / 180
 		);
-		parsed.push({ edge1, edge2, in: row[4] === name, closest });
+		parsed.push({ edge1, edge2, in: line.name === name, closest });
 	}
 	return parsed;
 }
