@@ -55,7 +55,7 @@ export default function RootLayout() {
 				</nav>
 			</header>
 			<Outlet context={context} />
-			<footer className="bg-slate-950 px-3 py-10">
+			<footer className="bg-slate-950 px-3 pt-10">
 				<ul className="flex flex-col gap-2 text-sm text-muted-foreground underline max-w-xl w-full mx-auto">
 					{pathname === "/" ? null : (
 						<li>
