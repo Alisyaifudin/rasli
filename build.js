@@ -1,6 +1,6 @@
 import { build } from "esbuild";
 import { dirname, join, relative } from "path";
-import { stat, mkdir, copyFile } from "fs/promises";
+import { stat, mkdir, copyFile, readdir } from "fs/promises";
 import { glob } from "glob";
 import { filesize } from "filesize";
 import { fileURLToPath } from "url";
@@ -99,10 +99,65 @@ async function copyWorkerFile() {
 	}
 }
 
+async function copyAssets() {
+	const sourceDir = "./public";
+	const targetDir = "./build";
+
+	try {
+		// Create target directory if it doesn't exist
+		await mkdir(targetDir, { recursive: true });
+
+		// Get all files and directories in source
+		const items = await readdir(sourceDir, { withFileTypes: true });
+
+		for (const item of items) {
+			const sourcePath = join(sourceDir, item.name);
+			const targetPath = join(targetDir, item.name);
+
+			if (item.isDirectory()) {
+				// Recursively copy directory
+				await copyDirectory(sourcePath, targetPath);
+			} else {
+				// Copy file
+				await copyFile(sourcePath, targetPath);
+				console.log(`Copied: ${sourcePath} → ${targetPath}`);
+			}
+		}
+
+		console.log("✅ Assets copied successfully!");
+	} catch (error) {
+		console.error("❌ Error copying assets:", error);
+		throw error;
+	}
+}
+
+async function copyDirectory(source, target) {
+	// Create target directory
+	await mkdir(target, { recursive: true });
+
+	// Get all items in source directory
+	const items = await readdir(source, { withFileTypes: true });
+
+	for (const item of items) {
+		const sourcePath = join(source, item.name);
+		const targetPath = join(target, item.name);
+
+		if (item.isDirectory()) {
+			// Recursively copy subdirectory
+			await copyDirectory(sourcePath, targetPath);
+		} else {
+			// Copy file
+			await copyFile(sourcePath, targetPath);
+			console.log(`Copied: ${sourcePath} → ${targetPath}`);
+		}
+	}
+}
+
 async function main() {
 	try {
 		await runBuild(); // Step 1: Run the build
 		await copyWorkerFile();
+		await copyAssets();
 		console.log("🚀 Build completed!");
 	} catch (error) {
 		console.error("❌ Build process failed:", error);

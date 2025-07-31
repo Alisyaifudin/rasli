@@ -9,9 +9,9 @@
 	"pages_build_output_dir": "./build",
 	"compatibility_date": "2025-07-12",
 	"compatibility_flags": ["global_fetch_strictly_public"],
-	"assets": {
-		"directory": "./public"
-	},
+	// "assets": {
+	// 	"directory": "./public"
+	// },
 	"observability": {
 		"enabled": true
 	}
