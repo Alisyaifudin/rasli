@@ -27,12 +27,12 @@ export function setNav(constellations: Constellation[], canvas: CanvasComp, star
 			(c) => c.name.toLowerCase() === val.trim().toLowerCase()
 		);
 		if (index === -1) return;
-		if (index === 1) {
+		if (index === 0) {
 			prevEl.disabled = true;
 		} else {
 			prevEl.disabled = false;
 		}
-		if (index >= constellations.length - 2) {
+		if (index === constellations.length - 1) {
 			nextEl.disabled = true;
 		} else {
 			nextEl.disabled = false;
