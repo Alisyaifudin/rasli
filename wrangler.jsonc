@@ -4,8 +4,8 @@
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "rasli-worker",
-	"main": "src/index.ts",
+	"name": "rasli",
+	// "main": "src/index.ts",
 	"pages_build_output_dir": "./build",
 	"compatibility_date": "2025-07-12",
 	"compatibility_flags": ["global_fetch_strictly_public"],
