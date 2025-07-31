@@ -51,14 +51,15 @@ export class GraphComp {
 		const played = stats.reduce((p, c) => p + c);
 		const win = played - stats[stats.length - 1];
 		this.el.stat.played.innerText = played.toString();
-		this.el.stat.win.innerText = Math.floor((win * 100) / played).toString() + "%";
+		this.el.stat.win.innerText =
+			(played > 0 ? Math.floor((win * 100) / played).toString() : "0") + "%";
 		this.el.stat.currentStreak.innerText = data.currentStreak.toString();
 		this.el.stat.maxStreak.innerText = data.maxStreak.toString();
 		this.el.graph.innerHTML = "";
 		this.el.title.innerText = `Statistik: ${mode.toUpperCase()}`;
 		stats.forEach((value, i) => {
 			const div1 = document.createElement("div");
-			div1.style.width = `${10 + (value / max) * 90}%`;
+			div1.style.width = max === 0 ? "10%" : `${10 + (value / max) * 90}%`;
 			const div2 = document.createElement("div");
 			div2.classList.add(
 				"h-full",
