@@ -7,8 +7,9 @@
 	"name": "rasli",
 	// "main": "src/index.ts",
 	"pages_build_output_dir": "./build",
+	
 	"compatibility_date": "2025-07-12",
-	"compatibility_flags": ["global_fetch_strictly_public"],
+	"compatibility_flags": ["nodejs_compat"],
 	// "assets": {
 	// 	"directory": "./public"
 	// },
